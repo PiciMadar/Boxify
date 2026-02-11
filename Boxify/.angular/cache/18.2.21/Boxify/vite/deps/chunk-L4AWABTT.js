@@ -1,7 +1,7 @@
 import {
   CommonModule,
   DOCUMENT
-} from "./chunk-HPYFNHGZ.js";
+} from "./chunk-IVNFXB5Y.js";
 import {
   APP_INITIALIZER,
   Component,
@@ -28,10 +28,10 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵprojection,
   ɵɵprojectionDef
-} from "./chunk-G2LLFY66.js";
+} from "./chunk-KV3ZIWGR.js";
 import {
   Subject
-} from "./chunk-P6U2JBMQ.js";
+} from "./chunk-EQS6DRQQ.js";
 import {
   __spreadValues
 } from "./chunk-WDMUDEB6.js";
@@ -337,6 +337,14 @@ function resolveFieldData(data, field) {
 function equals(obj1, obj2, field) {
   if (field) return resolveFieldData(obj1, field) === resolveFieldData(obj2, field);
   else return deepEquals(obj1, obj2);
+}
+function contains(value, list) {
+  if (value != null && list && list.length) {
+    for (let val of list) {
+      if (equals(value, val)) return true;
+    }
+  }
+  return false;
 }
 function findLastIndex(arr, callback) {
   let index = -1;
@@ -2479,6 +2487,8 @@ export {
   removeChild,
   isEmpty,
   isNotEmpty,
+  equals,
+  contains,
   findLastIndex,
   resolve,
   getKeyValue,
@@ -2495,4 +2505,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-6UULR7HO.js.map
+//# sourceMappingURL=chunk-L4AWABTT.js.map

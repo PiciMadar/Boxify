@@ -25,4 +25,5 @@ export const routes: Routes = [
         path:'boxes',
         component:BoxesComponent
     },
+     { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

@@ -1,6 +1,6 @@
 import {
   BaseComponent
-} from "./chunk-K2XTZJTZ.js";
+} from "./chunk-AZMDKPSZ.js";
 import {
   BaseStyle,
   SharedModule,
@@ -10,10 +10,10 @@ import {
   isNotEmpty,
   removeClass,
   uuid
-} from "./chunk-6UULR7HO.js";
+} from "./chunk-L4AWABTT.js";
 import {
   CommonModule
-} from "./chunk-HPYFNHGZ.js";
+} from "./chunk-IVNFXB5Y.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -43,7 +43,7 @@ import {
   ɵɵstyleProp,
   ɵɵtext,
   ɵɵtextInterpolate
-} from "./chunk-G2LLFY66.js";
+} from "./chunk-KV3ZIWGR.js";
 
 // node_modules/primeng/fesm2022/primeng-badge.mjs
 var theme = ({
@@ -1274,9 +1274,9 @@ var ConnectedOverlayScrollHandler = class {
 };
 
 export {
-  Badge,
-  BadgeModule,
   DomHandler,
-  ConnectedOverlayScrollHandler
+  ConnectedOverlayScrollHandler,
+  Badge,
+  BadgeModule
 };
-//# sourceMappingURL=chunk-OX347OE5.js.map
+//# sourceMappingURL=chunk-XDQKF3LQ.js.map

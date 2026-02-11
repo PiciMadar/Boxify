@@ -1,18 +1,18 @@
 import {
   BaseComponent
-} from "./chunk-K2XTZJTZ.js";
+} from "./chunk-AZMDKPSZ.js";
 import {
   BaseStyle,
   PrimeTemplate,
   SharedModule
-} from "./chunk-6UULR7HO.js";
+} from "./chunk-L4AWABTT.js";
 import {
   CommonModule,
   NgClass,
   NgIf,
   NgStyle,
   NgTemplateOutlet
-} from "./chunk-HPYFNHGZ.js";
+} from "./chunk-IVNFXB5Y.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -54,8 +54,9 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate2
-} from "./chunk-G2LLFY66.js";
-import "./chunk-P6U2JBMQ.js";
+} from "./chunk-KV3ZIWGR.js";
+import "./chunk-EQS6DRQQ.js";
+import "./chunk-HM5YLMWO.js";
 import "./chunk-WDMUDEB6.js";
 
 // node_modules/primeng/fesm2022/primeng-progressbar.mjs

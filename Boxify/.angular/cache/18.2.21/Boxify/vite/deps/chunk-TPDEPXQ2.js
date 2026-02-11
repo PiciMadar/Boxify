@@ -1,34 +1,18 @@
 import {
   BaseComponent
-} from "./chunk-K2XTZJTZ.js";
+} from "./chunk-AZMDKPSZ.js";
 import {
   BaseStyle,
-  addClass,
-  getHeight,
-  getOffset,
-  getOuterHeight,
-  getOuterWidth,
-  getWidth,
   isEmpty,
-  remove,
-  removeClass,
   uuid
-} from "./chunk-6UULR7HO.js";
-import {
-  isPlatformBrowser
-} from "./chunk-HPYFNHGZ.js";
+} from "./chunk-L4AWABTT.js";
 import {
   ChangeDetectionStrategy,
   Component,
-  Directive,
   Injectable,
   Input,
-  NgModule,
-  NgZone,
   ViewEncapsulation$1,
   booleanAttribute,
-  effect,
-  inject,
   setClassMetadata,
   ɵsetClassDebugInfo,
   ɵɵInheritDefinitionFeature,
@@ -39,10 +23,7 @@ import {
   ɵɵattribute,
   ɵɵclassMap,
   ɵɵdefineComponent,
-  ɵɵdefineDirective,
   ɵɵdefineInjectable,
-  ɵɵdefineInjector,
-  ɵɵdefineNgModule,
   ɵɵelement,
   ɵɵelementEnd,
   ɵɵelementStart,
@@ -51,7 +32,7 @@ import {
   ɵɵprojection,
   ɵɵprojectionDef,
   ɵɵproperty
-} from "./chunk-G2LLFY66.js";
+} from "./chunk-KV3ZIWGR.js";
 
 // node_modules/primeng/fesm2022/primeng-icons-baseicon.mjs
 var css = `
@@ -356,6 +337,114 @@ var BarsIcon = class _BarsIcon extends BaseIcon {
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassDebugInfo(BarsIcon, {
     className: "BarsIcon"
+  });
+})();
+
+// node_modules/primeng/fesm2022/primeng-icons-check.mjs
+var CheckIcon = class _CheckIcon extends BaseIcon {
+  static ɵfac = /* @__PURE__ */ (() => {
+    let ɵCheckIcon_BaseFactory;
+    return function CheckIcon_Factory(__ngFactoryType__) {
+      return (ɵCheckIcon_BaseFactory || (ɵCheckIcon_BaseFactory = ɵɵgetInheritedFactory(_CheckIcon)))(__ngFactoryType__ || _CheckIcon);
+    };
+  })();
+  static ɵcmp = ɵɵdefineComponent({
+    type: _CheckIcon,
+    selectors: [["CheckIcon"]],
+    standalone: true,
+    features: [ɵɵInheritDefinitionFeature, ɵɵStandaloneFeature],
+    decls: 2,
+    vars: 5,
+    consts: [["width", "14", "height", "14", "viewBox", "0 0 14 14", "fill", "none", "xmlns", "http://www.w3.org/2000/svg"], ["d", "M4.86199 11.5948C4.78717 11.5923 4.71366 11.5745 4.64596 11.5426C4.57826 11.5107 4.51779 11.4652 4.46827 11.4091L0.753985 7.69483C0.683167 7.64891 0.623706 7.58751 0.580092 7.51525C0.536478 7.44299 0.509851 7.36177 0.502221 7.27771C0.49459 7.19366 0.506156 7.10897 0.536046 7.03004C0.565935 6.95111 0.613367 6.88 0.674759 6.82208C0.736151 6.76416 0.8099 6.72095 0.890436 6.69571C0.970973 6.67046 1.05619 6.66385 1.13966 6.67635C1.22313 6.68886 1.30266 6.72017 1.37226 6.76792C1.44186 6.81567 1.4997 6.8786 1.54141 6.95197L4.86199 10.2503L12.6397 2.49483C12.7444 2.42694 12.8689 2.39617 12.9932 2.40745C13.1174 2.41873 13.2343 2.47141 13.3251 2.55705C13.4159 2.64268 13.4753 2.75632 13.4938 2.87973C13.5123 3.00315 13.4888 3.1292 13.4271 3.23768L5.2557 11.4091C5.20618 11.4652 5.14571 11.5107 5.07801 11.5426C5.01031 11.5745 4.9368 11.5923 4.86199 11.5948Z", "fill", "currentColor"]],
+    template: function CheckIcon_Template(rf, ctx) {
+      if (rf & 1) {
+        ɵɵnamespaceSVG();
+        ɵɵelementStart(0, "svg", 0);
+        ɵɵelement(1, "path", 1);
+        ɵɵelementEnd();
+      }
+      if (rf & 2) {
+        ɵɵclassMap(ctx.getClassNames());
+        ɵɵattribute("aria-label", ctx.ariaLabel)("aria-hidden", ctx.ariaHidden)("role", ctx.role);
+      }
+    },
+    encapsulation: 2
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CheckIcon, [{
+    type: Component,
+    args: [{
+      selector: "CheckIcon",
+      standalone: true,
+      template: `
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" [attr.aria-label]="ariaLabel" [attr.aria-hidden]="ariaHidden" [attr.role]="role" [class]="getClassNames()">
+            <path
+                d="M4.86199 11.5948C4.78717 11.5923 4.71366 11.5745 4.64596 11.5426C4.57826 11.5107 4.51779 11.4652 4.46827 11.4091L0.753985 7.69483C0.683167 7.64891 0.623706 7.58751 0.580092 7.51525C0.536478 7.44299 0.509851 7.36177 0.502221 7.27771C0.49459 7.19366 0.506156 7.10897 0.536046 7.03004C0.565935 6.95111 0.613367 6.88 0.674759 6.82208C0.736151 6.76416 0.8099 6.72095 0.890436 6.69571C0.970973 6.67046 1.05619 6.66385 1.13966 6.67635C1.22313 6.68886 1.30266 6.72017 1.37226 6.76792C1.44186 6.81567 1.4997 6.8786 1.54141 6.95197L4.86199 10.2503L12.6397 2.49483C12.7444 2.42694 12.8689 2.39617 12.9932 2.40745C13.1174 2.41873 13.2343 2.47141 13.3251 2.55705C13.4159 2.64268 13.4753 2.75632 13.4938 2.87973C13.5123 3.00315 13.4888 3.1292 13.4271 3.23768L5.2557 11.4091C5.20618 11.4652 5.14571 11.5107 5.07801 11.5426C5.01031 11.5745 4.9368 11.5923 4.86199 11.5948Z"
+                fill="currentColor"
+            />
+        </svg>
+    `
+    }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassDebugInfo(CheckIcon, {
+    className: "CheckIcon"
+  });
+})();
+
+// node_modules/primeng/fesm2022/primeng-icons-minus.mjs
+var MinusIcon = class _MinusIcon extends BaseIcon {
+  static ɵfac = /* @__PURE__ */ (() => {
+    let ɵMinusIcon_BaseFactory;
+    return function MinusIcon_Factory(__ngFactoryType__) {
+      return (ɵMinusIcon_BaseFactory || (ɵMinusIcon_BaseFactory = ɵɵgetInheritedFactory(_MinusIcon)))(__ngFactoryType__ || _MinusIcon);
+    };
+  })();
+  static ɵcmp = ɵɵdefineComponent({
+    type: _MinusIcon,
+    selectors: [["MinusIcon"]],
+    standalone: true,
+    features: [ɵɵInheritDefinitionFeature, ɵɵStandaloneFeature],
+    decls: 2,
+    vars: 5,
+    consts: [["width", "14", "height", "14", "viewBox", "0 0 14 14", "fill", "none", "xmlns", "http://www.w3.org/2000/svg"], ["d", "M13.2222 7.77778H0.777778C0.571498 7.77778 0.373667 7.69584 0.227806 7.54998C0.0819442 7.40412 0 7.20629 0 7.00001C0 6.79373 0.0819442 6.5959 0.227806 6.45003C0.373667 6.30417 0.571498 6.22223 0.777778 6.22223H13.2222C13.4285 6.22223 13.6263 6.30417 13.7722 6.45003C13.9181 6.5959 14 6.79373 14 7.00001C14 7.20629 13.9181 7.40412 13.7722 7.54998C13.6263 7.69584 13.4285 7.77778 13.2222 7.77778Z", "fill", "currentColor"]],
+    template: function MinusIcon_Template(rf, ctx) {
+      if (rf & 1) {
+        ɵɵnamespaceSVG();
+        ɵɵelementStart(0, "svg", 0);
+        ɵɵelement(1, "path", 1);
+        ɵɵelementEnd();
+      }
+      if (rf & 2) {
+        ɵɵclassMap(ctx.getClassNames());
+        ɵɵattribute("aria-label", ctx.ariaLabel)("aria-hidden", ctx.ariaHidden)("role", ctx.role);
+      }
+    },
+    encapsulation: 2
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MinusIcon, [{
+    type: Component,
+    args: [{
+      selector: "MinusIcon",
+      standalone: true,
+      template: `
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" [attr.aria-label]="ariaLabel" [attr.aria-hidden]="ariaHidden" [attr.role]="role" [class]="getClassNames()">
+            <path
+                d="M13.2222 7.77778H0.777778C0.571498 7.77778 0.373667 7.69584 0.227806 7.54998C0.0819442 7.40412 0 7.20629 0 7.00001C0 6.79373 0.0819442 6.5959 0.227806 6.45003C0.373667 6.30417 0.571498 6.22223 0.777778 6.22223H13.2222C13.4285 6.22223 13.6263 6.30417 13.7722 6.45003C13.9181 6.5959 14 6.79373 14 7.00001C14 7.20629 13.9181 7.40412 13.7722 7.54998C13.6263 7.69584 13.4285 7.77778 13.2222 7.77778Z"
+                fill="currentColor"
+            />
+        </svg>
+    `
+    }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassDebugInfo(MinusIcon, {
+    className: "MinusIcon"
   });
 })();
 
@@ -1484,60 +1573,6 @@ var CaretRightIcon = class _CaretRightIcon extends BaseIcon {
   });
 })();
 
-// node_modules/primeng/fesm2022/primeng-icons-check.mjs
-var CheckIcon = class _CheckIcon extends BaseIcon {
-  static ɵfac = /* @__PURE__ */ (() => {
-    let ɵCheckIcon_BaseFactory;
-    return function CheckIcon_Factory(__ngFactoryType__) {
-      return (ɵCheckIcon_BaseFactory || (ɵCheckIcon_BaseFactory = ɵɵgetInheritedFactory(_CheckIcon)))(__ngFactoryType__ || _CheckIcon);
-    };
-  })();
-  static ɵcmp = ɵɵdefineComponent({
-    type: _CheckIcon,
-    selectors: [["CheckIcon"]],
-    standalone: true,
-    features: [ɵɵInheritDefinitionFeature, ɵɵStandaloneFeature],
-    decls: 2,
-    vars: 5,
-    consts: [["width", "14", "height", "14", "viewBox", "0 0 14 14", "fill", "none", "xmlns", "http://www.w3.org/2000/svg"], ["d", "M4.86199 11.5948C4.78717 11.5923 4.71366 11.5745 4.64596 11.5426C4.57826 11.5107 4.51779 11.4652 4.46827 11.4091L0.753985 7.69483C0.683167 7.64891 0.623706 7.58751 0.580092 7.51525C0.536478 7.44299 0.509851 7.36177 0.502221 7.27771C0.49459 7.19366 0.506156 7.10897 0.536046 7.03004C0.565935 6.95111 0.613367 6.88 0.674759 6.82208C0.736151 6.76416 0.8099 6.72095 0.890436 6.69571C0.970973 6.67046 1.05619 6.66385 1.13966 6.67635C1.22313 6.68886 1.30266 6.72017 1.37226 6.76792C1.44186 6.81567 1.4997 6.8786 1.54141 6.95197L4.86199 10.2503L12.6397 2.49483C12.7444 2.42694 12.8689 2.39617 12.9932 2.40745C13.1174 2.41873 13.2343 2.47141 13.3251 2.55705C13.4159 2.64268 13.4753 2.75632 13.4938 2.87973C13.5123 3.00315 13.4888 3.1292 13.4271 3.23768L5.2557 11.4091C5.20618 11.4652 5.14571 11.5107 5.07801 11.5426C5.01031 11.5745 4.9368 11.5923 4.86199 11.5948Z", "fill", "currentColor"]],
-    template: function CheckIcon_Template(rf, ctx) {
-      if (rf & 1) {
-        ɵɵnamespaceSVG();
-        ɵɵelementStart(0, "svg", 0);
-        ɵɵelement(1, "path", 1);
-        ɵɵelementEnd();
-      }
-      if (rf & 2) {
-        ɵɵclassMap(ctx.getClassNames());
-        ɵɵattribute("aria-label", ctx.ariaLabel)("aria-hidden", ctx.ariaHidden)("role", ctx.role);
-      }
-    },
-    encapsulation: 2
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CheckIcon, [{
-    type: Component,
-    args: [{
-      selector: "CheckIcon",
-      standalone: true,
-      template: `
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" [attr.aria-label]="ariaLabel" [attr.aria-hidden]="ariaHidden" [attr.role]="role" [class]="getClassNames()">
-            <path
-                d="M4.86199 11.5948C4.78717 11.5923 4.71366 11.5745 4.64596 11.5426C4.57826 11.5107 4.51779 11.4652 4.46827 11.4091L0.753985 7.69483C0.683167 7.64891 0.623706 7.58751 0.580092 7.51525C0.536478 7.44299 0.509851 7.36177 0.502221 7.27771C0.49459 7.19366 0.506156 7.10897 0.536046 7.03004C0.565935 6.95111 0.613367 6.88 0.674759 6.82208C0.736151 6.76416 0.8099 6.72095 0.890436 6.69571C0.970973 6.67046 1.05619 6.66385 1.13966 6.67635C1.22313 6.68886 1.30266 6.72017 1.37226 6.76792C1.44186 6.81567 1.4997 6.8786 1.54141 6.95197L4.86199 10.2503L12.6397 2.49483C12.7444 2.42694 12.8689 2.39617 12.9932 2.40745C13.1174 2.41873 13.2343 2.47141 13.3251 2.55705C13.4159 2.64268 13.4753 2.75632 13.4938 2.87973C13.5123 3.00315 13.4888 3.1292 13.4271 3.23768L5.2557 11.4091C5.20618 11.4652 5.14571 11.5107 5.07801 11.5426C5.01031 11.5745 4.9368 11.5923 4.86199 11.5948Z"
-                fill="currentColor"
-            />
-        </svg>
-    `
-    }]
-  }], null, null);
-})();
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassDebugInfo(CheckIcon, {
-    className: "CheckIcon"
-  });
-})();
-
 // node_modules/primeng/fesm2022/primeng-icons-chevrondown.mjs
 var ChevronDownIcon = class _ChevronDownIcon extends BaseIcon {
   static ɵfac = /* @__PURE__ */ (() => {
@@ -2255,60 +2290,6 @@ var InfoCircleIcon = class _InfoCircleIcon extends BaseIcon {
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassDebugInfo(InfoCircleIcon, {
     className: "InfoCircleIcon"
-  });
-})();
-
-// node_modules/primeng/fesm2022/primeng-icons-minus.mjs
-var MinusIcon = class _MinusIcon extends BaseIcon {
-  static ɵfac = /* @__PURE__ */ (() => {
-    let ɵMinusIcon_BaseFactory;
-    return function MinusIcon_Factory(__ngFactoryType__) {
-      return (ɵMinusIcon_BaseFactory || (ɵMinusIcon_BaseFactory = ɵɵgetInheritedFactory(_MinusIcon)))(__ngFactoryType__ || _MinusIcon);
-    };
-  })();
-  static ɵcmp = ɵɵdefineComponent({
-    type: _MinusIcon,
-    selectors: [["MinusIcon"]],
-    standalone: true,
-    features: [ɵɵInheritDefinitionFeature, ɵɵStandaloneFeature],
-    decls: 2,
-    vars: 5,
-    consts: [["width", "14", "height", "14", "viewBox", "0 0 14 14", "fill", "none", "xmlns", "http://www.w3.org/2000/svg"], ["d", "M13.2222 7.77778H0.777778C0.571498 7.77778 0.373667 7.69584 0.227806 7.54998C0.0819442 7.40412 0 7.20629 0 7.00001C0 6.79373 0.0819442 6.5959 0.227806 6.45003C0.373667 6.30417 0.571498 6.22223 0.777778 6.22223H13.2222C13.4285 6.22223 13.6263 6.30417 13.7722 6.45003C13.9181 6.5959 14 6.79373 14 7.00001C14 7.20629 13.9181 7.40412 13.7722 7.54998C13.6263 7.69584 13.4285 7.77778 13.2222 7.77778Z", "fill", "currentColor"]],
-    template: function MinusIcon_Template(rf, ctx) {
-      if (rf & 1) {
-        ɵɵnamespaceSVG();
-        ɵɵelementStart(0, "svg", 0);
-        ɵɵelement(1, "path", 1);
-        ɵɵelementEnd();
-      }
-      if (rf & 2) {
-        ɵɵclassMap(ctx.getClassNames());
-        ɵɵattribute("aria-label", ctx.ariaLabel)("aria-hidden", ctx.ariaHidden)("role", ctx.role);
-      }
-    },
-    encapsulation: 2
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MinusIcon, [{
-    type: Component,
-    args: [{
-      selector: "MinusIcon",
-      standalone: true,
-      template: `
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" [attr.aria-label]="ariaLabel" [attr.aria-hidden]="ariaHidden" [attr.role]="role" [class]="getClassNames()">
-            <path
-                d="M13.2222 7.77778H0.777778C0.571498 7.77778 0.373667 7.69584 0.227806 7.54998C0.0819442 7.40412 0 7.20629 0 7.00001C0 6.79373 0.0819442 6.5959 0.227806 6.45003C0.373667 6.30417 0.571498 6.22223 0.777778 6.22223H13.2222C13.4285 6.22223 13.6263 6.30417 13.7722 6.45003C13.9181 6.5959 14 6.79373 14 7.00001C14 7.20629 13.9181 7.40412 13.7722 7.54998C13.6263 7.69584 13.4285 7.77778 13.2222 7.77778Z"
-                fill="currentColor"
-            />
-        </svg>
-    `
-    }]
-  }], null, null);
-})();
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && ɵsetClassDebugInfo(MinusIcon, {
-    className: "MinusIcon"
   });
 })();
 
@@ -3636,210 +3617,13 @@ var WindowMinimizeIcon = class _WindowMinimizeIcon extends BaseIcon {
   });
 })();
 
-// node_modules/primeng/fesm2022/primeng-ripple.mjs
-var theme = ({
-  dt
-}) => `
-/* For PrimeNG */
-.p-ripple {
-    overflow: hidden;
-    position: relative;
-}
-
-.p-ink {
-    display: block;
-    position: absolute;
-    background: ${dt("ripple.background")};
-    border-radius: 100%;
-    transform: scale(0);
-}
-
-.p-ink-active {
-    animation: ripple 0.4s linear;
-}
-
-.p-ripple-disabled .p-ink {
-    display: none !important;
-}
-
-@keyframes ripple {
-    100% {
-        opacity: 0;
-        transform: scale(2.5);
-    }
-}
-`;
-var classes = {
-  root: "p-ink"
-};
-var RippleStyle = class _RippleStyle extends BaseStyle {
-  name = "ripple";
-  theme = theme;
-  classes = classes;
-  static ɵfac = /* @__PURE__ */ (() => {
-    let ɵRippleStyle_BaseFactory;
-    return function RippleStyle_Factory(__ngFactoryType__) {
-      return (ɵRippleStyle_BaseFactory || (ɵRippleStyle_BaseFactory = ɵɵgetInheritedFactory(_RippleStyle)))(__ngFactoryType__ || _RippleStyle);
-    };
-  })();
-  static ɵprov = ɵɵdefineInjectable({
-    token: _RippleStyle,
-    factory: _RippleStyle.ɵfac
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(RippleStyle, [{
-    type: Injectable
-  }], null, null);
-})();
-var RippleClasses;
-(function(RippleClasses2) {
-  RippleClasses2["root"] = "p-ink";
-})(RippleClasses || (RippleClasses = {}));
-var Ripple = class _Ripple extends BaseComponent {
-  zone = inject(NgZone);
-  _componentStyle = inject(RippleStyle);
-  animationListener;
-  mouseDownListener;
-  timeout;
-  constructor() {
-    super();
-    effect(() => {
-      if (isPlatformBrowser(this.platformId)) {
-        if (this.config.ripple()) {
-          this.zone.runOutsideAngular(() => {
-            this.create();
-            this.mouseDownListener = this.renderer.listen(this.el.nativeElement, "mousedown", this.onMouseDown.bind(this));
-          });
-        } else {
-          this.remove();
-        }
-      }
-    });
-  }
-  ngAfterViewInit() {
-    super.ngAfterViewInit();
-  }
-  onMouseDown(event) {
-    let ink = this.getInk();
-    if (!ink || this.document.defaultView?.getComputedStyle(ink, null).display === "none") {
-      return;
-    }
-    removeClass(ink, "p-ink-active");
-    if (!getHeight(ink) && !getWidth(ink)) {
-      let d = Math.max(getOuterWidth(this.el.nativeElement), getOuterHeight(this.el.nativeElement));
-      ink.style.height = d + "px";
-      ink.style.width = d + "px";
-    }
-    let offset = getOffset(this.el.nativeElement);
-    let x = event.pageX - offset.left + this.document.body.scrollTop - getWidth(ink) / 2;
-    let y = event.pageY - offset.top + this.document.body.scrollLeft - getHeight(ink) / 2;
-    this.renderer.setStyle(ink, "top", y + "px");
-    this.renderer.setStyle(ink, "left", x + "px");
-    addClass(ink, "p-ink-active");
-    this.timeout = setTimeout(() => {
-      let ink2 = this.getInk();
-      if (ink2) {
-        removeClass(ink2, "p-ink-active");
-      }
-    }, 401);
-  }
-  getInk() {
-    const children = this.el.nativeElement.children;
-    for (let i = 0; i < children.length; i++) {
-      if (typeof children[i].className === "string" && children[i].className.indexOf("p-ink") !== -1) {
-        return children[i];
-      }
-    }
-    return null;
-  }
-  resetInk() {
-    let ink = this.getInk();
-    if (ink) {
-      removeClass(ink, "p-ink-active");
-    }
-  }
-  onAnimationEnd(event) {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-    removeClass(event.currentTarget, "p-ink-active");
-  }
-  create() {
-    let ink = this.renderer.createElement("span");
-    this.renderer.addClass(ink, "p-ink");
-    this.renderer.appendChild(this.el.nativeElement, ink);
-    this.renderer.setAttribute(ink, "aria-hidden", "true");
-    this.renderer.setAttribute(ink, "role", "presentation");
-    if (!this.animationListener) {
-      this.animationListener = this.renderer.listen(ink, "animationend", this.onAnimationEnd.bind(this));
-    }
-  }
-  remove() {
-    let ink = this.getInk();
-    if (ink) {
-      this.mouseDownListener && this.mouseDownListener();
-      this.animationListener && this.animationListener();
-      this.mouseDownListener = null;
-      this.animationListener = null;
-      remove(ink);
-    }
-  }
-  ngOnDestroy() {
-    if (this.config && this.config.ripple()) {
-      this.remove();
-    }
-    super.ngOnDestroy();
-  }
-  static ɵfac = function Ripple_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _Ripple)();
-  };
-  static ɵdir = ɵɵdefineDirective({
-    type: _Ripple,
-    selectors: [["", "pRipple", ""]],
-    hostAttrs: [1, "p-ripple"],
-    standalone: true,
-    features: [ɵɵProvidersFeature([RippleStyle]), ɵɵInheritDefinitionFeature]
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Ripple, [{
-    type: Directive,
-    args: [{
-      selector: "[pRipple]",
-      host: {
-        class: "p-ripple"
-      },
-      standalone: true,
-      providers: [RippleStyle]
-    }]
-  }], () => [], null);
-})();
-var RippleModule = class _RippleModule {
-  static ɵfac = function RippleModule_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _RippleModule)();
-  };
-  static ɵmod = ɵɵdefineNgModule({
-    type: _RippleModule
-  });
-  static ɵinj = ɵɵdefineInjector({});
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(RippleModule, [{
-    type: NgModule,
-    args: [{
-      imports: [Ripple],
-      exports: [Ripple]
-    }]
-  }], null, null);
-})();
-
 export {
   AngleDownIcon,
   AngleRightIcon,
   BarsIcon,
+  CheckIcon,
+  MinusIcon,
   SpinnerIcon,
-  TimesIcon,
-  Ripple
+  TimesIcon
 };
-//# sourceMappingURL=chunk-3XXG6BB5.js.map
+//# sourceMappingURL=chunk-TPDEPXQ2.js.map
