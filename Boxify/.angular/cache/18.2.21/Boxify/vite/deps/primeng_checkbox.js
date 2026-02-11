@@ -1,27 +1,27 @@
 import {
   CheckIcon,
   MinusIcon
-} from "./chunk-TPDEPXQ2.js";
+} from "./chunk-QO74YB2M.js";
+import {
+  NG_VALUE_ACCESSOR,
+  NgControl
+} from "./chunk-E35I3EUC.js";
 import {
   BaseComponent
-} from "./chunk-AZMDKPSZ.js";
+} from "./chunk-ULQIDMUT.js";
 import {
   BaseStyle,
   PrimeTemplate,
   SharedModule,
   contains,
   equals
-} from "./chunk-L4AWABTT.js";
-import {
-  NG_VALUE_ACCESSOR,
-  NgControl
-} from "./chunk-7W7S7MVY.js";
+} from "./chunk-ADIJBUWI.js";
 import {
   CommonModule,
   NgClass,
   NgIf,
   NgTemplateOutlet
-} from "./chunk-IVNFXB5Y.js";
+} from "./chunk-HPYFNHGZ.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -73,9 +73,8 @@ import {
   ɵɵstyleMap,
   ɵɵtemplate,
   ɵɵviewQuery
-} from "./chunk-KV3ZIWGR.js";
-import "./chunk-EQS6DRQQ.js";
-import "./chunk-HM5YLMWO.js";
+} from "./chunk-G2LLFY66.js";
+import "./chunk-P6U2JBMQ.js";
 import "./chunk-WDMUDEB6.js";
 
 // node_modules/primeng/fesm2022/primeng-checkbox.mjs
