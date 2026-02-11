@@ -1,11 +1,11 @@
 import {
   BaseComponent
-} from "./chunk-OYGMZNOJ.js";
+} from "./chunk-ULQIDMUT.js";
 import {
   BaseStyle,
   PrimeTemplate,
   SharedModule
-} from "./chunk-H4II2KPU.js";
+} from "./chunk-ADIJBUWI.js";
 import {
   CommonModule,
   NgClass,
