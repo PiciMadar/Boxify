@@ -1,0 +1,25 @@
+.container{
+}
+
+.LoginDiv{
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+.LoginDiv>p-floatlabel{
+    width: 30%;
+}
+.LoginDiv>p-floatlabel>input{
+    margin:0.2%;
+    width: 100%;
+}
+
+.gombDiv{
+    width: 30%;
+    display: flex;
+    justify-content:end;
+    align-items: center;
+    margin: 0 auto;
+}
