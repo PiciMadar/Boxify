@@ -18,10 +18,6 @@ export const routes: Routes = [
         component:ForgotPasswordComponent
     },
     {
-        path:'login',
-        component:LoginComponent
-    },
-    {
         path:'boxes',
         component:BoxesComponent
     },

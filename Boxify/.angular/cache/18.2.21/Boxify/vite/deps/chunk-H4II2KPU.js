@@ -55,6 +55,24 @@ function addClass(element, className) {
     [className].flat().filter(Boolean).forEach((_classNames) => _classNames.split(" ").forEach(fn));
   }
 }
+function getCSSVariableByRegex(variableRegex) {
+  for (const sheet of document == null ? void 0 : document.styleSheets) {
+    try {
+      for (const rule of sheet == null ? void 0 : sheet.cssRules) {
+        for (const property of rule == null ? void 0 : rule.style) {
+          if (variableRegex.test(property)) {
+            return {
+              name: property,
+              value: rule.style.getPropertyValue(property).trim()
+            };
+          }
+        }
+      }
+    } catch (e) {
+    }
+  }
+  return null;
+}
 function removeClass(element, className) {
   if (element && className) {
     const fn = (_className) => {
@@ -63,6 +81,21 @@ function removeClass(element, className) {
     };
     [className].flat().filter(Boolean).forEach((_classNames) => _classNames.split(" ").forEach(fn));
   }
+}
+function getHiddenElementDimensions(element) {
+  let dimensions = {
+    width: 0,
+    height: 0
+  };
+  if (element) {
+    element.style.visibility = "hidden";
+    element.style.display = "block";
+    dimensions.width = element.offsetWidth;
+    dimensions.height = element.offsetHeight;
+    element.style.display = "none";
+    element.style.visibility = "visible";
+  }
+  return dimensions;
 }
 function getViewport() {
   let win = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0], w = win.innerWidth || e.clientWidth || g.clientWidth, h = win.innerHeight || e.clientHeight || g.clientHeight;
@@ -79,6 +112,39 @@ function getWindowScrollTop() {
   let doc = document.documentElement;
   return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 }
+function absolutePosition(element, target, gutter = true) {
+  var _a, _b, _c, _d;
+  if (element) {
+    const elementDimensions = element.offsetParent ? {
+      width: element.offsetWidth,
+      height: element.offsetHeight
+    } : getHiddenElementDimensions(element);
+    const elementOuterHeight = elementDimensions.height;
+    const elementOuterWidth = elementDimensions.width;
+    const targetOuterHeight = target.offsetHeight;
+    const targetOuterWidth = target.offsetWidth;
+    const targetOffset = target.getBoundingClientRect();
+    const windowScrollTop = getWindowScrollTop();
+    const windowScrollLeft = getWindowScrollLeft();
+    const viewport = getViewport();
+    let top, left, origin = "top";
+    if (targetOffset.top + targetOuterHeight + elementOuterHeight > viewport.height) {
+      top = targetOffset.top + windowScrollTop - elementOuterHeight;
+      origin = "bottom";
+      if (top < 0) {
+        top = windowScrollTop;
+      }
+    } else {
+      top = targetOuterHeight + targetOffset.top + windowScrollTop;
+    }
+    if (targetOffset.left + elementOuterWidth > viewport.width) left = Math.max(0, targetOffset.left + windowScrollLeft + targetOuterWidth - elementOuterWidth);
+    else left = targetOffset.left + windowScrollLeft;
+    element.style.top = top + "px";
+    element.style.left = left + "px";
+    element.style.transformOrigin = origin;
+    gutter && (element.style.marginTop = origin === "bottom" ? `calc(${(_b = (_a = getCSSVariableByRegex(/-anchor-gutter$/)) == null ? void 0 : _a.value) != null ? _b : "2px"} * -1)` : (_d = (_c = getCSSVariableByRegex(/-anchor-gutter$/)) == null ? void 0 : _c.value) != null ? _d : "");
+  }
+}
 function getOuterWidth(element, margin) {
   if (element instanceof HTMLElement) {
     let width = element.offsetWidth;
@@ -89,6 +155,39 @@ function getOuterWidth(element, margin) {
     return width;
   }
   return 0;
+}
+function relativePosition(element, target, gutter = true) {
+  var _a, _b, _c, _d;
+  if (element) {
+    const elementDimensions = element.offsetParent ? {
+      width: element.offsetWidth,
+      height: element.offsetHeight
+    } : getHiddenElementDimensions(element);
+    const targetHeight = target.offsetHeight;
+    const targetOffset = target.getBoundingClientRect();
+    const viewport = getViewport();
+    let top, left, origin = "top";
+    if (targetOffset.top + targetHeight + elementDimensions.height > viewport.height) {
+      top = -1 * elementDimensions.height;
+      origin = "bottom";
+      if (targetOffset.top + top < 0) {
+        top = -1 * targetOffset.top;
+      }
+    } else {
+      top = targetHeight;
+    }
+    if (elementDimensions.width > viewport.width) {
+      left = targetOffset.left * -1;
+    } else if (targetOffset.left + elementDimensions.width > viewport.width) {
+      left = (targetOffset.left + elementDimensions.width - viewport.width) * -1;
+    } else {
+      left = 0;
+    }
+    element.style.top = top + "px";
+    element.style.left = left + "px";
+    element.style.transformOrigin = origin;
+    gutter && (element.style.marginTop = origin === "bottom" ? `calc(${(_b = (_a = getCSSVariableByRegex(/-anchor-gutter$/)) == null ? void 0 : _a.value) != null ? _b : "2px"} * -1)` : (_d = (_c = getCSSVariableByRegex(/-anchor-gutter$/)) == null ? void 0 : _c.value) != null ? _d : "");
+  }
 }
 function isElement(element) {
   return typeof HTMLElement === "object" ? element instanceof HTMLElement : element && typeof element === "object" && element !== null && element.nodeType === 1 && typeof element.nodeName === "string";
@@ -1016,6 +1115,56 @@ var SharedModule = class _SharedModule {
     }]
   }], null, null);
 })();
+var TranslationKeys = class {
+  static STARTS_WITH = "startsWith";
+  static CONTAINS = "contains";
+  static NOT_CONTAINS = "notContains";
+  static ENDS_WITH = "endsWith";
+  static EQUALS = "equals";
+  static NOT_EQUALS = "notEquals";
+  static NO_FILTER = "noFilter";
+  static LT = "lt";
+  static LTE = "lte";
+  static GT = "gt";
+  static GTE = "gte";
+  static IS = "is";
+  static IS_NOT = "isNot";
+  static BEFORE = "before";
+  static AFTER = "after";
+  static CLEAR = "clear";
+  static APPLY = "apply";
+  static MATCH_ALL = "matchAll";
+  static MATCH_ANY = "matchAny";
+  static ADD_RULE = "addRule";
+  static REMOVE_RULE = "removeRule";
+  static ACCEPT = "accept";
+  static REJECT = "reject";
+  static CHOOSE = "choose";
+  static UPLOAD = "upload";
+  static CANCEL = "cancel";
+  static PENDING = "pending";
+  static FILE_SIZE_TYPES = "fileSizeTypes";
+  static DAY_NAMES = "dayNames";
+  static DAY_NAMES_SHORT = "dayNamesShort";
+  static DAY_NAMES_MIN = "dayNamesMin";
+  static MONTH_NAMES = "monthNames";
+  static MONTH_NAMES_SHORT = "monthNamesShort";
+  static FIRST_DAY_OF_WEEK = "firstDayOfWeek";
+  static TODAY = "today";
+  static WEEK_HEADER = "weekHeader";
+  static WEAK = "weak";
+  static MEDIUM = "medium";
+  static STRONG = "strong";
+  static PASSWORD_PROMPT = "passwordPrompt";
+  static EMPTY_MESSAGE = "emptyMessage";
+  static EMPTY_FILTER_MESSAGE = "emptyFilterMessage";
+  static SHOW_FILTER_MENU = "showFilterMenu";
+  static HIDE_FILTER_MENU = "hideFilterMenu";
+  static SELECTION_MESSAGE = "selectionMessage";
+  static ARIA = "aria";
+  static SELECT_COLOR = "selectColor";
+  static BROWSE_FILES = "browseFiles";
+};
 var TreeDragDropService = class _TreeDragDropService {
   dragStartSource = new Subject();
   dragStopSource = new Subject();
@@ -2465,7 +2614,9 @@ export {
   getViewport,
   getWindowScrollLeft,
   getWindowScrollTop,
+  absolutePosition,
   getOuterWidth,
+  relativePosition,
   appendChild,
   fadeIn,
   findSingle,
@@ -2484,8 +2635,10 @@ export {
   getKeyValue,
   isPrintableCharacter,
   uuid,
+  OverlayService,
   PrimeTemplate,
   SharedModule,
+  TranslationKeys,
   service_default,
   config_default,
   base,
@@ -2495,4 +2648,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-6UULR7HO.js.map
+//# sourceMappingURL=chunk-H4II2KPU.js.map

@@ -1,23 +1,30 @@
 import {
-  Badge,
-  BadgeModule,
-  ConnectedOverlayScrollHandler
-} from "./chunk-OX347OE5.js";
-import {
-  AngleDownIcon,
-  AngleRightIcon,
-  BarsIcon,
-  Ripple
-} from "./chunk-3XXG6BB5.js";
-import {
   RouterLink,
   RouterLinkActive,
   RouterModule
 } from "./chunk-SPZTTNYH.js";
+import {
+  zindexutils
+} from "./chunk-6EUKM3X6.js";
 import "./chunk-JK42XS7J.js";
 import {
+  Badge,
+  BadgeModule
+} from "./chunk-OIEMALCN.js";
+import {
+  Ripple
+} from "./chunk-KXAWBXJE.js";
+import {
+  ConnectedOverlayScrollHandler
+} from "./chunk-5G7WYC4N.js";
+import {
+  AngleDownIcon,
+  AngleRightIcon,
+  BarsIcon
+} from "./chunk-32EUVJ7F.js";
+import {
   BaseComponent
-} from "./chunk-K2XTZJTZ.js";
+} from "./chunk-OYGMZNOJ.js";
 import {
   BaseStyle,
   PrimeTemplate,
@@ -40,7 +47,7 @@ import {
   removeChild,
   resolve,
   uuid
-} from "./chunk-6UULR7HO.js";
+} from "./chunk-H4II2KPU.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -135,48 +142,6 @@ import {
   __spreadProps,
   __spreadValues
 } from "./chunk-WDMUDEB6.js";
-
-// node_modules/primeng/fesm2022/primeng-utils.mjs
-function ZIndexUtils() {
-  let zIndexes = [];
-  const generateZIndex = (key, baseZIndex) => {
-    let lastZIndex = zIndexes.length > 0 ? zIndexes[zIndexes.length - 1] : {
-      key,
-      value: baseZIndex
-    };
-    let newZIndex = lastZIndex.value + (lastZIndex.key === key ? 0 : baseZIndex) + 2;
-    zIndexes.push({
-      key,
-      value: newZIndex
-    });
-    return newZIndex;
-  };
-  const revertZIndex = (zIndex) => {
-    zIndexes = zIndexes.filter((obj) => obj.value !== zIndex);
-  };
-  const getCurrentZIndex = () => {
-    return zIndexes.length > 0 ? zIndexes[zIndexes.length - 1].value : 0;
-  };
-  const getZIndex = (el) => {
-    return el ? parseInt(el.style.zIndex, 10) || 0 : 0;
-  };
-  return {
-    get: getZIndex,
-    set: (key, el, baseZIndex) => {
-      if (el) {
-        el.style.zIndex = String(generateZIndex(key, baseZIndex));
-      }
-    },
-    clear: (el) => {
-      if (el) {
-        revertZIndex(getZIndex(el));
-        el.style.zIndex = "";
-      }
-    },
-    getCurrent: () => getCurrentZIndex()
-  };
-}
-var zindexutils = ZIndexUtils();
 
 // node_modules/primeng/fesm2022/primeng-tooltip.mjs
 var theme = ({

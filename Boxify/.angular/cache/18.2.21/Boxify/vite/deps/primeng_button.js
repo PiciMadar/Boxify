@@ -1,15 +1,20 @@
 import {
   Badge,
-  BadgeModule,
-  DomHandler
-} from "./chunk-OX347OE5.js";
+  BadgeModule
+} from "./chunk-OIEMALCN.js";
 import {
-  Ripple,
+  Ripple
+} from "./chunk-KXAWBXJE.js";
+import {
+  AutoFocus
+} from "./chunk-562XX6UF.js";
+import "./chunk-5G7WYC4N.js";
+import {
   SpinnerIcon
-} from "./chunk-3XXG6BB5.js";
+} from "./chunk-32EUVJ7F.js";
 import {
   BaseComponent
-} from "./chunk-K2XTZJTZ.js";
+} from "./chunk-OYGMZNOJ.js";
 import {
   BaseStyle,
   PrimeTemplate,
@@ -17,15 +22,13 @@ import {
   addClass,
   findSingle,
   isEmpty
-} from "./chunk-6UULR7HO.js";
+} from "./chunk-H4II2KPU.js";
 import {
   CommonModule,
-  DOCUMENT,
   NgClass,
   NgIf,
   NgStyle,
-  NgTemplateOutlet,
-  isPlatformBrowser
+  NgTemplateOutlet
 } from "./chunk-HPYFNHGZ.js";
 import {
   ChangeDetectionStrategy,
@@ -33,13 +36,11 @@ import {
   ContentChild,
   ContentChildren,
   Directive,
-  ElementRef,
   EventEmitter,
   Injectable,
   Input,
   NgModule,
   Output,
-  PLATFORM_ID,
   ViewEncapsulation$1,
   booleanAttribute,
   computed,
@@ -86,108 +87,6 @@ import {
 } from "./chunk-G2LLFY66.js";
 import "./chunk-P6U2JBMQ.js";
 import "./chunk-WDMUDEB6.js";
-
-// node_modules/primeng/fesm2022/primeng-autofocus.mjs
-var AutoFocus = class _AutoFocus extends BaseComponent {
-  /**
-   * When present, it specifies that the component should automatically get focus on load.
-   * @deprecated use [pAutoFocus]="true"
-   * @group Props
-   */
-  autofocus = false;
-  /**
-   * When present, it specifies that the component should automatically get focus on load.
-   * @group Props
-   */
-  _autofocus = false;
-  focused = false;
-  platformId = inject(PLATFORM_ID);
-  document = inject(DOCUMENT);
-  host = inject(ElementRef);
-  ngAfterContentChecked() {
-    if (this.autofocus === false) {
-      this.host.nativeElement.removeAttribute("autofocus");
-    } else {
-      this.host.nativeElement.setAttribute("autofocus", true);
-    }
-    if (!this.focused) {
-      this.autoFocus();
-    }
-  }
-  ngAfterViewChecked() {
-    if (!this.focused) {
-      this.autoFocus();
-    }
-  }
-  autoFocus() {
-    if (isPlatformBrowser(this.platformId) && this._autofocus) {
-      setTimeout(() => {
-        const focusableElements = DomHandler.getFocusableElements(this.host?.nativeElement);
-        if (focusableElements.length === 0) {
-          this.host.nativeElement.focus();
-        }
-        if (focusableElements.length > 0) {
-          focusableElements[0].focus();
-        }
-        this.focused = true;
-      });
-    }
-  }
-  static ɵfac = /* @__PURE__ */ (() => {
-    let ɵAutoFocus_BaseFactory;
-    return function AutoFocus_Factory(__ngFactoryType__) {
-      return (ɵAutoFocus_BaseFactory || (ɵAutoFocus_BaseFactory = ɵɵgetInheritedFactory(_AutoFocus)))(__ngFactoryType__ || _AutoFocus);
-    };
-  })();
-  static ɵdir = ɵɵdefineDirective({
-    type: _AutoFocus,
-    selectors: [["", "pAutoFocus", ""]],
-    inputs: {
-      autofocus: [2, "autofocus", "autofocus", booleanAttribute],
-      _autofocus: [0, "pAutoFocus", "_autofocus"]
-    },
-    standalone: true,
-    features: [ɵɵInputTransformsFeature, ɵɵInheritDefinitionFeature]
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AutoFocus, [{
-    type: Directive,
-    args: [{
-      selector: "[pAutoFocus]",
-      standalone: true
-    }]
-  }], null, {
-    autofocus: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    _autofocus: [{
-      type: Input,
-      args: ["pAutoFocus"]
-    }]
-  });
-})();
-var AutoFocusModule = class _AutoFocusModule {
-  static ɵfac = function AutoFocusModule_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AutoFocusModule)();
-  };
-  static ɵmod = ɵɵdefineNgModule({
-    type: _AutoFocusModule
-  });
-  static ɵinj = ɵɵdefineInjector({});
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AutoFocusModule, [{
-    type: NgModule,
-    args: [{
-      imports: [AutoFocus],
-      exports: [AutoFocus]
-    }]
-  }], null, null);
-})();
 
 // node_modules/primeng/fesm2022/primeng-button.mjs
 var theme = ({

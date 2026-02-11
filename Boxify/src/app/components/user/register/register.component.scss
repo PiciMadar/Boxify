@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.nameDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.LabelDiv>p-floatlabel{
+    width: 100%;
+}
+.LabelDiv>p-floatlabel>input{
+    margin:0.2%;
+    width: 100%;
+}
+.LabelDiv>p-floatlabel>p-password{
+    width: 100%;
+}
+

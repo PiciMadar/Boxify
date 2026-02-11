@@ -1,1 +1,36 @@
-<p>register works!</p>
+<div class="container">
+    <h1>Register</h1>
+
+    <div class="registerDiv">
+        <div class="nameDiv">
+            <p-floatlabel variant="on" class="mb-3 mt-5">
+                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
+                <label for="on_label">First name</label>
+            </p-floatlabel>
+            <p-floatlabel variant="on" class="mb-3 mt-5">
+                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
+                <label for="on_label">Last name</label>
+            </p-floatlabel>
+        </div>
+
+        <div class="LabelDiv">
+            <p-floatlabel variant="on" class="mb-3 mt-1">
+                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
+                <label for="on_label">Username</label>
+            </p-floatlabel>
+            <p-floatlabel variant="on" class="mb-3 mt-1">
+                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
+                <label for="on_label">Email</label>
+            </p-floatlabel>
+            <p-floatlabel variant="on" class="mb-3 mt-1 w-full" >
+                <p-password [(ngModel)]="value3" inputId="on_label" inputStyleClass="w-full" styleClass="w-full"/>
+                <label for="on_label">Password</label>
+            </p-floatlabel>
+        </div>
+
+    </div>
+
+        <div class="card flex justify-center gombDiv">
+            <p-button label="Submit" />
+        </div>
+</div>
