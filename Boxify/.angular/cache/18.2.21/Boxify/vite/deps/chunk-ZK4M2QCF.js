@@ -6,7 +6,7 @@ import {
   getKeyValue,
   service_default,
   uuid
-} from "./chunk-ADIJBUWI.js";
+} from "./chunk-WV2ALMFU.js";
 import {
   DOCUMENT,
   isPlatformServer
@@ -254,4 +254,4 @@ var BaseComponent = class _BaseComponent {
 export {
   BaseComponent
 };
-//# sourceMappingURL=chunk-ULQIDMUT.js.map
+//# sourceMappingURL=chunk-ZK4M2QCF.js.map

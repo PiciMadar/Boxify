@@ -20,46 +20,29 @@ export class NavbarComponent implements OnInit{
                 label: 'Home',
                 icon: 'pi pi-home'
             },
-
+            //After auth
             {
-                label: 'Features',
-                icon: 'pi pi-star'
+                label: 'Dashboard',
+                icon: 'pi pi-chart-pie'
             },
             {
-                label: 'Projects',
-                icon: 'pi pi-search',
-                items: [
-                    {
-                        label: 'Components',
-                        icon: 'pi pi-bolt'
-                    },
-                    {
-                        label: 'Blocks',
-                        icon: 'pi pi-server'
-                    },
-                    {
-                        label: 'UI Kit',
-                        icon: 'pi pi-pencil'
-                    },
-                    {
-                        label: 'Templates',
-                        icon: 'pi pi-palette',
-                        items: [
-                            {
-                                label: 'Apollo',
-                                icon: 'pi pi-palette'
-                            },
-                            {
-                                label: 'Ultima',
-                                icon: 'pi pi-palette'
-                            }
-                        ]
-                    }
+                label: 'Boxes',
+                icon: 'pi pi-box',
+                items:[
+                  {
+                    label:"My boxes",
+                    icon:'pi pi-box'
+                  },
+                  {
+                    label:"Fill a new box",
+                    icon:'pi pi-plus'
+                  },
                 ]
             },
+            //admin
             {
-                label: 'Contact',
-                icon: 'pi pi-envelope'
+                label: 'User control panel',
+                icon: 'pi pi-users'
             }
         ]
     }

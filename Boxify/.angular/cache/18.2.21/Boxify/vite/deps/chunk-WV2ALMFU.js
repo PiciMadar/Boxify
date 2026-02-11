@@ -145,6 +145,15 @@ function absolutePosition(element, target, gutter = true) {
     gutter && (element.style.marginTop = origin === "bottom" ? `calc(${(_b = (_a = getCSSVariableByRegex(/-anchor-gutter$/)) == null ? void 0 : _a.value) != null ? _b : "2px"} * -1)` : (_d = (_c = getCSSVariableByRegex(/-anchor-gutter$/)) == null ? void 0 : _c.value) != null ? _d : "");
   }
 }
+function addStyle(element, style) {
+  if (element) {
+    if (typeof style === "string") {
+      element.style.cssText = style;
+    } else {
+      Object.entries(style || {}).forEach(([key, value]) => element.style[key] = value);
+    }
+  }
+}
 function getOuterWidth(element, margin) {
   if (element instanceof HTMLElement) {
     let width = element.offsetWidth;
@@ -212,6 +221,28 @@ function appendChild(element, child) {
   if (target) target.appendChild(child);
   else throw new Error("Cannot append " + child + " to " + element);
 }
+var calculatedScrollbarWidth = void 0;
+function calculateScrollbarWidth(element) {
+  if (element) {
+    let style = getComputedStyle(element);
+    return element.offsetWidth - element.clientWidth - parseFloat(style.borderLeftWidth) - parseFloat(style.borderRightWidth);
+  } else {
+    if (calculatedScrollbarWidth != null) return calculatedScrollbarWidth;
+    let scrollDiv = document.createElement("div");
+    addStyle(scrollDiv, {
+      width: "100px",
+      height: "100px",
+      overflow: "scroll",
+      position: "absolute",
+      top: "-9999px"
+    });
+    document.body.appendChild(scrollDiv);
+    let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+    document.body.removeChild(scrollDiv);
+    calculatedScrollbarWidth = scrollbarWidth;
+    return scrollbarWidth;
+  }
+}
 function setAttributes(element, attributes = {}) {
   if (isElement(element)) {
     const computedStyles = (rule, value) => {
@@ -277,6 +308,28 @@ function getHeight(element) {
   }
   return 0;
 }
+function getHiddenElementOuterHeight(element) {
+  if (element) {
+    element.style.visibility = "hidden";
+    element.style.display = "block";
+    let elementHeight = element.offsetHeight;
+    element.style.display = "none";
+    element.style.visibility = "visible";
+    return elementHeight;
+  }
+  return 0;
+}
+function getHiddenElementOuterWidth(element) {
+  if (element) {
+    element.style.visibility = "hidden";
+    element.style.display = "block";
+    let elementWidth = element.offsetWidth;
+    element.style.display = "none";
+    element.style.visibility = "visible";
+    return elementWidth;
+  }
+  return 0;
+}
 function getOffset(element) {
   if (element) {
     let rect = element.getBoundingClientRect();
@@ -312,6 +365,40 @@ function getWidth(element) {
 }
 function isTouchDevice() {
   return "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+}
+function nestedPosition(element, level) {
+  var _a, _b;
+  if (element) {
+    const parentItem = element.parentElement;
+    const elementOffset = getOffset(parentItem);
+    const viewport = getViewport();
+    const sublistWidth = element.offsetParent ? element.offsetWidth : getHiddenElementOuterWidth(element);
+    const sublistHeight = element.offsetParent ? element.offsetHeight : getHiddenElementOuterHeight(element);
+    const itemOuterWidth = getOuterWidth((_a = parentItem == null ? void 0 : parentItem.children) == null ? void 0 : _a[0]);
+    const itemOuterHeight = getOuterHeight((_b = parentItem == null ? void 0 : parentItem.children) == null ? void 0 : _b[0]);
+    let left = "";
+    let top = "";
+    if (elementOffset.left + itemOuterWidth + sublistWidth > viewport.width - calculateScrollbarWidth()) {
+      if (elementOffset.left < sublistWidth) {
+        if (level % 2 === 1) {
+          left = elementOffset.left ? "-" + elementOffset.left + "px" : "100%";
+        } else if (level % 2 === 0) {
+          left = viewport.width - sublistWidth - calculateScrollbarWidth() + "px";
+        }
+      } else {
+        left = "-100%";
+      }
+    } else {
+      left = "100%";
+    }
+    if (element.getBoundingClientRect().top + itemOuterHeight + sublistHeight > viewport.height) {
+      top = `-${sublistHeight - itemOuterHeight}px`;
+    } else {
+      top = "0px";
+    }
+    element.style.top = top;
+    element.style.left = left;
+  }
 }
 function remove(element) {
   var _a;
@@ -2634,6 +2721,7 @@ export {
   getOuterHeight,
   getWidth,
   isTouchDevice,
+  nestedPosition,
   remove,
   removeChild,
   isEmpty,
@@ -2658,4 +2746,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-ADIJBUWI.js.map
+//# sourceMappingURL=chunk-WV2ALMFU.js.map

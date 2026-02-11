@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule, FormGroup,FormControl} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { PasswordModule } from 'primeng/password';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [Message, InputTextModule,CommonModule,
     FormsModule,FloatLabelModule,ButtonModule,
-    ReactiveFormsModule,CheckboxModule],
+    ReactiveFormsModule,CheckboxModule,
+    PasswordModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 

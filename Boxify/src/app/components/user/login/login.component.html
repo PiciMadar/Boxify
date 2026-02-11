@@ -1,34 +1,33 @@
 <div class="container">
 
-
+    <h1>Login</h1>
 
     <div class="LoginDiv">
-            <h1>Login</h1>
-        <p-floatlabel variant="on" class="mb-3 mt-5">
-            <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
-            <label for="on_label">Username</label>
-        </p-floatlabel>
-
-        <p-floatlabel variant="on" class="mb-3">
-            <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
-            <label for="on_label">Email</label>
-        </p-floatlabel>
-
-        <p-floatlabel variant="on" class="mb-3">
-            <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" />
-            <label for="on_label">Password</label>
-        </p-floatlabel>
+        <div class="LabelDiv">
+            <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
+                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" inputStyleClass="w-full" styleClass="w-full"/>
+                <label for="on_label">Username</label>
+            </p-floatlabel>
+            <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
+                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
+                <label for="on_label">Email</label>
+            </p-floatlabel>
+            <p-floatlabel variant="on" class="mb-3 mt-1 w-full" >
+                <p-password [(ngModel)]="value3" inputId="on_label" inputStyleClass="w-full" styleClass="w-full"/>
+                <label for="on_label">Password</label>
+            </p-floatlabel>
+        </div>
 
     </div>
     <div class="Gombok">
         
         <form class="flex items-center gap-1" [formGroup]="formGroup">
             <p-checkbox formControlName="city" value="New York" inputId="ny" />
-            <label for="ny" class="ml-2">New York</label>
+            <label for="ny" class="ml-2">Remember me</label>
         </form>
 
         <div class="card flex justify-center gombDiv">
-            <p-button label="Submit" size="large"/>
+            <p-button label="Login" size="large"/>
         </div>
 
     </div>

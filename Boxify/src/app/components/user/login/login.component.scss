@@ -1,25 +1,31 @@
 .container{
-}
-
-.LoginDiv{
-    margin: 0 auto;
-    align-items: center;
-    justify-content: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
-.LoginDiv>p-floatlabel{
-    width: 30%;
+
+
+.LabelDiv{
+    width: 100%;
 }
-.LoginDiv>p-floatlabel>input{
+.LabelDiv>p-floatlabel{
+    width: 100%;
+}
+.LabelDiv>p-floatlabel>input{
     margin:0.2%;
     width: 100%;
 }
 
-.gombDiv{
+.LoginDiv{
     width: 30%;
-    display: flex;
-    justify-content:end;
-    align-items: center;
+}
+
+.Gombok{
     margin: 0 auto;
+    align-items: center;
+    display: flex;
+    width: 48%;
+    justify-content: space-around;
 }
