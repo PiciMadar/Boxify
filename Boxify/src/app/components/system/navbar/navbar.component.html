@@ -1,3 +1,4 @@
 <div class="card">
-    <p-menubar [model]="items" />
+    <p-menubar [model]="items" *ngIf="items && items.length > 0" />
+    <div *ngIf="!items || items.length === 0" style="padding: 12px 16px; color: #e0e0e0;">Loading menu...</div>
 </div>

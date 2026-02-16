@@ -10,6 +10,7 @@ import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -29,8 +30,8 @@ import { User } from '../../../interfaces/user';
 export class RegisterComponent {
 
   constructor(private api : ApiService,
-    private auth: AuthService,
-    private msg : MessageService
+    private msg : MessageService,
+    private router: Router
   ) {
 
   }
@@ -42,15 +43,30 @@ export class RegisterComponent {
     confirm:string = '';
 
     register() {
+      if(!this.user.name || !this.user.password || !this.user.email){
+      this.msg.show("error","Error","All fields are required");
+      return;
+    }
       if(this.user.password != this.confirm){
         this.msg.show("error","Error","Passwords do not match");
+        return;
     }
+    if(this.user.password.length < 8){
+      this.msg.show("error","Error","Password must be at least 8 characters long");
+      return;
+    }
+    if(!this.user.email.includes("@")){
+      this.msg.show("error","Error","Email is invalid");
+      return;
+    }
+    
     this.api.registration("users", this.user).subscribe({
       next: (response) => {
         this.msg.show("success", "Registration Successful", "User registered successfully");
+        this.router.navigate(['/login']);
       },
-      error: (error) => {
-        this.msg.show("error", "Registration Failed", error.message);
+      error: (err) => {
+        this.msg.show("error", "Registration Failed", err.error.message);
       }
     });
   }

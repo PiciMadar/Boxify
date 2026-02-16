@@ -7,7 +7,6 @@
 
   .card {
     background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
 
     position: sticky;
     top: 0;
@@ -15,13 +14,25 @@
 
     margin: 0;
     padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 
     .p-menubar {
       background: transparent;
       border: none;
       padding: 0;
+      width: 100%;
+      display: flex !important;
+      justify-content: center !important;
 
       .p-menubar-root-list {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 8px;
+        width: auto;
+        
         > .p-menuitem {
           > .p-menuitem-link {
             color: #e0e0e0;
