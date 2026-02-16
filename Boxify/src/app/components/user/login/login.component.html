@@ -1,30 +1,33 @@
-<div class="container mt-6 pt-6 pb-6">
+<div class="container mt-6 pt-6 pb-6 flex justify-center">
+    <p-card class="login-card">
+        <ng-template #header>
+            <div class="p-card-header">
+                <h1>Login</h1>
+            </div>
+        </ng-template>
 
-    <h1>Login</h1>
-
-    <div class="LoginDiv mt-4">
-        <div class="LabelDiv">
-            <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
-                <input pInputText id="on_label" [(ngModel)]="email" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
-                <label for="on_label">Email</label>
-            </p-floatlabel>
-            <p-floatlabel variant="on" class="mb-3 mt-3 w-full" >
-                <p-password [(ngModel)]="password" inputId="on_label" inputStyleClass="w-full" styleClass="w-full"/>
-                <label for="on_label">Password</label>
-            </p-floatlabel>
+        <div class="LoginDiv mt-4">
+            <div class="LabelDiv">
+                <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
+                    <input pInputText id="on_label" [(ngModel)]="email" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
+                    <label for="on_label">Email</label>
+                </p-floatlabel>
+                <p-floatlabel variant="on" class="mb-3 mt-3 w-full" >
+                    <p-password [(ngModel)]="password" inputId="on_label" inputStyleClass="w-full" styleClass="w-full"/>
+                    <label for="on_label">Password</label>
+                </p-floatlabel>
+            </div>
         </div>
 
-    </div>
-    <div class="Gombok">
-        
-        <form class="flex items-center gap-1" [formGroup]="formGroup">
-            <p-checkbox formControlName="city" value="New York" inputId="ny" />
-            <label for="ny" class="ml-2">Remember me</label>
-        </form>
+        <div class="Gombok mt-4">
+            <form class="flex items-center gap-1 mb-3" [formGroup]="formGroup">
+                <p-checkbox formControlName="city" value="New York" inputId="ny" />
+                <label for="ny" class="ml-2">Remember me</label>
+            </form>
 
-        <div class="card flex justify-center gombDiv">
-            <p-button label="Login" size="large"/>
+            <div class="flex justify-center gombDiv">
+                <p-button label="Login" size="large"/>
+            </div>
         </div>
-
-    </div>
+    </p-card>
 </div>

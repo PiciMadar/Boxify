@@ -1,4 +1,8 @@
 /node_modules
 /.angular
+<<<<<<< HEAD
 /angular
 /.angular/cache
+=======
+/.angular/**
+>>>>>>> cab0054e080ad4edc0af0b4d712bf69912f2b540

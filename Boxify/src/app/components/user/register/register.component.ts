@@ -4,20 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { Message } from 'primeng/message';
 import { PasswordModule } from 'primeng/password';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    Message,
     InputTextModule,
     CommonModule,
     FormsModule,
     FloatLabelModule,
     ButtonModule,
-    PasswordModule
+    PasswordModule,
+    CardModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
