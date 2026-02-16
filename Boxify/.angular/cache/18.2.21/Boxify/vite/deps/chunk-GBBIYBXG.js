@@ -1,6 +1,6 @@
 import {
   EventBus,
-  FilterMatchMode,
+  getKeyValue,
   isArray,
   isEmpty,
   isNotEmpty,
@@ -8,36 +8,12 @@ import {
   isObject,
   isString,
   matchRegex,
+  mergeKeys,
   minifyCSS,
   resolve,
-  setAttribute,
-  setAttributes,
   toKebabCase,
   toTokenKey
-} from "./chunk-RZNRI3LJ.js";
-import {
-  DOCUMENT
-} from "./chunk-HPYFNHGZ.js";
-import {
-  APP_INITIALIZER,
-  Injectable,
-  InjectionToken,
-  PLATFORM_ID,
-  effect,
-  inject,
-  makeEnvironmentProviders,
-  setClassMetadata,
-  signal,
-  untracked,
-  ɵɵdefineInjectable,
-  ɵɵgetInheritedFactory
-} from "./chunk-G2LLFY66.js";
-import {
-  Subject
-} from "./chunk-P6U2JBMQ.js";
-import {
-  __spreadValues
-} from "./chunk-WDMUDEB6.js";
+} from "./chunk-YP5BFJWJ.js";
 
 // node_modules/@primeuix/styled/index.mjs
 var __defProp = Object.defineProperty;
@@ -52,7 +28,7 @@ var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {
   writable: true,
   value
 }) : obj[key] = value;
-var __spreadValues2 = (a, b) => {
+var __spreadValues = (a, b) => {
   for (var prop in b || (b = {})) if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop]);
   if (__getOwnPropSymbols) for (var prop of __getOwnPropSymbols(b)) {
     if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop]);
@@ -68,8 +44,14 @@ var __objRest = (source, exclude) => {
   }
   return target;
 };
+function definePreset(...presets) {
+  return mergeKeys(...presets);
+}
 var ThemeService = EventBus();
 var service_default = ThemeService;
+function toTokenKey2(str) {
+  return isString(str) ? str.replace(/[A-Z]/g, (c, i) => i === 0 ? c : "." + c.toLowerCase()).toLowerCase() : str;
+}
 function merge(value1, value2) {
   if (isArray(value1)) {
     value1.push(...value2 || []);
@@ -79,6 +61,15 @@ function merge(value1, value2) {
 }
 function toValue(value) {
   return isObject(value) && value.hasOwnProperty("value") && value.hasOwnProperty("type") ? value.value : value;
+}
+function toUnit(value, variable = "") {
+  const excludedProperties = ["opacity", "z-index", "line-height", "font-weight", "flex", "flex-grow", "flex-shrink", "order"];
+  if (!excludedProperties.some((property) => variable.endsWith(property))) {
+    const val = `${value}`.trim();
+    const valArr = val.split(" ");
+    return valArr.map((v) => isNumber(v) ? `${v}px` : v).join(" ");
+  }
+  return value;
 }
 function toNormalizePrefix(prefix) {
   return prefix.replaceAll(/ /g, "").replace(/[^\w]/g, "-");
@@ -116,6 +107,16 @@ function getVariableValue(value, variable = "", prefix = "", excludedKeyRegexes 
   }
   return void 0;
 }
+function getComputedValue(obj = {}, value) {
+  if (isString(value)) {
+    const regex = /{([^}]*)}/g;
+    const val = value.trim();
+    return matchRegex(val, regex) ? val.replaceAll(regex, (v) => getKeyValue(obj, v.replace(/{|}/g, ""))) : val;
+  } else if (isNumber(value)) {
+    return value;
+  }
+  return void 0;
+}
 function setProperty(properties, key, value) {
   if (isString(key, false)) {
     properties.push(`${key}:${value};`);
@@ -127,12 +128,56 @@ function getRule(selector, properties) {
   }
   return "";
 }
+function normalizeColor(color) {
+  if (color.length === 4) {
+    return `#${color[1]}${color[1]}${color[2]}${color[2]}${color[3]}${color[3]}`;
+  }
+  return color;
+}
+function hexToRgb(hex) {
+  var bigint = parseInt(hex.substring(1), 16);
+  var r = bigint >> 16 & 255;
+  var g = bigint >> 8 & 255;
+  var b = bigint & 255;
+  return {
+    r,
+    g,
+    b
+  };
+}
+function rgbToHex(r, g, b) {
+  return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+var mix_default = (color1, color2, weight) => {
+  color1 = normalizeColor(color1);
+  color2 = normalizeColor(color2);
+  var p = weight / 100;
+  var w = p * 2 - 1;
+  var w1 = (w + 1) / 2;
+  var w2 = 1 - w1;
+  var rgb1 = hexToRgb(color1);
+  var rgb2 = hexToRgb(color2);
+  var r = Math.round(rgb1.r * w1 + rgb2.r * w2);
+  var g = Math.round(rgb1.g * w1 + rgb2.g * w2);
+  var b = Math.round(rgb1.b * w1 + rgb2.b * w2);
+  return rgbToHex(r, g, b);
+};
+var shade_default = (color, percent) => mix_default("#000000", color, percent);
+var tint_default = (color, percent) => mix_default("#ffffff", color, percent);
+var scales = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+var palette_default = (color) => {
+  if (/{([^}]*)}/g.test(color)) {
+    const token = color.replace(/{|}/g, "");
+    return scales.reduce((acc, scale) => (acc[scale] = `{${token}.${scale}}`, acc), {});
+  }
+  return typeof color === "string" ? scales.reduce((acc, scale, i) => (acc[scale] = i <= 5 ? tint_default(color, (5 - i) * 19) : shade_default(color, (i - 5) * 15), acc), {}) : color;
+};
 var $dt = (tokenPath) => {
   var _a;
-  const theme2 = config_default.getTheme();
-  const variable = dtwt(theme2, tokenPath, void 0, "variable");
+  const theme = config_default.getTheme();
+  const variable = dtwt(theme, tokenPath, void 0, "variable");
   const name = (_a = variable == null ? void 0 : variable.match(/--[\w-]+/g)) == null ? void 0 : _a[0];
-  const value = dtwt(theme2, tokenPath, void 0, "value");
+  const value = dtwt(theme, tokenPath, void 0, "value");
   return {
     name,
     variable,
@@ -142,7 +187,7 @@ var $dt = (tokenPath) => {
 var dt = (...args) => {
   return dtwt(config_default.getTheme(), ...args);
 };
-var dtwt = (theme2 = {}, tokenPath, fallback, type) => {
+var dtwt = (theme = {}, tokenPath, fallback, type) => {
   if (tokenPath) {
     const {
       variable: VARIABLE,
@@ -151,7 +196,7 @@ var dtwt = (theme2 = {}, tokenPath, fallback, type) => {
     const {
       prefix,
       transform
-    } = (theme2 == null ? void 0 : theme2.options) || OPTIONS || {};
+    } = (theme == null ? void 0 : theme.options) || OPTIONS || {};
     const regex = /{([^}]*)}/g;
     const token = matchRegex(tokenPath, regex) ? tokenPath : `{${tokenPath}}`;
     const isStrictTransform = type === "value" || isEmpty(type) && transform === "strict";
@@ -159,7 +204,88 @@ var dtwt = (theme2 = {}, tokenPath, fallback, type) => {
   }
   return "";
 };
-function toVariables_default(theme2, options = {}) {
+function css(style) {
+  return resolve(style, {
+    dt
+  });
+}
+var $t = (theme = {}) => {
+  let {
+    preset: _preset,
+    options: _options
+  } = theme;
+  return {
+    preset(value) {
+      _preset = _preset ? mergeKeys(_preset, value) : value;
+      return this;
+    },
+    options(value) {
+      _options = _options ? __spreadValues(__spreadValues({}, _options), value) : value;
+      return this;
+    },
+    // features
+    primaryPalette(primary) {
+      const {
+        semantic
+      } = _preset || {};
+      _preset = __spreadProps(__spreadValues({}, _preset), {
+        semantic: __spreadProps(__spreadValues({}, semantic), {
+          primary
+        })
+      });
+      return this;
+    },
+    surfacePalette(surface) {
+      var _a, _b;
+      const {
+        semantic
+      } = _preset || {};
+      const lightSurface = (surface == null ? void 0 : surface.hasOwnProperty("light")) ? surface == null ? void 0 : surface.light : surface;
+      const darkSurface = (surface == null ? void 0 : surface.hasOwnProperty("dark")) ? surface == null ? void 0 : surface.dark : surface;
+      const newColorScheme = {
+        colorScheme: {
+          light: __spreadValues(__spreadValues({}, (_a = semantic == null ? void 0 : semantic.colorScheme) == null ? void 0 : _a.light), !!lightSurface && {
+            surface: lightSurface
+          }),
+          dark: __spreadValues(__spreadValues({}, (_b = semantic == null ? void 0 : semantic.colorScheme) == null ? void 0 : _b.dark), !!darkSurface && {
+            surface: darkSurface
+          })
+        }
+      };
+      _preset = __spreadProps(__spreadValues({}, _preset), {
+        semantic: __spreadValues(__spreadValues({}, semantic), newColorScheme)
+      });
+      return this;
+    },
+    // actions
+    define({
+      useDefaultPreset = false,
+      useDefaultOptions = false
+    } = {}) {
+      return {
+        preset: useDefaultPreset ? config_default.getPreset() : _preset,
+        options: useDefaultOptions ? config_default.getOptions() : _options
+      };
+    },
+    update({
+      mergePresets = true,
+      mergeOptions = true
+    } = {}) {
+      const newTheme = {
+        preset: mergePresets ? mergeKeys(config_default.getPreset(), _preset) : _preset,
+        options: mergeOptions ? __spreadValues(__spreadValues({}, config_default.getOptions()), _options) : _options
+      };
+      config_default.setTheme(newTheme);
+      return newTheme;
+    },
+    use(options) {
+      const newTheme = this.define(options);
+      config_default.setTheme(newTheme);
+      return newTheme;
+    }
+  };
+};
+function toVariables_default(theme, options = {}) {
   const VARIABLE = config_default.defaults.variable;
   const {
     prefix = VARIABLE.prefix,
@@ -190,7 +316,7 @@ function toVariables_default(theme2, options = {}) {
   const {
     variables,
     tokens
-  } = _toVariables(theme2, prefix);
+  } = _toVariables(theme, prefix);
   return {
     value: variables,
     tokens,
@@ -259,14 +385,14 @@ var themeUtils_default = {
       });
     }
   },
-  _toVariables(theme2, options) {
-    return toVariables_default(theme2, {
+  _toVariables(theme, options) {
+    return toVariables_default(theme, {
       prefix: options == null ? void 0 : options.prefix
     });
   },
   getCommon({
     name = "",
-    theme: theme2 = {},
+    theme = {},
     params,
     set,
     defaults
@@ -275,7 +401,7 @@ var themeUtils_default = {
     const {
       preset,
       options
-    } = theme2;
+    } = theme;
     let primitive_css, primitive_tokens, semantic_css, semantic_tokens, global_css, global_tokens, style;
     if (isNotEmpty(preset) && options.transform !== "strict") {
       const {
@@ -381,13 +507,13 @@ var themeUtils_default = {
         dark: ecsDark
       } = _d, ecsRest = __objRest(_d, ["dark"]);
       const vRest_var = isNotEmpty(vRest) ? this._toVariables({
-        [_name]: __spreadValues2(__spreadValues2({}, vRest), evRest)
+        [_name]: __spreadValues(__spreadValues({}, vRest), evRest)
       }, options) : {};
       const csRest_var = isNotEmpty(csRest) ? this._toVariables({
-        [_name]: __spreadValues2(__spreadValues2({}, csRest), ecsRest)
+        [_name]: __spreadValues(__spreadValues({}, csRest), ecsRest)
       }, options) : {};
       const csDark_var = isNotEmpty(dark) ? this._toVariables({
-        [_name]: __spreadValues2(__spreadValues2({}, dark), ecsDark)
+        [_name]: __spreadValues(__spreadValues({}, dark), ecsDark)
       }, options) : {};
       const [vRest_css, vRest_tokens] = [(_e = vRest_var.declarations) != null ? _e : "", vRest_var.tokens || []];
       const [csRest_css, csRest_tokens] = [(_f = csRest_var.declarations) != null ? _f : "", csRest_var.tokens || []];
@@ -408,7 +534,7 @@ var themeUtils_default = {
   },
   getPresetC({
     name = "",
-    theme: theme2 = {},
+    theme = {},
     params,
     set,
     defaults
@@ -417,7 +543,7 @@ var themeUtils_default = {
     const {
       preset,
       options
-    } = theme2;
+    } = theme;
     const cPreset = (_a = preset == null ? void 0 : preset.components) == null ? void 0 : _a[name];
     return this.getPreset({
       name,
@@ -430,7 +556,7 @@ var themeUtils_default = {
   },
   getPresetD({
     name = "",
-    theme: theme2 = {},
+    theme = {},
     params,
     set,
     defaults
@@ -440,7 +566,7 @@ var themeUtils_default = {
     const {
       preset,
       options
-    } = theme2;
+    } = theme;
     const dPreset = (_a = preset == null ? void 0 : preset.directives) == null ? void 0 : _a[dName];
     return this.getPreset({
       name: dName,
@@ -470,7 +596,7 @@ var themeUtils_default = {
   },
   getCommonStyleSheet({
     name = "",
-    theme: theme2 = {},
+    theme = {},
     params,
     props = {},
     set,
@@ -478,7 +604,7 @@ var themeUtils_default = {
   }) {
     const common = this.getCommon({
       name,
-      theme: theme2,
+      theme,
       params,
       set,
       defaults
@@ -495,7 +621,7 @@ var themeUtils_default = {
   },
   getStyleSheet({
     name = "",
-    theme: theme2 = {},
+    theme = {},
     params,
     props = {},
     set,
@@ -504,7 +630,7 @@ var themeUtils_default = {
     var _a;
     const options = {
       name,
-      theme: theme2,
+      theme,
       params,
       set,
       defaults
@@ -642,11 +768,11 @@ var config_default = {
   _tokens: {},
   update(newValues = {}) {
     const {
-      theme: theme2
+      theme
     } = newValues;
-    if (theme2) {
-      this._theme = __spreadProps(__spreadValues2({}, theme2), {
-        options: __spreadValues2(__spreadValues2({}, this.defaults.options), theme2.options)
+    if (theme) {
+      this._theme = __spreadProps(__spreadValues({}, theme), {
+        options: __spreadValues(__spreadValues({}, this.defaults.options), theme.options)
       });
       this._tokens = themeUtils_default.createTokens(this.preset, this.defaults);
       this.clearLoadedStyleNames();
@@ -679,7 +805,7 @@ var config_default = {
     return this.preset;
   },
   setPreset(newValue) {
-    this._theme = __spreadProps(__spreadValues2({}, this.theme), {
+    this._theme = __spreadProps(__spreadValues({}, this.theme), {
       preset: newValue
     });
     this._tokens = themeUtils_default.createTokens(newValue, this.defaults);
@@ -691,7 +817,7 @@ var config_default = {
     return this.options;
   },
   setOptions(newValue) {
-    this._theme = __spreadProps(__spreadValues2({}, this.theme), {
+    this._theme = __spreadProps(__spreadValues({}, this.theme), {
       options: newValue
     });
     this.clearLoadedStyleNames();
@@ -821,662 +947,59 @@ var config_default = {
     }
   }
 };
-
-// node_modules/primeng/fesm2022/primeng-usestyle.mjs
-var _id = 0;
-var UseStyle = class _UseStyle {
-  document = inject(DOCUMENT);
-  use(css2, options = {}) {
-    let isLoaded = false;
-    let cssRef = css2;
-    let styleRef = null;
-    const {
-      immediate = true,
-      manual = false,
-      name = `style_${++_id}`,
-      id = void 0,
-      media = void 0,
-      nonce = void 0,
-      first = false,
-      props = {}
-    } = options;
-    if (!this.document) return;
-    styleRef = this.document.querySelector(`style[data-primeng-style-id="${name}"]`) || id && this.document.getElementById(id) || this.document.createElement("style");
-    if (!styleRef.isConnected) {
-      cssRef = css2;
-      setAttributes(styleRef, {
-        type: "text/css",
-        media,
-        nonce
-      });
-      const HEAD = this.document.head;
-      first && HEAD.firstChild ? HEAD.insertBefore(styleRef, HEAD.firstChild) : HEAD.appendChild(styleRef);
-      setAttribute(styleRef, "data-primeng-style-id", name);
-    }
-    if (styleRef.textContent !== cssRef) {
-      styleRef.textContent = cssRef;
-    }
-    return {
-      id,
-      name,
-      el: styleRef,
-      css: cssRef
-    };
-  }
-  static ɵfac = function UseStyle_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _UseStyle)();
-  };
-  static ɵprov = ɵɵdefineInjectable({
-    token: _UseStyle,
-    factory: _UseStyle.ɵfac,
-    providedIn: "root"
+function updatePreset(...presets) {
+  const newPreset = mergeKeys(config_default.getPreset(), ...presets);
+  config_default.setPreset(newPreset);
+  return newPreset;
+}
+function updatePrimaryPalette(primary) {
+  return $t().primaryPalette(primary).update().preset;
+}
+function updateSurfacePalette(palette) {
+  return $t().surfacePalette(palette).update().preset;
+}
+function usePreset(...presets) {
+  const newPreset = mergeKeys(...presets);
+  config_default.setPreset(newPreset);
+  return newPreset;
+}
+function useTheme(theme) {
+  return $t(theme).update({
+    mergePresets: false
   });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UseStyle, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
-})();
-
-// node_modules/primeng/fesm2022/primeng-base.mjs
-var base = {
-  _loadedStyleNames: /* @__PURE__ */ new Set(),
-  getLoadedStyleNames() {
-    return this._loadedStyleNames;
-  },
-  isStyleNameLoaded(name) {
-    return this._loadedStyleNames.has(name);
-  },
-  setLoadedStyleName(name) {
-    this._loadedStyleNames.add(name);
-  },
-  deleteLoadedStyleName(name) {
-    this._loadedStyleNames.delete(name);
-  },
-  clearLoadedStyleNames() {
-    this._loadedStyleNames.clear();
-  }
-};
-var theme = ({
-  dt: dt2
-}) => `
-*,
-::before,
-::after {
-    box-sizing: border-box;
-}
-
-/* Non ng overlay animations */
-.p-connected-overlay {
-    opacity: 0;
-    transform: scaleY(0.8);
-    transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1),
-        opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
-}
-
-.p-connected-overlay-visible {
-    opacity: 1;
-    transform: scaleY(1);
-}
-
-.p-connected-overlay-hidden {
-    opacity: 0;
-    transform: scaleY(1);
-    transition: opacity 0.1s linear;
-}
-
-/* NG based overlay animations */
-.p-connected-overlay-enter-from {
-    opacity: 0;
-    transform: scaleY(0.8);
-}
-
-.p-connected-overlay-leave-to {
-    opacity: 0;
-}
-
-.p-connected-overlay-enter-active {
-    transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1),
-        opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
-}
-
-.p-connected-overlay-leave-active {
-    transition: opacity 0.1s linear;
-}
-
-/* Toggleable Content */
-.p-toggleable-content-enter-from,
-.p-toggleable-content-leave-to {
-    max-height: 0;
-}
-
-.p-toggleable-content-enter-to,
-.p-toggleable-content-leave-from {
-    max-height: 1000px;
-}
-
-.p-toggleable-content-leave-active {
-    overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
-}
-
-.p-toggleable-content-enter-active {
-    overflow: hidden;
-    transition: max-height 1s ease-in-out;
-}
-
-.p-disabled,
-.p-disabled * {
-    cursor: default;
-    pointer-events: none;
-    user-select: none;
-}
-
-.p-disabled,
-.p-component:disabled {
-    opacity: ${dt2("disabled.opacity")};
-}
-
-.pi {
-    font-size: ${dt2("icon.size")};
-}
-
-.p-icon {
-    width: ${dt2("icon.size")};
-    height: ${dt2("icon.size")};
-}
-
-.p-overlay-mask {
-    background: ${dt2("mask.background")};
-    color: ${dt2("mask.color")};
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.p-overlay-mask-enter {
-    animation: p-overlay-mask-enter-animation ${dt2("mask.transition.duration")} forwards;
-}
-
-.p-overlay-mask-leave {
-    animation: p-overlay-mask-leave-animation ${dt2("mask.transition.duration")} forwards;
-}
-/* Temporarily disabled, distrupts PrimeNG overlay animations */
-/* @keyframes p-overlay-mask-enter-animation {
-    from {
-        background: transparent;
-    }
-    to {
-        background: ${dt2("mask.background")};
-    }
-}
-@keyframes p-overlay-mask-leave-animation {
-    from {
-        background: ${dt2("mask.background")};
-    }
-    to {
-        background: transparent;
-    }
-}*/
-
-.p-iconwrapper {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-}
-`;
-var css = ({
-  dt: dt2
-}) => `
-.p-hidden-accessible {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
-
-.p-hidden-accessible input,
-.p-hidden-accessible select {
-    transform: scale(0);
-}
-
-.p-overflow-hidden {
-    overflow: hidden;
-    padding-right: ${dt2("scrollbar.width")};
-}
-
-/* @todo move to baseiconstyle.ts */
-
-.p-icon {
-    display: inline-block;
-    vertical-align: baseline;
-}
-
-.p-icon-spin {
-    -webkit-animation: p-icon-spin 2s infinite linear;
-    animation: p-icon-spin 2s infinite linear;
-}
-
-@-webkit-keyframes p-icon-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}
-
-@keyframes p-icon-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}
-`;
-var BaseStyle = class _BaseStyle {
-  name = "base";
-  useStyle = inject(UseStyle);
-  theme = theme;
-  css = css;
-  classes = {};
-  inlineStyles = {};
-  load = (style, options = {}, transform = (cs) => cs) => {
-    const computedStyle = transform(resolve(style, {
-      dt
-    }));
-    return computedStyle ? this.useStyle.use(minifyCSS(computedStyle), __spreadValues({
-      name: this.name
-    }, options)) : {};
-  };
-  loadCSS = (options = {}) => {
-    return this.load(this.css, options);
-  };
-  loadTheme = (options = {}, style = "") => {
-    return this.load(this.theme, options, (computedStyle = "") => config_default.transformCSS(options.name || this.name, `${computedStyle}${style}`));
-  };
-  getCommonTheme = (params) => {
-    return config_default.getCommon(this.name, params);
-  };
-  getComponentTheme = (params) => {
-    return config_default.getComponent(this.name, params);
-  };
-  getDirectiveTheme = (params) => {
-    return config_default.getDirective(this.name, params);
-  };
-  getPresetTheme = (preset, selector, params) => {
-    return config_default.getCustomPreset(this.name, preset, selector, params);
-  };
-  getLayerOrderThemeCSS = () => {
-    return config_default.getLayerOrderCSS(this.name);
-  };
-  getStyleSheet = (extendedCSS = "", props = {}) => {
-    if (this.css) {
-      const _css = resolve(this.css, {
-        dt
-      });
-      const _style = minifyCSS(`${_css}${extendedCSS}`);
-      const _props = Object.entries(props).reduce((acc, [k, v]) => acc.push(`${k}="${v}"`) && acc, []).join(" ");
-      return `<style type="text/css" data-primeng-style-id="${this.name}" ${_props}>${_style}</style>`;
-    }
-    return "";
-  };
-  getCommonThemeStyleSheet = (params, props = {}) => {
-    return config_default.getCommonStyleSheet(this.name, params, props);
-  };
-  getThemeStyleSheet = (params, props = {}) => {
-    let css2 = [config_default.getStyleSheet(this.name, params, props)];
-    if (this.theme) {
-      const name = this.name === "base" ? "global-style" : `${this.name}-style`;
-      const _css = resolve(this.theme, {
-        dt
-      });
-      const _style = minifyCSS(config_default.transformCSS(name, _css));
-      const _props = Object.entries(props).reduce((acc, [k, v]) => acc.push(`${k}="${v}"`) && acc, []).join(" ");
-      css2.push(`<style type="text/css" data-primeng-style-id="${name}" ${_props}>${_style}</style>`);
-    }
-    return css2.join("");
-  };
-  static ɵfac = function BaseStyle_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _BaseStyle)();
-  };
-  static ɵprov = ɵɵdefineInjectable({
-    token: _BaseStyle,
-    factory: _BaseStyle.ɵfac,
-    providedIn: "root"
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BaseStyle, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
-})();
-
-// node_modules/primeng/fesm2022/primeng-config.mjs
-var ThemeProvider = class _ThemeProvider {
-  // @todo define type for theme
-  theme = signal(void 0);
-  isThemeChanged = false;
-  document = inject(DOCUMENT);
-  baseStyle = inject(BaseStyle);
-  constructor() {
-    effect(() => {
-      service_default.on("theme:change", (newTheme) => {
-        untracked(() => {
-          this.isThemeChanged = true;
-          this.theme.set(newTheme);
-        });
-      });
-    }, {
-      allowSignalWrites: true
-    });
-    effect(() => {
-      const themeValue = this.theme();
-      if (this.document && themeValue) {
-        if (!this.isThemeChanged) {
-          this.onThemeChange(themeValue);
-        }
-        this.isThemeChanged = false;
-      }
-    });
-  }
-  ngOnDestroy() {
-    config_default.clearLoadedStyleNames();
-    service_default.clear();
-  }
-  onThemeChange(value) {
-    config_default.setTheme(value);
-    if (this.document) {
-      this.loadCommonTheme();
-    }
-  }
-  loadCommonTheme() {
-    if (this.theme() === "none") return;
-    if (!config_default.isStyleNameLoaded("common")) {
-      const {
-        primitive,
-        semantic,
-        global,
-        style
-      } = this.baseStyle.getCommonTheme?.() || {};
-      const styleOptions = {
-        nonce: void 0
-      };
-      this.baseStyle.load(primitive?.css, __spreadValues({
-        name: "primitive-variables"
-      }, styleOptions));
-      this.baseStyle.load(semantic?.css, __spreadValues({
-        name: "semantic-variables"
-      }, styleOptions));
-      this.baseStyle.load(global?.css, __spreadValues({
-        name: "global-variables"
-      }, styleOptions));
-      this.baseStyle.loadTheme(__spreadValues({
-        name: "global-style"
-      }, styleOptions), style);
-      config_default.setLoadedStyleName("common");
-    }
-  }
-  setThemeConfig(config) {
-    const {
-      theme: theme2
-    } = config || {};
-    if (theme2) this.theme.set(theme2);
-  }
-  static ɵfac = function ThemeProvider_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ThemeProvider)();
-  };
-  static ɵprov = ɵɵdefineInjectable({
-    token: _ThemeProvider,
-    factory: _ThemeProvider.ɵfac,
-    providedIn: "root"
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ThemeProvider, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
-})();
-var PrimeNG = class _PrimeNG extends ThemeProvider {
-  ripple = signal(false);
-  platformId = inject(PLATFORM_ID);
-  inputStyle = signal("outlined");
-  inputVariant = signal("outlined");
-  overlayOptions = {};
-  csp = signal({
-    nonce: void 0
-  });
-  filterMatchModeOptions = {
-    text: [FilterMatchMode.STARTS_WITH, FilterMatchMode.CONTAINS, FilterMatchMode.NOT_CONTAINS, FilterMatchMode.ENDS_WITH, FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS],
-    numeric: [FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS, FilterMatchMode.LESS_THAN, FilterMatchMode.LESS_THAN_OR_EQUAL_TO, FilterMatchMode.GREATER_THAN, FilterMatchMode.GREATER_THAN_OR_EQUAL_TO],
-    date: [FilterMatchMode.DATE_IS, FilterMatchMode.DATE_IS_NOT, FilterMatchMode.DATE_BEFORE, FilterMatchMode.DATE_AFTER]
-  };
-  translation = {
-    startsWith: "Starts with",
-    contains: "Contains",
-    notContains: "Not contains",
-    endsWith: "Ends with",
-    equals: "Equals",
-    notEquals: "Not equals",
-    noFilter: "No Filter",
-    lt: "Less than",
-    lte: "Less than or equal to",
-    gt: "Greater than",
-    gte: "Greater than or equal to",
-    is: "Is",
-    isNot: "Is not",
-    before: "Before",
-    after: "After",
-    dateIs: "Date is",
-    dateIsNot: "Date is not",
-    dateBefore: "Date is before",
-    dateAfter: "Date is after",
-    clear: "Clear",
-    apply: "Apply",
-    matchAll: "Match All",
-    matchAny: "Match Any",
-    addRule: "Add Rule",
-    removeRule: "Remove Rule",
-    accept: "Yes",
-    reject: "No",
-    choose: "Choose",
-    upload: "Upload",
-    cancel: "Cancel",
-    pending: "Pending",
-    fileSizeTypes: ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
-    dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    dayNamesMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-    monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    chooseYear: "Choose Year",
-    chooseMonth: "Choose Month",
-    chooseDate: "Choose Date",
-    prevDecade: "Previous Decade",
-    nextDecade: "Next Decade",
-    prevYear: "Previous Year",
-    nextYear: "Next Year",
-    prevMonth: "Previous Month",
-    nextMonth: "Next Month",
-    prevHour: "Previous Hour",
-    nextHour: "Next Hour",
-    prevMinute: "Previous Minute",
-    nextMinute: "Next Minute",
-    prevSecond: "Previous Second",
-    nextSecond: "Next Second",
-    am: "am",
-    pm: "pm",
-    dateFormat: "mm/dd/yy",
-    firstDayOfWeek: 0,
-    today: "Today",
-    weekHeader: "Wk",
-    weak: "Weak",
-    medium: "Medium",
-    strong: "Strong",
-    passwordPrompt: "Enter a password",
-    emptyMessage: "No results found",
-    searchMessage: "Search results are available",
-    selectionMessage: "{0} items selected",
-    emptySelectionMessage: "No selected item",
-    emptySearchMessage: "No results found",
-    emptyFilterMessage: "No results found",
-    fileChosenMessage: "Files",
-    noFileChosenMessage: "No file chosen",
-    aria: {
-      trueLabel: "True",
-      falseLabel: "False",
-      nullLabel: "Not Selected",
-      star: "1 star",
-      stars: "{star} stars",
-      selectAll: "All items selected",
-      unselectAll: "All items unselected",
-      close: "Close",
-      previous: "Previous",
-      next: "Next",
-      navigation: "Navigation",
-      scrollTop: "Scroll Top",
-      moveTop: "Move Top",
-      moveUp: "Move Up",
-      moveDown: "Move Down",
-      moveBottom: "Move Bottom",
-      moveToTarget: "Move to Target",
-      moveToSource: "Move to Source",
-      moveAllToTarget: "Move All to Target",
-      moveAllToSource: "Move All to Source",
-      pageLabel: "{page}",
-      firstPageLabel: "First Page",
-      lastPageLabel: "Last Page",
-      nextPageLabel: "Next Page",
-      prevPageLabel: "Previous Page",
-      rowsPerPageLabel: "Rows per page",
-      previousPageLabel: "Previous Page",
-      jumpToPageDropdownLabel: "Jump to Page Dropdown",
-      jumpToPageInputLabel: "Jump to Page Input",
-      selectRow: "Row Selected",
-      unselectRow: "Row Unselected",
-      expandRow: "Row Expanded",
-      collapseRow: "Row Collapsed",
-      showFilterMenu: "Show Filter Menu",
-      hideFilterMenu: "Hide Filter Menu",
-      filterOperator: "Filter Operator",
-      filterConstraint: "Filter Constraint",
-      editRow: "Row Edit",
-      saveEdit: "Save Edit",
-      cancelEdit: "Cancel Edit",
-      listView: "List View",
-      gridView: "Grid View",
-      slide: "Slide",
-      slideNumber: "{slideNumber}",
-      zoomImage: "Zoom Image",
-      zoomIn: "Zoom In",
-      zoomOut: "Zoom Out",
-      rotateRight: "Rotate Right",
-      rotateLeft: "Rotate Left",
-      listLabel: "Option List",
-      selectColor: "Select a color",
-      removeLabel: "Remove",
-      browseFiles: "Browse Files",
-      maximizeLabel: "Maximize"
-    }
-  };
-  zIndex = {
-    modal: 1100,
-    overlay: 1e3,
-    menu: 1e3,
-    tooltip: 1100
-  };
-  translationSource = new Subject();
-  translationObserver = this.translationSource.asObservable();
-  getTranslation(key) {
-    return this.translation[key];
-  }
-  setTranslation(value) {
-    this.translation = __spreadValues(__spreadValues({}, this.translation), value);
-    this.translationSource.next(this.translation);
-  }
-  setConfig(config) {
-    const {
-      csp,
-      ripple,
-      inputStyle,
-      theme: theme2,
-      overlayOptions,
-      translation
-    } = config || {};
-    if (csp) this.csp.set(csp);
-    if (ripple) this.ripple.set(ripple);
-    if (inputStyle) this.inputStyle.set(inputStyle);
-    if (overlayOptions) this.overlayOptions = overlayOptions;
-    if (translation) this.setTranslation(translation);
-    if (theme2) this.setThemeConfig({
-      theme: theme2
-    });
-  }
-  static ɵfac = /* @__PURE__ */ (() => {
-    let ɵPrimeNG_BaseFactory;
-    return function PrimeNG_Factory(__ngFactoryType__) {
-      return (ɵPrimeNG_BaseFactory || (ɵPrimeNG_BaseFactory = ɵɵgetInheritedFactory(_PrimeNG)))(__ngFactoryType__ || _PrimeNG);
-    };
-  })();
-  static ɵprov = ɵɵdefineInjectable({
-    token: _PrimeNG,
-    factory: _PrimeNG.ɵfac,
-    providedIn: "root"
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PrimeNG, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
-})();
-var PRIME_NG_CONFIG = new InjectionToken("PRIME_NG_CONFIG");
-function providePrimeNG(...features) {
-  const providers = features?.map((feature) => ({
-    provide: PRIME_NG_CONFIG,
-    useValue: feature,
-    multi: false
-  }));
-  const initializer = {
-    provide: APP_INITIALIZER,
-    useFactory: (PrimeNGConfig) => () => features?.forEach((feature) => PrimeNGConfig.setConfig(feature)),
-    deps: [PrimeNG],
-    multi: true
-  };
-  return makeEnvironmentProviders([...providers, initializer]);
 }
 
 export {
+  definePreset,
   service_default,
+  toTokenKey2 as toTokenKey,
+  merge,
+  toValue,
+  toUnit,
+  toNormalizePrefix,
+  toNormalizeVariable,
+  getVariableName,
+  hasOddBraces,
+  getVariableValue,
+  getComputedValue,
+  setProperty,
+  getRule,
+  mix_default,
+  shade_default,
+  tint_default,
+  palette_default,
   $dt,
+  dt,
+  dtwt,
+  css,
+  $t,
+  toVariables_default,
+  themeUtils_default,
   config_default,
-  base,
-  BaseStyle,
-  ThemeProvider,
-  PrimeNG,
-  PRIME_NG_CONFIG,
-  providePrimeNG
+  updatePreset,
+  updatePrimaryPalette,
+  updateSurfacePalette,
+  usePreset,
+  useTheme
 };
-//# sourceMappingURL=chunk-QLHGFKCC.js.map
+//# sourceMappingURL=chunk-GBBIYBXG.js.map

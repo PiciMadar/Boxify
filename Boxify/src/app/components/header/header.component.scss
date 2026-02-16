@@ -1,0 +1,22 @@
+.logoDiv{
+    background: linear-gradient(90deg, var(--main-bg-color), var(--secondary-color));
+    color: var(--main-font-color);
+    text-shadow: 0 0 2px var(--main-font-color);
+    padding: 10px 0;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    font-variant: small-caps;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px var(--main-bg-color);
+    
+}
+
+@media screen and (max-width: 991px) {
+    .logoDiv{
+        margin-bottom: 10px;
+    }
+    
+}

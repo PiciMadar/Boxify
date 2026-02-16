@@ -1,4 +1,7 @@
+<app-header [title]="app_title"></app-header>
 <app-progressbar *ngIf="loading$ | async"></app-progressbar>
 <app-navbar></app-navbar>
 
 <router-outlet />
+
+<app-footer></app-footer>
