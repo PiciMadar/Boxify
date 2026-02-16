@@ -6,12 +6,13 @@ import { NavbarComponent } from './components/system/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './components/system/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { MessageComponent } from './components/system/message/message.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,ProgressbarComponent,NavbarComponent,CommonModule,FooterComponent,HeaderComponent],
+  imports: [RouterOutlet,ProgressbarComponent,NavbarComponent,CommonModule,FooterComponent,HeaderComponent,MessageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -9,23 +9,27 @@
         <div class="RegisterDiv mt-4">
             <div class="LabelDiv">
                 <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
-                    <input pInputText id="username" [(ngModel)]="value1" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
-                    <label for="username">Username</label>
+                    <input pInputText id="name" [(ngModel)]="user.name" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
+                    <label for="name">Name</label>
                 </p-floatlabel>
-                <p-floatlabel variant="on" class="mb-3 mt-3 w-full">
-                    <input pInputText id="email" [(ngModel)]="value2" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
+                <p-floatlabel variant="on" class="mb-3 w-full">
+                    <input pInputText id="email" [(ngModel)]="user.email" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
                     <label for="email">Email</label>
                 </p-floatlabel>
-                <p-floatlabel variant="on" class="mb-3 mt-3 w-full">
-                    <p-password [(ngModel)]="value3" inputId="password" inputStyleClass="w-full" styleClass="w-full"/>
+                <p-floatlabel variant="on" class="mb-3 w-full">
+                    <p-password [(ngModel)]="user.password" inputId="password" inputStyleClass="w-full" styleClass="w-full"/>
                     <label for="password">Password</label>
+                </p-floatlabel>
+                <p-floatlabel variant="on" class="mb-3 w-full">
+                    <p-password [(ngModel)]="confirm" inputId="confirmPassword" inputStyleClass="w-full" styleClass="w-full"/>
+                    <label for="confirmPassword">Confirm password</label>
                 </p-floatlabel>
             </div>
         </div>
 
         <div class="Gombok mt-4">
             <div class="flex justify-center gombDiv">
-                <p-button label="Register" size="large"/>
+                <p-button label="Register" size="large" (click)="register()"/>
             </div>
         </div>
     </p-card>
