@@ -9,6 +9,10 @@
     background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
 
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
     margin: 0;
     padding: 0 !important;
 
