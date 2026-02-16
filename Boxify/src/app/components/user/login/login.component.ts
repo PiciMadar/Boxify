@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Message } from 'primeng/message';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
@@ -7,15 +6,16 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule, FormGroup,FormControl} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
+import { CardModule } from 'primeng/card';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [Message, InputTextModule,CommonModule,
-    FormsModule,FloatLabelModule,ButtonModule,
-    ReactiveFormsModule,CheckboxModule,
-    PasswordModule],
+  imports: [InputTextModule, CommonModule,
+    FormsModule, FloatLabelModule, ButtonModule,
+    ReactiveFormsModule, CheckboxModule,
+    PasswordModule, CardModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 

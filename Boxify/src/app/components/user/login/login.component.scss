@@ -1,34 +1,117 @@
-.container{
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(29, 33, 231, 0.15);
+    border: 1px solid rgba(29, 33, 231, 0.2);
+    
+    .p-card-header {
+        padding: 24px !important;
+        background: linear-gradient(135deg, #2d81ffff 0%, #3d47cc 100%) !important;
+        border-radius: 12px 12px 0 0 !important;
+        border-bottom: 2px solid #2d81ffff !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        
+        h1 {
+            margin: 0 !important;
+            padding: 0 !important;
+            color: #ffffff !important;
+            font-size: 28px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+            text-align: center !important;
+        }
+    }
+    
+    :host ::ng-deep {
+        .p-card-body {
+            padding: 32px 24px !important;
+        }
+    }
+}
+
+.LoginDiv {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    justify-content: center;
-    width: 50%;
-    box-shadow: 0px 0px 13px 2px rgba(0,0,0,0.8);
-    border-radius: 30px;
+    gap: 16px;
 }
 
-
-.LabelDiv{
+.LabelDiv {
     width: 100%;
-}
-.LabelDiv>p-floatlabel{
-    width: 100%;
-}
-.LabelDiv>p-floatlabel>input{
-    margin:0.2%;
-    width: 100%;
-}
-
-.LoginDiv{
-    width: 60%;
-}
-
-.Gombok{
-    margin: 0 auto;
-    align-items: center;
     display: flex;
-    width: 48%;
-    justify-content: space-around;
+    flex-direction: column;
+    gap: 16px;
+    
+    p-floatlabel {
+        width: 100%;
+        
+        input {
+            width: 100%;
+        }
+    }
+}
+
+.Gombok {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+    
+    form {
+        width: 100%;
+        
+        label {
+            color: #374151;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    }
+    
+    .gombDiv {
+        width: 100%;
+        
+        p-button {
+            width: 100%;
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .login-card {
+        max-width: 100%;
+    }
+    
+    .container {
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    :host ::ng-deep .p-card-header {
+        padding: 16px !important;
+        
+        h1 {
+            font-size: 24px;
+        }
+    }
+    
+    :host ::ng-deep .p-card-body {
+        padding: 20px 16px !important;
+    }
 }
