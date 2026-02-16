@@ -7,10 +7,44 @@
     justify-content: center;
     text-align: center;
     display: flex;
-    background-color: red;
+    flex-direction: column;
 }
 h1{
     align-items: center;
     text-align: center;
 }
 
+.BoxCardsDiv{
+    width: 100%;
+    margin-top: 2%;
+    box-shadow: 2px 8px 15px 10px rgb(180, 180, 180);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: -0px;
+}
+.BoxCardsDiv>div>p-card{
+    box-shadow: 2px 8px 15px 10px rgb(214, 214, 214);
+    border-radius: 10px;
+    padding-top: 5%;
+}
+
+.cardImg{
+    width: 100%;
+    height: 40vh;
+}
+.knobDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.cardList{
+    margin: 0;
+    padding-left: 1rem;
+    text-align: left;
+    list-style-position: outside;
+}

@@ -31,7 +31,8 @@ export class NavbarComponent implements OnInit{
                 items:[
                   {
                     label:"My boxes",
-                    icon:'pi pi-box'
+                    icon:'pi pi-box',
+                    url: "/boxes"
                   },
                   {
                     label:"Fill a new box",

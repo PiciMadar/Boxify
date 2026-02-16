@@ -12,6 +12,93 @@
             </p-iconfield>
         </ng-template>
     </p-toolbar>
-    
 </div>
+    <div class="BoxCardsDiv">
+        
+        <div class="mb-4 p-8 flex items-center justify-center">
+            <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+                <ng-template pTemplate="header">
+                    <div class="card flex justify-center knobDiv">
+                        <p-knob [(ngModel)]="value" valueTemplate="{value}%" [size]="200" readonly="true"/>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="title"> "Kártya cím" </ng-template>
+                <ng-template pTemplate="subtitle"> Rék Dávid </ng-template>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <hr>
+                <ul class="cardList text-left pl-4">
+                    <li>Párna</li>
+                    <li>Valami plüss</li>
+                    <li>Kisóra</li>
+                    <li>Lámpa</li>
+                    <li>Miújság</li>
+                </ul>
+                <hr>
+                <ng-template pTemplate="footer">
+                    <div class="flex gap-4 mt-1">
+                        <p-button label="Delete" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                        <p-button label="Edit" class="w-full" styleClass="w-full" />
+                    </div>
+                </ng-template>
+            </p-card>
+        </div>
+
+<div class="mb-4 p-8 flex items-center justify-center">
+            <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+                <ng-template pTemplate="header">
+                    <div class="card flex justify-center knobDiv">
+                        <p-knob [(ngModel)]="value" valueTemplate="{value}%" [size]="200" readonly="true"/>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="title"> "Kártya cím" </ng-template>
+                <ng-template pTemplate="subtitle"> Rék Dávid </ng-template>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <hr>
+                <ul class="cardList text-left pl-4">
+                    <li>Párna</li>
+                    <li>Valami plüss</li>
+                    <li>Kisóra</li>
+                    <li>Lámpa</li>
+                    <li>Miújság</li>
+                </ul>
+                <hr>
+                <ng-template pTemplate="footer">
+                    <div class="flex gap-4 mt-1">
+                        <p-button label="Delete" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                        <p-button label="Edit" class="w-full" styleClass="w-full" />
+                    </div>
+                </ng-template>
+            </p-card>
+        </div>
+
+        <div class="mb-4 p-8 flex items-center justify-center">
+            <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
+                <ng-template pTemplate="header">
+                    <div class="card flex justify-center knobDiv">
+                        <p-knob [(ngModel)]="value" valueTemplate="{value}%" [size]="200" readonly="true"/>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="title"> "Kártya cím" </ng-template>
+                <ng-template pTemplate="subtitle"> Rék Dávid </ng-template>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <hr>
+                <ul class="cardList text-left pl-4">
+                    <li>Párna</li>
+                    <li>Valami plüss</li>
+                    <li>Kisóra</li>
+                    <li>Lámpa</li>
+                    <li>Miújság</li>
+                </ul>
+                <hr>
+                <ng-template pTemplate="footer">
+                    <div class="flex gap-4 mt-1">
+                        <p-button label="Delete" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" />
+                        <p-button label="Edit" class="w-full" styleClass="w-full" />
+                    </div>
+                </ng-template>
+            </p-card>
+        </div>
+
+        
+    </div>
 </div>

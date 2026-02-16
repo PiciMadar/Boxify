@@ -3,10 +3,12 @@ import {
   PrimeNG,
   base,
   config_default,
+  service_default
+} from "./chunk-QLHGFKCC.js";
+import {
   getKeyValue,
-  service_default,
   uuid
-} from "./chunk-WV2ALMFU.js";
+} from "./chunk-RZNRI3LJ.js";
 import {
   DOCUMENT,
   isPlatformServer
@@ -254,4 +256,4 @@ var BaseComponent = class _BaseComponent {
 export {
   BaseComponent
 };
-//# sourceMappingURL=chunk-ZK4M2QCF.js.map
+//# sourceMappingURL=chunk-EA43GGZN.js.map
