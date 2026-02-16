@@ -18,12 +18,19 @@ export class NavbarComponent implements OnInit{
             //Always on
             {
                 label: 'Home',
-                icon: 'pi pi-home'
+                icon: 'pi pi-home',
+                url: '/'
+            },
+            {
+              label: 'Register',
+              icon: 'pi pi-user',
+              url: '/register'
             },
             //After auth
             {
                 label: 'Dashboard',
-                icon: 'pi pi-chart-pie'
+                icon: 'pi pi-chart-pie',
+                url: '/dashboard'
             },
             {
                 label: 'Boxes',

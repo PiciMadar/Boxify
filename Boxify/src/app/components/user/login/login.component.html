@@ -1,19 +1,15 @@
-<div class="container">
+<div class="container mt-6 pt-6 pb-6">
 
     <h1>Login</h1>
 
-    <div class="LoginDiv">
+    <div class="LoginDiv mt-4">
         <div class="LabelDiv">
             <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
-                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" inputStyleClass="w-full" styleClass="w-full"/>
-                <label for="on_label">Username</label>
-            </p-floatlabel>
-            <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
-                <input pInputText id="on_label" [(ngModel)]="value3" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
+                <input pInputText id="on_label" [(ngModel)]="email" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
                 <label for="on_label">Email</label>
             </p-floatlabel>
-            <p-floatlabel variant="on" class="mb-3 mt-1 w-full" >
-                <p-password [(ngModel)]="value3" inputId="on_label" inputStyleClass="w-full" styleClass="w-full"/>
+            <p-floatlabel variant="on" class="mb-3 mt-3 w-full" >
+                <p-password [(ngModel)]="password" inputId="on_label" inputStyleClass="w-full" styleClass="w-full"/>
                 <label for="on_label">Password</label>
             </p-floatlabel>
         </div>

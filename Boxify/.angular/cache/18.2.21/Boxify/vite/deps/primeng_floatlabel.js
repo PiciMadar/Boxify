@@ -1,10 +1,11 @@
 import {
   BaseComponent
-} from "./chunk-ZK4M2QCF.js";
+} from "./chunk-YWOYHOCG.js";
 import {
   BaseStyle,
   SharedModule
-} from "./chunk-WV2ALMFU.js";
+} from "./chunk-3YPPQ5CT.js";
+import "./chunk-XKM2PPUO.js";
 import {
   CommonModule
 } from "./chunk-HPYFNHGZ.js";

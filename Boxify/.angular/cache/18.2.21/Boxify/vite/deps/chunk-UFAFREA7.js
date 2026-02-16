@@ -6,7 +6,7 @@ import {
 } from "./chunk-5G7WYC4N.js";
 import {
   BaseComponent
-} from "./chunk-ZK4M2QCF.js";
+} from "./chunk-YWOYHOCG.js";
 import {
   BaseStyle,
   appendChild,
@@ -20,7 +20,7 @@ import {
   hasClass,
   removeChild,
   uuid
-} from "./chunk-WV2ALMFU.js";
+} from "./chunk-3YPPQ5CT.js";
 import {
   isPlatformBrowser
 } from "./chunk-HPYFNHGZ.js";
@@ -916,4 +916,4 @@ export {
   Tooltip,
   TooltipModule
 };
-//# sourceMappingURL=chunk-VRT64IVV.js.map
+//# sourceMappingURL=chunk-UFAFREA7.js.map

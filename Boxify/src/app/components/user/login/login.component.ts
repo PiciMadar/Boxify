@@ -24,9 +24,8 @@ import { PasswordModule } from 'primeng/password';
 export class LoginComponent {
   formGroup!: FormGroup;
 
-    value1: string | undefined;
-    value2: string | undefined;
-    value3: string | undefined;
+    email: string | undefined;
+    password: string | undefined;
     ngOnInit() {
         this.formGroup = new FormGroup({
             city: new FormControl<string | null>(null)
