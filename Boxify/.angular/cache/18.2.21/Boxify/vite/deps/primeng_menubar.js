@@ -23,10 +23,10 @@ import {
   AngleRightIcon,
   BarsIcon
 } from "./chunk-Q5XKGF23.js";
+import "./chunk-JK42XS7J.js";
 import {
   BaseComponent
 } from "./chunk-ZK4M2QCF.js";
-import "./chunk-JK42XS7J.js";
 import {
   BaseStyle,
   PrimeTemplate,
