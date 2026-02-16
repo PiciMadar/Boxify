@@ -16,13 +16,43 @@
 
 <div class="card flex justify-center">
     <hr>
-    <p-dialog header="New box" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem', height: '40rem' }">
+    <p-dialog header="New box" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem', height: '50rem' }">
         <div class="newBoxContainer">
             <div class="CalcDiv">
+                <h1>Space</h1>
                 <div class="card flex justify-center knobDiv">
                     <p-knob [(ngModel)]="value" valueTemplate="{value}%" [size]="200" readonly="true"/>
                 </div>
+                <h3>
+                    Box weight: 54kg
+                </h3>
                 <hr>
+                
+                <h3>Box content</h3>
+                <div class="card">
+                <p-table
+                    [value]="boxItems"
+                    [scrollable]="true"
+                    scrollHeight="150px"
+                    [tableStyle]="{'min-width': '5rem'}">
+                        <ng-template #header>
+                            <tr>
+                                <th>Name</th>
+                                <th>Dimensions</th>
+                                <th>Weight</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-item>
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.dimensions }}</td>
+                                <td>{{ item.weight }}</td>
+                            </tr>
+                        </ng-template>
+                </p-table>
+                </div>
+                
+
             </div>
             <div class="contentDiv">
                 <div class="newBoxName">
@@ -43,22 +73,65 @@
                         <input pInputText id="on_label" autocomplete="off" class="w-full h-full"/>
                         <label for="on_label">Item name</label>
                     </p-floatlabel>
-                    <p-floatlabel variant="on">
-                        <input pInputText id="on_label" autocomplete="off" class="w-full h-full"/>
-                        <label for="on_label">Item weight</label>
-                    </p-floatlabel>
-                    <p-floatlabel variant="on">
-                        <input pInputText id="on_label" autocomplete="off" class="w-full h-full"/>
-                        <label for="on_label">Item name</label>
-                    </p-floatlabel>
-                    <p-floatlabel variant="on">
-                        <input pInputText id="on_label" autocomplete="off" class="w-full h-full"/>
-                        <label for="on_label">Item name</label>
-                    </p-floatlabel>
+                    <div class="newBoxNumberCTRL">
+                        <div class="card flex justify-center">
+                            <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" [inputStyle]="{ width: '3rem' }">
+                                <ng-template pTemplate="incrementbuttonicon">
+                                    <span class="pi pi-plus"></span>
+                                </ng-template>
+                                <ng-template pTemplate="decrementbuttonicon">
+                                    <span class="pi pi-minus"></span>
+                                </ng-template>
+                            </p-inputnumber>
+                        </div>
+
+                        <div class="card flex justify-center">
+                            <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" [inputStyle]="{ width: '3rem' }">
+                                <ng-template pTemplate="incrementbuttonicon">
+                                    <span class="pi pi-plus"></span>
+                                </ng-template>
+                                <ng-template pTemplate="decrementbuttonicon">
+                                    <span class="pi pi-minus"></span>
+                                </ng-template>
+                            </p-inputnumber>
+                        </div>
+
+                        <div class="card flex justify-center">
+                            <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" [inputStyle]="{ width: '3rem' }">
+                                <ng-template pTemplate="incrementbuttonicon">
+                                    <span class="pi pi-plus"></span>
+                                </ng-template>
+                                <ng-template pTemplate="decrementbuttonicon">
+                                    <span class="pi pi-minus"></span>
+                                </ng-template>
+                            </p-inputnumber>
+                        </div>
+
+                        <div class="card flex justify-center">
+                            <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" [inputStyle]="{ width: '3rem' }">
+                                <ng-template pTemplate="incrementbuttonicon">
+                                    <span class="pi pi-plus"></span>
+                                </ng-template>
+                                <ng-template pTemplate="decrementbuttonicon">
+                                    <span class="pi pi-minus"></span>
+                                </ng-template>
+                            </p-inputnumber>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="newBoxButtonDiv">
+                        <p-button label="Clear" [raised]="true" severity="secondary" class="w-full"/>
+                        <p-button label="Add item" [raised]="true" severity="success" class="w-full"/>
+                    </div>
+
                 </div>
 
 
             </div>
+        </div>
+        <div class="newBoxButtonDiv">
+            <p-button label="Cancel" [raised]="true" (click)="closeDialog()" severity="secondary" [style]="{width: '100%'}"/>
+            <p-button label="Save" [raised]="true" (click)="closeDialog()" severity="success" [style]="{width: '100%'}"/>
         </div>
     </p-dialog>
 </div>

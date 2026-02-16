@@ -13,11 +13,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
 import { FloatLabel } from 'primeng/floatlabel';
+import { InputNumber } from 'primeng/inputnumber';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { TableModule } from 'primeng/table';
+
+
 
 @Component({
   selector: 'app-boxes',
   standalone: true,
-  imports: [Toolbar, ButtonModule, SplitButton, InputTextModule, IconField, InputIcon,ToolbarModule,CardModule,Knob,CommonModule,FormsModule,Dialog,FloatLabel],
+  imports: [Toolbar, ButtonModule, SplitButton, InputTextModule, IconField, InputIcon,ToolbarModule,CardModule,Knob,CommonModule,FormsModule,Dialog,FloatLabel,InputNumber,ScrollPanelModule, TableModule],
   templateUrl: './boxes.component.html',
   styleUrl: './boxes.component.scss'
 })
@@ -32,10 +37,17 @@ export class BoxesComponent implements OnInit{
         this.visible = false;
     }
 
+    boxItems = [
+      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
+      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
+      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' },
+      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
+      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
+      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' }
+    ];
 
 
-
-  value: number = 40;
+  value: number = 0;
   items: MenuItem[] | undefined;
   ngOnInit() {
         this.items = [
