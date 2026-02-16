@@ -11,17 +11,31 @@ import { CardModule } from 'primeng/card';
 import { Knob } from 'primeng/knob';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { Dialog } from 'primeng/dialog';
+import { FloatLabel } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-boxes',
   standalone: true,
-  imports: [Toolbar, ButtonModule, SplitButton, InputTextModule, IconField, InputIcon,ToolbarModule,CardModule,Knob,CommonModule,FormsModule],
+  imports: [Toolbar, ButtonModule, SplitButton, InputTextModule, IconField, InputIcon,ToolbarModule,CardModule,Knob,CommonModule,FormsModule,Dialog,FloatLabel],
   templateUrl: './boxes.component.html',
   styleUrl: './boxes.component.scss'
 })
 export class BoxesComponent implements OnInit{
-  value: number = 0;
+    //Modal controll
+    visible: boolean = false;
+    showDialog() {
+        this.visible = true;
+    }
+
+    closeDialog() {
+        this.visible = false;
+    }
+
+
+
+
+  value: number = 40;
   items: MenuItem[] | undefined;
   ngOnInit() {
         this.items = [
