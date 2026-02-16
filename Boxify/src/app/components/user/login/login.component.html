@@ -9,24 +9,24 @@
         <div class="LoginDiv mt-4">
             <div class="LabelDiv">
                 <p-floatlabel variant="on" class="mb-3 mt-1 w-full">
-                    <input pInputText id="on_label" [(ngModel)]="email" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
+                    <input pInputText id="on_label" [(ngModel)]="user.email" autocomplete="off" inputStyleClass="w-full" styleClass="w-full" />
                     <label for="on_label">Email</label>
                 </p-floatlabel>
-                <p-floatlabel variant="on" class="mb-3 mt-3 w-full" >
-                    <p-password [(ngModel)]="password" inputId="on_label" inputStyleClass="w-full" styleClass="w-full"/>
+                <p-floatlabel variant="on" class="mb-3 w-full" >
+                    <p-password [(ngModel)]="user.password" inputId="on_label" inputStyleClass="w-full" styleClass="w-full" [feedback]="false"/>
                     <label for="on_label">Password</label>
                 </p-floatlabel>
             </div>
         </div>
 
         <div class="Gombok mt-4">
-            <form class="flex items-center gap-1 mb-3" [formGroup]="formGroup">
-                <p-checkbox formControlName="city" value="New York" inputId="ny" />
-                <label for="ny" class="ml-2">Remember me</label>
-            </form>
+            <div class="flex items-center gap-1 mb-3">
+                <p-checkbox [(ngModel)]="rememberMe" [binary]="true" inputId="remember" />
+                <label for="remember" class="ml-2">Remember me</label>
+            </div>
 
             <div class="flex justify-center gombDiv">
-                <p-button label="Login" size="large"/>
+                <p-button label="Login" size="large" (click)="login()"/>
             </div>
         </div>
     </p-card>

@@ -41,7 +41,12 @@ export class AuthService {
   loggedUser() {
     const token = sessionStorage.getItem(this.tokenName);
     if (token) {
-      return JSON.parse(token);
+      try {
+        return JSON.parse(token);
+      } catch (e) {
+        // Token is not JSON, return null
+        return null;
+      }
     }
     return null;
   }
