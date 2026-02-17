@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -21,7 +21,7 @@ import { MessageService } from '../../../services/message.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   rememberMe: boolean = false;
   user:User = {
@@ -59,5 +59,10 @@ export class LoginComponent {
         this.msg.show("error","Error",err.error.error);
       }
     });
+  }
+  ngOnInit(): void {
+    if (this.auth.isLoggedUser()) {
+      this.router.navigate(['/boxes']);
+    }
   }
 }
