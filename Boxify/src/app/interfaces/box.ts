@@ -1,16 +1,16 @@
 export interface Box {
-    id: number;
+    id?: number;
     userId: number;
-    code: string;
-    labelType: string;
+    code?: string;
+    labelType?: string;
     lengthCm: number;
     widthCm: number;
     heightCm: number;
     maxWeightKg: number;
-    location: string;
-    note: string | null;
-    status: string;
-    createdAt: string | Date | null;
-    updatedAt: string | Date | null;
+    location?: string;
+    note?: string | null;
+    status?: string;
+    createdAt?: string | Date | null;
+    updatedAt?: string | Date | null;
     name: string;
 }

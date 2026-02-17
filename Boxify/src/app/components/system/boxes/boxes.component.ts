@@ -50,19 +50,11 @@ export class BoxesComponent implements OnInit{
 
     //Boxes
     box : Box = {
-      id: 0,
       userId: 0,
-      code: '',
-      labelType: '',
       lengthCm: 0,
       widthCm: 0,
       heightCm: 0,
       maxWeightKg: 0,
-      location: '',
-      note: null,
-      status: '',
-      createdAt: null,
-      updatedAt: null,
       name:'',
     };
     //BoxItem
@@ -105,10 +97,9 @@ export class BoxesComponent implements OnInit{
     }
     saveBox(){
         if(this.box.name != '' || this.box.note != '') {
-            this.box.userId = 1; // Ensure userId is set
-            this.box.createdAt = new Date();
-            this.box.updatedAt = new Date();
+            this.box.userId = this.auth.loggedUser().id;
             console.log("Box details:", this.box);
+
             this.api.insert("boxes", this.box).subscribe({
                 next: (response) => {
                     this.msg.show("success", "Success", "Box created successfully");

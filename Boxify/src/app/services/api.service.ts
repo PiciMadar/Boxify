@@ -77,8 +77,11 @@ export class ApiService {
     return this.http.get(`${this.server}/${table}`, this.tokenHeader());
   }
 
-  insert(table: string, data: object) {
-    return this.http.post(`${this.server}/${table}`, data, this.tokenHeader());
+  insert(table: string, data: object, authenticated: boolean = false) {
+    if (authenticated) {
+      return this.http.post(`${this.server}/${table}`, data, this.tokenHeader());
+    }
+    return this.http.post(`${this.server}/${table}`, data);
   }
 
   update(table: string, id: string, data: object) {
