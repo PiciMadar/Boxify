@@ -100,7 +100,7 @@ export class BoxesComponent implements OnInit{
             this.box.userId = this.auth.loggedUser().id;
             console.log("Box details:", this.box);
 
-            this.api.insert("boxes", this.box).subscribe({
+            this.api.insert("boxes", this.box, true).subscribe({
                 next: (response) => {
                     this.msg.show("success", "Success", "Box created successfully");
                 },
