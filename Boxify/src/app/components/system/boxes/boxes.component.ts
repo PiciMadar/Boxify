@@ -21,6 +21,7 @@ import { BoxItem } from '../../../interfaces/boxItem';
 import { Item } from '../../../interfaces/item';
 import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
+import { AuthService } from '../../../services/auth.service';
 
 
 
@@ -43,14 +44,14 @@ export class BoxesComponent implements OnInit{
     
     constructor(
         private api : ApiService,
-        private msg : MessageService
+        private msg : MessageService,
+        private auth: AuthService,
       ) {}
 
     //Boxes
     box : Box = {
       id: 0,
       name:'',
-      description:'',
       userId: 0,
       code: '',
       labelType: '',
@@ -91,12 +92,33 @@ export class BoxesComponent implements OnInit{
 
     clearForm(){
         this.box.name = '';
-        this.box.description = '';
+        this.box.note = '';
     }
     addItem(){
-        if(this.box.name != '' || this.box.description != '') {
-            this.clearForm();
-            console.log(this.box.name + "\n" + this.item.name + "\n" + this.item.description + "\n" + this.item.lengthCm + "\n" + this.item.widthCm + "\n" + this.item.heightCm + "\n" + this.item.weightKg);
+        if(this.box.name != '' || this.box.note != '') {
+
+        }
+        else
+        {
+            this.msg.show("error", "Error", "Please fill in the box name and description");
+        }
+    }
+    saveBox(){
+        if(this.box.name != '' || this.box.note != '') {
+            
+            this.box.code = Math.random().toString(36).substring(2, 8).toUpperCase(); //Generate random code for box
+            this.box.labelType = "QR"; //Default label type
+
+            
+            this.api.insert("boxes", this.box).subscribe({
+                next: (response) => {
+                    this.msg.show("success", "Success", "Box created successfully");
+                },
+                error: (error) => {
+                    this.msg.show("error", "Error", "Error creating box");
+                }
+            });
+            this.closeDialog();
         }
         else
         {
