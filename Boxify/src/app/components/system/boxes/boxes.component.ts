@@ -51,7 +51,6 @@ export class BoxesComponent implements OnInit{
     //Boxes
     box : Box = {
       id: 0,
-      name:'',
       userId: 0,
       code: '',
       labelType: '',
@@ -63,7 +62,8 @@ export class BoxesComponent implements OnInit{
       note: null,
       status: '',
       createdAt: null,
-      updatedAt: null
+      updatedAt: null,
+      name:'',
     };
     //BoxItem
     boxItem: BoxItem = {
@@ -105,17 +105,17 @@ export class BoxesComponent implements OnInit{
     }
     saveBox(){
         if(this.box.name != '' || this.box.note != '') {
-            
-            this.box.code = Math.random().toString(36).substring(2, 8).toUpperCase(); //Generate random code for box
-            this.box.labelType = "QR"; //Default label type
-
-            
+            this.box.userId = 1; // Ensure userId is set
+            this.box.createdAt = new Date();
+            this.box.updatedAt = new Date();
+            console.log("Box details:", this.box);
             this.api.insert("boxes", this.box).subscribe({
                 next: (response) => {
                     this.msg.show("success", "Success", "Box created successfully");
                 },
                 error: (error) => {
-                    this.msg.show("error", "Error", "Error creating box");
+                    this.msg.show("error", "Error", "Failed to create box");
+                    console.log("Error details:", error);
                 }
             });
             this.closeDialog();
@@ -125,9 +125,19 @@ export class BoxesComponent implements OnInit{
             this.msg.show("error", "Error", "Please fill in the box name and description");
         }
     }
-
+    selectBoxSize(size:string){
+        this.box.widthCm = size === 'small' ? 30 : size === 'medium' ? 90 : 200;
+        this.box.heightCm = size === 'small' ? 30 : size === 'medium' ? 90 : 200;
+        this.box.lengthCm = size === 'small' ? 30 : size === 'medium' ? 90 : 200;
+    }
 
     boxItems = [
+      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
+      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
+      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' },
+      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
+      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
+      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' },
       { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
       { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
       { name: 'Name3', dimensions: '5x5x5', weight: '2kg' },

@@ -16,7 +16,7 @@
 
 <div class="card flex justify-center">
     <hr>
-    <p-dialog header="New box" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem', height: '60rem' }">
+    <p-dialog header="New box" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem', height: '70rem' }">
         <div class="newBoxContainer">
             <div class="CalcDiv">
                 <h1>Space</h1>
@@ -24,7 +24,10 @@
                     <p-knob [(ngModel)]="value" valueTemplate="{value}%" [size]="200" readonly="true"/>
                 </div>
                 <h3>
-                    Box weight cap.: {{box.maxWeightKg}} kg
+                    Box weight capacity: {{box.maxWeightKg}} kg
+                </h3>
+                <h3>
+                    Box dimensions: {{box.widthCm}} x {{box.heightCm}} x {{box.lengthCm}} cm
                 </h3>
                 <hr>
                 
@@ -33,7 +36,7 @@
                 <p-table
                     [value]="boxItems"
                     [scrollable]="true"
-                    scrollHeight="180px"
+                    scrollHeight="300px"
                     [tableStyle]="{'min-width': '5rem'}">
                         <ng-template #header>
                             <tr>
@@ -66,7 +69,25 @@
                         <label for="on_label">Box description</label>
                     </p-floatlabel>
                     <p-inputnumber [(ngModel)]="box.maxWeightKg" [showButtons]="true"  buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal" [step]="1" />  
+                    <div class="BoxSizeSelector">
+                        <div (click)="selectBoxSize('small')" class="Smallbox">
+                            <i class="pi pi-box" id="small-box"></i>
+                            <h6><i>Small box</i></h6>
+                        </div>
+                        <div (click)="selectBoxSize('medium')"  class="Mediumbox">
+                            <i class="pi pi-box" id="medium-box"></i>
+                            <h6>Medium box</h6>
+                        </div>
+                        <div (click)="selectBoxSize('large')" class="Largebox">
+                            <i class="pi pi-box" id="large-box"></i>
+                            <h6><b>Large box</b></h6>
+                        </div>
+                    </div>
                 </div>
+
+                
+
+
                 <div class="newBoxContent">
                     <hr>
                     <h1>Add new item</h1>
@@ -150,13 +171,26 @@
                 <ng-template pTemplate="subtitle"> Rék Dávid </ng-template>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <hr>
-                <ul class="cardList text-left pl-4">
-                    <li>Párna</li>
-                    <li>Valami plüss</li>
-                    <li>Kisóra</li>
-                    <li>Lámpa</li>
-                    <li>Miújság</li>
-                </ul>
+                <p-table
+                    [value]="boxItems"
+                    [scrollable]="true"
+                    scrollHeight="200px"
+                    [tableStyle]="{'min-width': '5rem'}">
+                        <ng-template #header>
+                            <tr>
+                                <th>Name</th>
+                                <th>Dimensions</th>
+                                <th>Weight</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-item>
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.dimensions }}</td>
+                                <td>{{ item.weight }}</td>
+                            </tr>
+                        </ng-template>
+                </p-table>
                 <hr>
                 <ng-template pTemplate="footer">
                     <div class="flex gap-4 mt-1">
@@ -167,7 +201,7 @@
             </p-card>
         </div>
 
-<div class="mb-4 p-8 flex items-center justify-center">
+  <div class="mb-4 p-8 flex items-center justify-center">
             <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
                 <ng-template pTemplate="header">
                     <div class="card flex justify-center knobDiv">
@@ -178,13 +212,26 @@
                 <ng-template pTemplate="subtitle"> Rék Dávid </ng-template>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <hr>
-                <ul class="cardList text-left pl-4">
-                    <li>Párna</li>
-                    <li>Valami plüss</li>
-                    <li>Kisóra</li>
-                    <li>Lámpa</li>
-                    <li>Miújság</li>
-                </ul>
+                <p-table
+                    [value]="boxItems"
+                    [scrollable]="true"
+                    scrollHeight="200px"
+                    [tableStyle]="{'min-width': '5rem'}">
+                        <ng-template #header>
+                            <tr>
+                                <th>Name</th>
+                                <th>Dimensions</th>
+                                <th>Weight</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-item>
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.dimensions }}</td>
+                                <td>{{ item.weight }}</td>
+                            </tr>
+                        </ng-template>
+                </p-table>
                 <hr>
                 <ng-template pTemplate="footer">
                     <div class="flex gap-4 mt-1">
@@ -195,7 +242,7 @@
             </p-card>
         </div>
 
-        <div class="mb-4 p-8 flex items-center justify-center">
+          <div class="mb-4 p-8 flex items-center justify-center">
             <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
                 <ng-template pTemplate="header">
                     <div class="card flex justify-center knobDiv">
@@ -206,13 +253,26 @@
                 <ng-template pTemplate="subtitle"> Rék Dávid </ng-template>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <hr>
-                <ul class="cardList text-left pl-4">
-                    <li>Párna</li>
-                    <li>Valami plüss</li>
-                    <li>Kisóra</li>
-                    <li>Lámpa</li>
-                    <li>Miújság</li>
-                </ul>
+                <p-table
+                    [value]="boxItems"
+                    [scrollable]="true"
+                    scrollHeight="200px"
+                    [tableStyle]="{'min-width': '5rem'}">
+                        <ng-template #header>
+                            <tr>
+                                <th>Name</th>
+                                <th>Dimensions</th>
+                                <th>Weight</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-item>
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.dimensions }}</td>
+                                <td>{{ item.weight }}</td>
+                            </tr>
+                        </ng-template>
+                </p-table>
                 <hr>
                 <ng-template pTemplate="footer">
                     <div class="flex gap-4 mt-1">
@@ -222,7 +282,6 @@
                 </ng-template>
             </p-card>
         </div>
-
         
     </div>
 </div>

@@ -75,12 +75,49 @@ h1{
     width: 50%;
     height: 100%;
     padding: 2%;
+    background-color: rgb(250, 248, 248);
+    border-radius: 10px;
 }
 
 p-inputnumber{
     text-align: center;
 }
 
+.BoxSizeSelector{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 7%;
+    transition: 0.5s
+}
+.BoxSizeSelector>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0px;
+    width: 20%;
+    padding-top: 2rem;
+    height: 100%;
+    transition: 0.3s;
+    background-color: rgb(247, 247, 247);
+    border-radius: 10px;
+}
+.BoxSizeSelector>div:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 1px rgb(214, 214, 214);
+}
+#small-box{
+    font-size: small;
+}
+#medium-box{
+    font-size: medium;
+}
+#large-box{
+    font-size: large;
+}
 
 .contentDiv{
     width: 50%;

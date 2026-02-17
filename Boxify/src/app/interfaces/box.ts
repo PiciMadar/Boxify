@@ -1,6 +1,5 @@
 export interface Box {
     id: number;
-    name: string;
     userId: number;
     code: string;
     labelType: string;
@@ -13,4 +12,5 @@ export interface Box {
     status: string;
     createdAt: string | Date | null;
     updatedAt: string | Date | null;
+    name: string;
 }
