@@ -24,30 +24,39 @@ export class ApiService {
     return localStorage.getItem(this.tokenName) || sessionStorage.getItem(this.tokenName);
   }
 
-  // public endpoints
+  //  endpoints
 
   registration(table: string, data: object) {
     return this.http.post(`${this.server}/${table}/registration`, data);
   }
 
   login(table: string, data: object) {
-    return this.http.post(`${this.server}/${table}/login`, data);
+    return this.http.post<any>(`${this.server}/${table}/login`, data);
   }
 
   //lostpass() { }
 
   //restorepass() { }
 
-  readById(table: string, id: string) {
-    return this.http.get(`${this.server}/public/${table}/${id}`);
+  readById(table: string, id: string, authenticated: boolean = false) {
+    if (authenticated) {
+      return this.http.get(`${this.server}/${table}/${id}`, this.tokenHeader());
+    }
+    return this.http.get(`${this.server}/${table}/${id}`);
   }
 
-  readByField(table: string, field: string, op: string, value: string) {
-    return this.http.get(`${this.server}/public/${table}/${field}/${op}/${value}`);
+  readByField(table: string, field: string, op: string, value: string, authenticated: boolean = false) {
+    if (authenticated) {
+      return this.http.get(`${this.server}/${table}/${field}/${op}/${value}`, this.tokenHeader());
+    }
+    return this.http.get(`${this.server}/${table}/${field}/${op}/${value}`);
   }
 
-  readAll(table: string) {
-    return this.http.get(`${this.server}/public/${table}`);
+  readAll(table: string, authenticated: boolean = false) {
+    if (authenticated) {
+      return this.http.get(`${this.server}/${table}`, this.tokenHeader());
+    }
+    return this.http.get(`${this.server}/${table}`);
   }
 
   sendMail(data: object) {
