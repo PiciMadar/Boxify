@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { BehaviorSubject } from 'rxjs';
+import { ApiService } from './api.service';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(
+    private api : ApiService
+  ) { }
 
   private tokenName = environment.tokenName;
 
   private isLoggedIn = new BehaviorSubject<boolean>(this.getToken());
   isLoggedIn$ = this.isLoggedIn.asObservable();
+
 
   getToken() {
     const sess = sessionStorage.getItem(this.tokenName);
@@ -27,8 +32,9 @@ export class AuthService {
     return false;
   }
 
-  login(token: string) {
+  login(token: string,id: string) {
     sessionStorage.setItem(this.tokenName, token);
+    sessionStorage.setItem('userId', id);
     this.isLoggedIn.next(true);
   }
 
@@ -39,12 +45,18 @@ export class AuthService {
   }
 
   loggedUser() {
-    const token = sessionStorage.getItem(this.tokenName);
-    if (token) {
+    // Check sessionStorage first, then localStorage
+    let token = sessionStorage.getItem(this.tokenName) || localStorage.getItem(this.tokenName);
+    if (token){
       try {
-        return JSON.parse(token);
+        const payload = token.split('.')[1];
+        const decodedPayload = atob(payload);
+        const decodedUTF8Payload = new TextDecoder('utf-8').decode(
+          new Uint8Array(decodedPayload.split('').map(char => char.charCodeAt(0)))
+        );
+        return JSON.parse(decodedUTF8Payload);
       } catch (e) {
-        // Token is not JSON, return null
+        console.error('Failed to decode token:', e);
         return null;
       }
     }
@@ -59,8 +71,13 @@ export class AuthService {
     return this.isLoggedIn.value;
   }
 
-  isAdmin(): boolean {
-    const user: any = this.loggedUser();
-    return user && user.role === 'admin';
+  async isAdmin(): Promise<boolean> {
+    const user : any = await this.api.readById('users', this.loggedUser().id,true).toPromise();
+    if (user) {
+     if(user.role === 'admin'){
+      return true;
+     }
+    }
+    return false;
   }
 }

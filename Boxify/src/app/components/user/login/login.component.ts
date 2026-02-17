@@ -46,11 +46,11 @@ export class LoginComponent {
       password: this.user.password
     }
     this.api.login('users', data).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         if (this.rememberMe) {
-          this.auth.storeUser(res as any);
+          this.auth.storeUser(res.token);
         }
-        this.auth.login(res as any);
+        this.auth.login(res.token,res.id);
         this.msg.show("success","Success","Logged in successfully");
         this.router.navigate(['/boxes']);
       },

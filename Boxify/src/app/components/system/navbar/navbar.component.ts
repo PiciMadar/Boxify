@@ -6,6 +6,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { MessageService } from '../../../services/message.service';
 import { Router } from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
   constructor(
     private auth: AuthService,
     private msg: MessageService,
-    private router: Router
+    private router: Router,
+    private api: ApiService
   ) { }
   items: MenuItem[] = [];
   isLoggedIn: boolean = false;
@@ -29,14 +31,11 @@ export class NavbarComponent implements OnInit, OnDestroy{
     // Initial check and build
     this.checkAuthStatus();
     this.buildMenuItems();
-    console.log('Initial isLoggedIn:', this.isLoggedIn, 'Items:', this.items.length);
 
     // Subscribe to login status changes
     this.subscription = this.auth.isLoggedIn$.subscribe((loggedIn) => {
-      console.log('Auth status changed to:', loggedIn);
       this.checkAuthStatus();
       this.buildMenuItems();
-      console.log('After build, isLoggedIn:', this.isLoggedIn, 'Items:', this.items.length);
     });
   }
 
@@ -46,9 +45,11 @@ export class NavbarComponent implements OnInit, OnDestroy{
     }
   }
 
-  checkAuthStatus() {
+   async checkAuthStatus() {
     this.isLoggedIn = this.auth.isLoggedUser();
-    this.isAdmin = this.isLoggedIn ? this.auth.isAdmin() : false;
+    if (this.isLoggedIn) {
+    this.isAdmin = await this.auth.isAdmin();
+    }
   }
 
   buildMenuItems() {
