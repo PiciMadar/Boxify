@@ -5,6 +5,7 @@ import { ForgotPasswordComponent } from './components/user/forgot-password/forgo
 import { BoxesComponent } from './components/system/boxes/boxes.component';
 import { UserControlComponent } from './components/admin/user-control/user-control.component';
 import { DashboardComponent } from './components/system/dashboard/dashboard.component';
+import { ItemsComponent } from './components/system/items/items.component';
 
 export const routes: Routes = [
     {
@@ -30,6 +31,10 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         component:DashboardComponent
+    },
+    {
+        path:'items',
+        component:ItemsComponent
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

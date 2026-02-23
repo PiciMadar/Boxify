@@ -1,0 +1,52 @@
+.container{
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 2%;
+    padding: 0.8%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.NewItemModal{
+    display: flex;
+    flex-direction: column;
+}
+h1{
+    align-items: center;
+    text-align: center;
+}
+
+p-floatlabel{
+    margin-top: 2%;
+}
+
+.ClassCatDropDown{
+    width: 33%;
+    margin-top: 2%;
+}
+.ClassCatDropDown>p-autocomplete{
+    width: 33%;
+}
+
+.HaromOszlop{
+    display: flex;
+    flex-direction: row;
+    row-gap: 0px;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 3%;
+}
+
+.NumberInputsDiv{
+    display: flex;
+    justify-content: space-between;
+}
+
+.ButtonDiv{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 5%;
+    margin-top: 3%;
+}
