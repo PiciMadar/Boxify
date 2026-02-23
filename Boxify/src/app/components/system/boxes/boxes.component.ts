@@ -51,6 +51,8 @@ export class BoxesComponent implements OnInit{
     }
     closeDialog() {
         this.visible = false;
+        this.AddItemMode = false;
+        this.selectedBox = null;
     }
     AddItemMode:boolean = false;
     NoBoxesFound:boolean = true;
@@ -144,6 +146,7 @@ export class BoxesComponent implements OnInit{
                     console.log("Error details:", error);
                 }
             });
+            this.AddItemMode = false;
             this.closeDialog();
         }
         else
@@ -180,9 +183,9 @@ export class BoxesComponent implements OnInit{
 
     // Selected box for adding items
     selectedBox: Box | null = null;
-    addingToBox: boolean = false;
 
     openAddItem(box: Box) {
+        this.AddItemMode = true;
         this.selectedBox = box;
         // Prefill dialog with selected box context
         this.box = {
@@ -195,12 +198,10 @@ export class BoxesComponent implements OnInit{
             heightCm: box.heightCm,
             maxWeightKg: box.maxWeightKg
         };
-        this.addingToBox = true;
         this.showDialog();
     }
 
     addItemToBox() {
-        this.AddItemMode = true;
         if (!this.selectedBox) {
             this.msg.show('error', 'Error', 'No box selected');
             return;
@@ -216,7 +217,7 @@ export class BoxesComponent implements OnInit{
                 this.msg.show('success', 'Success', 'Item added to box');
                 this.closeDialog();
                 this.getBoxes();
-                this.addingToBox = false;
+                this.AddItemMode = false;
                 this.selectedBox = null;
             },
             error: (err) => {
@@ -224,5 +225,6 @@ export class BoxesComponent implements OnInit{
                 this.msg.show('error', 'Error', err.error?.error || 'Failed to add item to box');
             }
         });
+        this.AddItemMode = false;
     }
 }
