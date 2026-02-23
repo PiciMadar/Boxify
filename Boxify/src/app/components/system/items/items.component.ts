@@ -47,8 +47,9 @@ import { ToastModule } from 'primeng/toast';
   templateUrl: './items.component.html',
   styleUrl: './items.component.scss'
 })
-export class ItemsComponent {
+export class ItemsComponent implements OnInit{
     visible: boolean = false;
+    visible2: boolean = false;
     showDialog() {
         this.visible = true;
     }
@@ -56,6 +57,10 @@ export class ItemsComponent {
         this.visible = false;
     }
     
+    ngOnInit(): void {
+      this.clearItems();
+      this.getItems()
+    }
     constructor(
         private api : ApiService,
         private msg : MessageService,
@@ -75,7 +80,7 @@ export class ItemsComponent {
         weightKg: 0,
         imagepath: null,
     };
-
+    ItemsList: Item[] = []
     items: any[] | undefined;
 
     value: any;
@@ -90,9 +95,33 @@ export class ItemsComponent {
         alert("a")
     }
     
-    clearItems(){}
-    getItems(){
+    clearItems(){
+      this.item.name = '',
+      this.item.description = '',
+      this.item.category = '',
+      this.item.lengthCm = 0,
+      this.item.widthCm = 0,
+      this.item.heightCm = 0,
+      this.item.weightKg = 0,
+      this.item.imagepath = null
 
+      this.ItemsList = []
+    }
+    NoItemsFound:boolean = false;
+    getItems(){
+      this.clearItems();
+      this.api.selectByField("items", "userId", "eq", this.auth.loggedUser().id).subscribe({
+            next: (response) => {
+                this.ItemsList = response as Item[];
+                if(this.ItemsList.length !== 0) {
+                    this.NoItemsFound = false;
+                }
+            },
+            error: (error) => {
+                this.msg.show("error", "Error", "Failed to retrieve boxes");
+                console.log("Error details:", error);
+            }
+        });
     }
     saveItem(){
       if(this.item.name == '' || this.item.description == '' || this.item.weightKg == 0 || this.item.widthCm == 0 || this.item.heightCm == 0 || this.item.lengthCm == 0){
@@ -115,5 +144,24 @@ export class ItemsComponent {
             }
         });
       }
+    }
+
+    deleteItem(itemId:string){
+      console.log(itemId)
+      this.api.delete("items",itemId).subscribe({
+        next:(res)=>{
+          console.log(itemId)
+          this.msg.show('success','Success','Item deleted successfully!')
+          this.getItems();
+        },
+        error:(err)=>{
+          console.error('Failed to delete item', err)
+          this.msg.show('error','Error', err.error?.error|| 'Failed to delete item!')
+        }
+      });
+
+    }
+    moveToBox(){
+      this.visible2 = true;
     }
 }
