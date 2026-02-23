@@ -19,6 +19,7 @@ import { Item } from '../../../interfaces/item';
 import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 
 
@@ -226,5 +227,19 @@ export class BoxesComponent implements OnInit{
             }
         });
         this.AddItemMode = false;
+    }
+    deleteBox(boxId: string) {
+        this.api.delete(`boxes`, boxId, true).subscribe({
+            next: (res) => {
+                this.msg.show('success', 'Success', 'Box deleted successfully');
+                this.getBoxes();
+            },
+            error: (err) => {
+                console.error('Failed to delete box', err);
+                this.msg.show('error', 'Error', err.error?.error || 'Failed to delete box');
+            }
+        });
+        // Refresh the page
+        location.reload();
     }
 }

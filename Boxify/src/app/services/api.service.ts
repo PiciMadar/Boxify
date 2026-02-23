@@ -88,8 +88,11 @@ export class ApiService {
     return this.http.patch(`${this.server}/${table}/${id}`, data, this.tokenHeader());
   }
 
-  delete(table: string, id: string) {
-    return this.http.delete(`${this.server}/${table}/${id}`, this.tokenHeader());
+  delete(table: string, id: string, authenticated: boolean = false ) {
+    if (authenticated) {
+      return this.http.delete(`${this.server}/${table}/${id}`, this.tokenHeader());
+    }
+    return this.http.delete(`${this.server}/${table}/${id}`);
   }
 
   deleteAll(table: string) {
