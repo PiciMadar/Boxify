@@ -33,8 +33,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.buildMenuItems();
 
     // Subscribe to login status changes
-    this.subscription = this.auth.isLoggedIn$.subscribe((loggedIn) => {
-      this.checkAuthStatus();
+     this.subscription = this.auth.isLoggedIn$.subscribe(async (loggedIn) => {
+      await this.checkAuthStatus();
       this.buildMenuItems();
     });
   }
@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
    async checkAuthStatus() {
     this.isLoggedIn = this.auth.isLoggedUser();
     if (this.isLoggedIn) {
-    this.isAdmin = await this.auth.isAdmin();
+    this.isAdmin = await this.auth.isAdmin(); 
     }
   }
 
