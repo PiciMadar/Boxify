@@ -65,7 +65,6 @@ export class ItemsComponent {
 
         //Item
     item:Item = {
-        id: 0,
         name: '',
         userId: 0,
         description: '',
@@ -75,8 +74,6 @@ export class ItemsComponent {
         heightCm: 0,
         weightKg: 0,
         imagepath: null,
-        createdAt: null,
-        updatedAt: null
     };
 
     items: any[] | undefined;
@@ -93,6 +90,7 @@ export class ItemsComponent {
         alert("a")
     }
     
+    clearItems(){}
     getItems(){
 
     }
@@ -101,11 +99,14 @@ export class ItemsComponent {
         this.msg.show('error', 'Error', 'Please fill in all inputs');
       }
       else{
+        console.log(this.auth.loggedUser().id);
+        this.item.userId = this.auth.loggedUser().id
         this.api.insert('items', this.item, true).subscribe({
             next: (res) => {
                 console.log(this.item)
                 this.msg.show('success', 'Success', 'Item added to box');
                 this.closeDialog();
+                this.clearItems()
                 this.getItems();
             },
             error: (err) => {

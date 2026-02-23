@@ -1,5 +1,5 @@
 export interface Item {
-    id: number;
+    id?: number;
     name: string;
     userId: number;
     description: string;
@@ -9,6 +9,6 @@ export interface Item {
     heightCm: number;
     weightKg: number;
     imagepath: string | null;
-    createdAt: string | Date | null;
-    updatedAt: string | Date | null;
+    createdAt?: string | Date | null;
+    updatedAt?: string | Date | null;
 }
