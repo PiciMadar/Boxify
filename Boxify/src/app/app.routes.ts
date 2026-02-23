@@ -3,6 +3,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import { ForgotPasswordComponent } from './components/user/forgot-password/forgot-password.component';
 import { BoxesComponent } from './components/system/boxes/boxes.component';
+import { UserControlComponent } from './components/admin/user-control/user-control.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,10 @@ export const routes: Routes = [
     {
         path:'boxes',
         component:BoxesComponent
+    },
+    {
+        path: 'user-control',
+        component: UserControlComponent
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
