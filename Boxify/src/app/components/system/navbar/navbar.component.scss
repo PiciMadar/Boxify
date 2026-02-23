@@ -1,4 +1,4 @@
-// Navbar styling to match footer
+// Navbar styling — PrimeNG 18 class names
 :host ::ng-deep {
   app-navbar {
     display: block;
@@ -7,134 +7,209 @@
 
   .card {
     background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-
     position: sticky;
     top: 0;
-    z-index: 5;
-
+    z-index: 1000;
     margin: 0;
     padding: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
 
+    // ========== ALL MENUBAR (shared) ==========
     .p-menubar {
-      background: transparent;
-      border: none;
-      padding: 0;
-      width: 100%;
-      display: flex !important;
-      justify-content: center !important;
+      background: transparent !important;
+      border: none !important;
+      padding: 10px 16px !important;
+      width: 100% !important;
 
-      .p-menubar-root-list {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 8px;
-        width: auto;
-        
-        > .p-menuitem {
-          > .p-menuitem-link {
-            color: #e0e0e0;
-            padding: 12px 16px;
-            border-radius: 6px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 500;
+      // Item styling (applies desktop & mobile)
+      .p-menubar-item-content {
+        background: transparent;
+        border-radius: 6px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
-            .p-menuitem-icon {
-              color: rgb(29, 33, 231);
-              margin-right: 8px;
-              transition: all 0.3s ease;
-            }
+      .p-menubar-item-link {
+        color: #e0e0e0;
+        font-weight: 500;
 
-            &:hover {
-              background: rgba(99, 102, 241, 0.15);
-              color: rgb(29, 33, 231);
-              transform: translateY(-2px);
-
-              .p-menuitem-icon {
-                transform: scale(1.1);
-              }
-            }
-          }
-
-          &.p-menuitem-active > .p-menuitem-link {
-            background: rgba(99, 102, 241, 0.25);
-            color: rgb(29, 33, 231);
-            border-bottom: 2px solid rgb(29, 33, 231);
-          }
+        .p-menubar-item-icon {
+          color: #2d81ff;
+          transition: all 0.3s ease;
         }
       }
 
-      // Submenu styling
-      .p-submenu {
-        .p-submenu-list {
-          background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
-          border: 1px solid rgba(99, 102, 241, 0.2);
-          border-radius: 6px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-          margin-top: 8px;
+      .p-menubar-item-content:hover {
+        background: rgba(45, 129, 255, 0.15);
 
-          .p-menuitem {
-            .p-menuitem-link {
-              color: #b0b0b0;
-              padding: 10px 16px;
-              transition: all 0.3s ease;
+        .p-menubar-item-link {
+          color: #2d81ff;
+        }
 
-              .p-menuitem-icon {
-                color: #6366f1;
-                margin-right: 8px;
+        .p-menubar-item-icon {
+          transform: scale(1.1);
+        }
+      }
+
+      .p-menubar-item-active > .p-menubar-item-content {
+        background: rgba(45, 129, 255, 0.25);
+
+        .p-menubar-item-link {
+          color: #2d81ff;
+        }
+      }
+
+      // The p-menubarsub host is the direct flex child — stretch it
+      p-menubarsub,
+      p-menubarSub {
+        flex: 1 1 100% !important;
+      }
+
+      // Neutralize the end slot so it doesn't break centering
+      .p-menubar-end {
+        display: none !important;
+      }
+
+      // Desktop: center root list items
+      .p-menubar-root-list {
+        justify-content: center !important;
+        gap: 8px;
+      }
+
+      // Desktop submenu dropdown
+      .p-menubar-submenu {
+        background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%) !important;
+        border: 1px solid rgba(45, 129, 255, 0.2) !important;
+        border-radius: 6px !important; 
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+          
+        .p-menubar-item-link {
+          color: #b0b0b0; 
+        }
+
+        .p-menubar-item-content:hover .p-menubar-item-link {
+          color: #ffffff;
+        }
+      }
+
+      // Hamburger button
+      .p-menubar-button {
+        color: #2d81ff !important;
+        border: 1px solid rgba(45, 129, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 8px !important;
+        background: rgba(45, 129, 255, 0.1) !important;
+        transition: all 0.3s ease;
+
+        &:hover,
+        &:focus {
+          background: rgba(45, 129, 255, 0.25) !important;
+          border-color: #2d81ff !important;
+          box-shadow: 0 0 12px rgba(45, 129, 255, 0.3);
+        }
+      }
+    }
+
+    // ========== MOBILE ONLY ==========
+    .p-menubar-mobile {
+      justify-content: center !important;
+
+      // Center the hamburger button
+      .p-menubar-button {
+        margin: 0 auto !important;
+      }
+
+      // Remove menubarsub from flex flow so it doesn't push the button
+      p-menubarsub,
+      p-menubarSub {
+        position: absolute !important;
+        width: 100% !important;
+        left: 0 !important;
+        top: 100% !important;
+        flex: none !important;
+      }
+
+      // Mobile dropdown — let PrimeNG handle positioning, just style it
+      .p-menubar-root-list {
+        background: linear-gradient(180deg, #111111 0%, #1a1a1a 100%) !important;
+        border: 1px solid rgba(45, 129, 255, 0.15) !important;
+        border-top: 2px solid #2d81ff !important;
+        border-radius: 0 0 12px 12px !important;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7) !important;
+        padding: 4px 0 !important;
+
+        .p-menubar-item {
+          width: 100%;
+
+          > .p-menubar-item-content {
+            border-radius: 0 !important;
+
+            > .p-menubar-item-link {
+              padding: 14px 24px !important;
+              color: #d0d0d0 !important;
+              gap: 12px;
+
+              .p-menubar-item-icon {
+                color: #2d81ff !important;
+                font-size: 1.15rem;
+                min-width: 22px;
               }
 
-              &:hover {
-                background: rgba(99, 102, 241, 0.2);
-                color: #ffffff;
-                padding-left: 24px;
+              .p-menubar-item-label {
+                font-size: 0.95rem;
+                font-weight: 500;
+              }
+
+              .p-menubar-submenu-icon {
+                color: rgba(255, 255, 255, 0.35) !important;
+                margin-left: auto !important;
               }
             }
 
-            &.p-menuitem-active > .p-menuitem-link {
-              background: rgba(99, 102, 241, 0.3);
-              color: #6366f1;
-              border-left: 3px solid rgb(29, 33, 231);
-              padding-left: 20px;
+            &:hover {
+              background: rgba(45, 129, 255, 0.1) !important;
+
+              > .p-menubar-item-link {
+                color: #ffffff !important;
+              }
             }
+          }
+        }
+
+        // Nested submenu in mobile
+        .p-menubar-submenu {
+          background: rgba(0, 0, 0, 0.15) !important;
+          border: none !important;
+          box-shadow: none !important;
+
+          .p-menubar-item-link {
+            padding-left: 52px !important;
+            color: #a0a0a0 !important;
+
+            .p-menubar-item-icon {
+              color: rgba(45, 129, 255, 0.6) !important;
+            }
+          }
+
+          .p-menubar-item-content:hover .p-menubar-item-link {
+            color: #ffffff !important;
           }
         }
       }
     }
+
+    // Animation when menu opens
+    .p-menubar-mobile-active .p-menubar-root-list {
+      animation: mobileMenuSlide 0.2s ease-out;
+    }
   }
 }
 
-// Animation for navbar items
-@keyframes slideDown {
+@keyframes mobileMenuSlide {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-// Responsive navbar
-@media (max-width: 768px) {
-  :host ::ng-deep {
-    .p-menubar {
-      flex-direction: column;
-
-      .p-menubar-root-list {
-        flex-direction: column;
-
-        > .p-menuitem {
-          width: 100%;
-
-          > .p-menuitem-link {
-            width: 100%;
-          }
-        }
-      }
-    }
   }
 }
