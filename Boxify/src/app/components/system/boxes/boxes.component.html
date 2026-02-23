@@ -97,6 +97,7 @@
                     </p-floatlabel>
                     <div class="newBoxNumberCTRL">
                         <div class="card flex justify-center">
+                            <div class="IconAndNumber">
                             <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" [(ngModel)]="item.weightKg" [inputStyle]="{ width: '3rem' }" [disabled]="true">
                                 <ng-template pTemplate="incrementbuttonicon">
                                     <span class="pi pi-plus"></span>
@@ -105,9 +106,12 @@
                                     <span class="pi pi-minus"></span>
                                 </ng-template>
                             </p-inputnumber>
+                            <i class="pi pi-briefcase"></i>
+                            </div>
                         </div>
 
                         <div class="card flex justify-center">
+                            <div class="IconAndNumber">
                             <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" [(ngModel)]="item.heightCm" [inputStyle]="{ width: '3rem' }" [disabled]="true">
                                 <ng-template pTemplate="incrementbuttonicon">
                                     <span class="pi pi-plus"></span>
@@ -116,9 +120,13 @@
                                     <span class="pi pi-minus"></span>
                                 </ng-template>
                             </p-inputnumber>
+                            <i class="pi pi-arrows-v"></i>
+                            </div>
+
                         </div>
 
                         <div class="card flex justify-center">
+                            <div class="IconAndNumber">
                             <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" [(ngModel)]="item.widthCm" [inputStyle]="{ width: '3rem' }" [disabled]="true">
                                 <ng-template pTemplate="incrementbuttonicon">
                                     <span class="pi pi-plus"></span>
@@ -127,9 +135,12 @@
                                     <span class="pi pi-minus"></span>
                                 </ng-template>
                             </p-inputnumber>
+                            <i class="pi pi-arrows-h"></i>
+                            </div>
                         </div>
 
                         <div class="card flex justify-center">
+                            <div class="IconAndNumber">
                             <p-inputnumber [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical" aria-disabled="true" [(ngModel)]="item.lengthCm" [inputStyle]="{ width: '3rem' }" [disabled]="true">
                                 <ng-template pTemplate="incrementbuttonicon">
                                     <span class="pi pi-plus"></span>
@@ -138,6 +149,9 @@
                                     <span class="pi pi-minus"></span>
                                 </ng-template>
                             </p-inputnumber>
+                            <i class="pi pi-arrow-up-right-and-arrow-down-left-from-center"></i>
+                            </div>
+
                         </div>
                     </div>
                     <hr>

@@ -152,3 +152,9 @@ p-inputnumber{
 .newBoxButtonDiv>p-button{
     width: 40%
 }
+
+.IconAndNumber{
+    display: flex;
+    row-gap: 15%;
+    flex-direction: column;
+}
