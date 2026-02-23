@@ -11,7 +11,7 @@ import { ChartModule } from 'primeng/chart';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit{
-data: any;
+    data: any;
 
     options: any;
 
