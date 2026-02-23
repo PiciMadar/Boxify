@@ -1,21 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem} from 'primeng/api';
-import { Toolbar } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
-import { SplitButton } from 'primeng/splitbutton';
-import { InputTextModule } from 'primeng/inputtext';
-import { IconField } from 'primeng/iconfield';
-import { InputIcon } from 'primeng/inputicon';
+import { MenuItem } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { KnobModule } from 'primeng/knob';
 import { CardModule } from 'primeng/card';
-import { Knob } from 'primeng/knob';
+import { InputNumber } from 'primeng/inputnumber';
+import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Dialog } from 'primeng/dialog';
-import { FloatLabel } from 'primeng/floatlabel';
-import { InputNumber } from 'primeng/inputnumber';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { Box } from '../../../interfaces/box';
 import { BoxItem } from '../../../interfaces/boxItem';
 import { Item } from '../../../interfaces/item';
@@ -28,7 +25,21 @@ import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-boxes',
   standalone: true,
-  imports: [Toolbar, ButtonModule, SplitButton, InputTextModule, IconField, InputIcon,ToolbarModule,CardModule,Knob,CommonModule,FormsModule,Dialog,FloatLabel,InputNumber,ScrollPanelModule, TableModule],
+    imports: [
+        ToolbarModule,
+        ButtonModule,
+        InputTextModule,
+        IconFieldModule,
+        InputIconModule,
+        KnobModule,
+        CardModule,
+        CommonModule,
+        FormsModule,
+        DialogModule,
+        FloatLabelModule,
+        InputNumber,
+        TableModule
+    ],
   templateUrl: './boxes.component.html',
   styleUrl: './boxes.component.scss'
 })
@@ -41,7 +52,7 @@ export class BoxesComponent implements OnInit{
     closeDialog() {
         this.visible = false;
     }
-    
+    AddItemMode:boolean = false;
     NoBoxesFound:boolean = true;
     EditMode:boolean = false;
     BoxesList:Box[] = [];
@@ -165,5 +176,53 @@ export class BoxesComponent implements OnInit{
             }
         ];
         this.getBoxes();
+    }
+
+    // Selected box for adding items
+    selectedBox: Box | null = null;
+    addingToBox: boolean = false;
+
+    openAddItem(box: Box) {
+        this.selectedBox = box;
+        // Prefill dialog with selected box context
+        this.box = {
+            ...this.box,
+            userId: box.userId,
+            name: box.name,
+            note: box.note,
+            lengthCm: box.lengthCm,
+            widthCm: box.widthCm,
+            heightCm: box.heightCm,
+            maxWeightKg: box.maxWeightKg
+        };
+        this.addingToBox = true;
+        this.showDialog();
+    }
+
+    addItemToBox() {
+        this.AddItemMode = true;
+        if (!this.selectedBox) {
+            this.msg.show('error', 'Error', 'No box selected');
+            return;
+        }
+        // create a BoxItem - adapt fields according to backend
+        const payload: any = {
+            boxId: this.selectedBox.id,
+            itemId: this.item.id,
+            quantity: this.boxItem.quantity || 1
+        };
+        this.api.insert('boxitems', payload, true).subscribe({
+            next: (res) => {
+                this.msg.show('success', 'Success', 'Item added to box');
+                this.closeDialog();
+                this.getBoxes();
+                this.addingToBox = false;
+                this.selectedBox = null;
+            },
+            error: (err) => {
+                console.error('Failed to add item to box', err);
+                this.msg.show('error', 'Error', err.error?.error || 'Failed to add item to box');
+            }
+        });
     }
 }

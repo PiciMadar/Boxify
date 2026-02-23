@@ -121,6 +121,16 @@ p-inputnumber{
     border-radius: 10px;
     box-shadow: 2px 2px 5px 1px rgb(214, 214, 214);
 }
+
+/* Disabled state for size selector (accessible) */
+.BoxSizeSelector>div.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(60%);
+    transform: none !important;
+    box-shadow: none !important;
+}
 #small-box{
     font-size: small;
 }
