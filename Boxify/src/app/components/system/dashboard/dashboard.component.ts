@@ -1,6 +1,6 @@
-import { Component, OnInit, PLATFORM_ID, ChangeDetectorRef, inject, effect } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, ChangeDetectorRef, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
-import { AppConfigService } from '@/service/appconfigservice';
 
 
 @Component({
@@ -17,19 +17,7 @@ data: any;
 
     platformId = inject(PLATFORM_ID);
 
-    configService = inject(AppConfigService);
-
-    designerService = inject(DesignerService);
-
     constructor(private cd: ChangeDetectorRef) {}
-
-    themeEffect = effect(() => {
-        if (this.configService.transitionComplete()) {
-            if (this.designerService.preset()) {
-                this.initChart();
-            }
-        }
-    });
 
     ngOnInit() {
         this.initChart();
