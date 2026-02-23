@@ -4,6 +4,7 @@ import { RegisterComponent } from './components/user/register/register.component
 import { ForgotPasswordComponent } from './components/user/forgot-password/forgot-password.component';
 import { BoxesComponent } from './components/system/boxes/boxes.component';
 import { UserControlComponent } from './components/admin/user-control/user-control.component';
+import { DashboardComponent } from './components/system/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,10 @@ export const routes: Routes = [
     {
         path: 'user-control',
         component: UserControlComponent
+    },
+    {
+        path: 'dashboard',
+        component:DashboardComponent
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
