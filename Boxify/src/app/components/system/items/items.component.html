@@ -1,1 +1,67 @@
-<p>items works!</p>
+<h1>Items</h1>
+<div class="container">
+    <div class="container">
+    <div class="card">
+    <p-toolbar>
+        <ng-template #start>
+            <p-button icon="pi pi-plus" class="mr-2" (click)="showDialog()" text severity="secondary" />
+        </ng-template>
+        <ng-template #center>
+            <p-iconfield iconPosition="left" >
+                <p-inputicon styleClass="pi pi-search" />
+                <input type="text" pInputText placeholder="Search" />
+            </p-iconfield>
+        </ng-template>
+    </p-toolbar>
+
+    <div class="card flex justify-center">
+    <hr>
+
+</div>
+</div>
+</div>
+    <p-dialog class="NewItemModal" header="New Item" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem', height: '50rem' }">
+        <h2>Create a new item!</h2>
+        <p-floatlabel variant="on">
+            <input pInputText id="on_label" [(ngModel)]="item.name" autocomplete="off"  width="w-full" class="w-full"/>
+            <label for="on_label">Item name</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on">
+            <input pInputText id="on_label" [(ngModel)]="item.description" autocomplete="off"  width="w-full" class="w-full"/>
+            <label for="on_label">Item description</label>
+        </p-floatlabel>
+        <hr>
+        <h2>Category</h2>
+        <div class="HaromOszlop">
+
+            <div class="card flex justify-center w-full ClassCatDropDown">
+                            <p-button label="+" [raised]="true" severity="success" />
+                <p-autocomplete [(ngModel)]="value" [dropdown]="true"  (completeMethod)="search($event)" class="w-full"/>
+            </div>
+        </div>
+        <hr>
+        <h2>Number inputs</h2>
+        <div class="NumberInputsDiv">
+            <div class="InputsAndLabels">
+                <p-inputnumber [(ngModel)]="item.weightKg" [showButtons]="true"/>
+                <p>Weigth</p>
+            </div>
+            <div class="InputsAndLabels">
+                <p-inputnumber [(ngModel)]="item.heightCm" [showButtons]="true"/>
+                <p>Height</p>
+            </div>
+            <div class="InputsAndLabels">
+                <p-inputnumber [(ngModel)]="item.widthCm" [showButtons]="true"/>
+                <p>Width</p>
+            </div>
+            <div class="InputsAndLabels">
+                <p-inputnumber [(ngModel)]="item.lengthCm" [showButtons]="true"/>
+                <p>Length</p>
+            </div>
+        </div>
+        <hr>
+        <div class="ButtonDiv">
+            <p-button label="Cancel" [raised]="true" (click)="closeDialog()" severity="secondary" [style]="{width: '100%'}" class="w-full"/>
+            <p-button label="Save" [raised]="true" (click)="saveItem()" severity="success" [style]="{width: '100%'}" class="w-full"/>
+        </div>
+    </p-dialog>

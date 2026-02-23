@@ -8,6 +8,9 @@ import { Message } from '../interfaces/message';
 })
 
 export class MessageService {
+  add(arg0: { severity: string; summary: string; detail: string; }) {
+    throw new Error('Method not implemented.');
+  }
 
   private messageSubject = new BehaviorSubject<Message | null>(null);
 
