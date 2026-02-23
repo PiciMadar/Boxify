@@ -42,6 +42,10 @@ export class BoxesComponent implements OnInit{
         this.visible = false;
     }
     
+    NoBoxesFound:boolean = true;
+    EditMode:boolean = false;
+    BoxesList:Box[] = [];
+
     constructor(
         private api : ApiService,
         private msg : MessageService,
@@ -82,9 +86,27 @@ export class BoxesComponent implements OnInit{
         updatedAt: null
     };
 
+    getBoxes(){
+        this.api.selectByField("boxes", "userId", "eq", this.auth.loggedUser().id).subscribe({
+            next: (response) => {
+                this.BoxesList = response as Box[];
+                if(this.BoxesList.length !== 0) {
+                    this.NoBoxesFound = false;
+                }
+            },
+            error: (error) => {
+                this.msg.show("error", "Error", "Failed to retrieve boxes");
+                console.log("Error details:", error);
+            }
+        });
+    }
+
     clearForm(){
         this.box.name = '';
         this.box.note = '';
+    }
+    editBoxes(){
+
     }
     addItem(){
         if(this.box.name != '' || this.box.note != '') {
@@ -103,6 +125,8 @@ export class BoxesComponent implements OnInit{
             this.api.insert("boxes", this.box, true).subscribe({
                 next: (response) => {
                     this.msg.show("success", "Success", "Box created successfully");
+                    this.clearForm();
+                    this.getBoxes()
                 },
                 error: (error) => {
                     this.msg.show("error", "Error", "Failed to create box");
@@ -124,17 +148,6 @@ export class BoxesComponent implements OnInit{
 
     boxItems = [
       { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
-      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
-      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' },
-      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
-      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
-      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' },
-      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
-      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
-      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' },
-      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
-      { name: 'Name2', dimensions: '20x20x20', weight: '10kg' },
-      { name: 'Name3', dimensions: '5x5x5', weight: '2kg' }
     ];
 
 
@@ -151,5 +164,6 @@ export class BoxesComponent implements OnInit{
                 icon: 'pi pi-times'
             }
         ];
+        this.getBoxes();
     }
 }
