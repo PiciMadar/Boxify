@@ -168,3 +168,8 @@ p-inputnumber{
     row-gap: 15%;
     flex-direction: column;
 }
+
+.newBoxContent > p-floatlabel {
+    display: block;
+    margin-bottom: 1rem;
+}
