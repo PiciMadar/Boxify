@@ -1,5 +1,5 @@
 export interface Box {
-    id?: number;
+    id?: string;
     userId: number;
     code?: string;
     labelType?: string;

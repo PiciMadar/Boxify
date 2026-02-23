@@ -230,7 +230,7 @@
                 <hr>
                 <ng-template pTemplate="footer">
                     <div class="flex gap-4 mt-1">
-                        <p-button label="Delete" severity="danger" class="w-full" [outlined]="true" styleClass="w-full" />
+                        <p-button label="Delete" severity="danger" class="w-full" [outlined]="true" (click)="deleteBox(box.id!)" styleClass="w-full" />
                         <p-button label="Edit" (click)="editBoxes()" class="w-full" styleClass="w-full" />
                         <p-button label="Add" icon="pi pi-plus" (click)="openAddItem(box)" class="w-full" styleClass="w-full" />
                     </div>
