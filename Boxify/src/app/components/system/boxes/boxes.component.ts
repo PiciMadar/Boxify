@@ -76,8 +76,6 @@ export class BoxesComponent implements OnInit{
     boxItem: BoxItem = {
       id: 0,
       boxId: 0,
-      description: '',
-      category: '',
       itemId: 0,
       quantity: 0,
       createdAt: null,
@@ -211,8 +209,6 @@ export class BoxesComponent implements OnInit{
         const payload: any = {
             boxId: this.selectedBox.id,
             itemId: this.item.id,
-            description: this.item.description,
-            category: this.item.category,
             quantity: this.boxItem.quantity || 1
         };
         this.api.insert('boxitems', payload, true).subscribe({
