@@ -13,13 +13,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { SelectModule } from 'primeng/select';
 import { Box } from '../../../interfaces/box';
 import { BoxItem } from '../../../interfaces/boxItem';
 import { Item } from '../../../interfaces/item';
 import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
-import { SafeResourceUrl } from '@angular/platform-browser';
 
 
 
@@ -39,7 +39,8 @@ import { SafeResourceUrl } from '@angular/platform-browser';
         DialogModule,
         FloatLabelModule,
         InputNumber,
-        TableModule
+        TableModule,
+        SelectModule
     ],
   templateUrl: './boxes.component.html',
   styleUrl: './boxes.component.scss'
@@ -99,6 +100,8 @@ export class BoxesComponent implements OnInit{
         createdAt: null,
         updatedAt: null
     };
+    items: Item[] = [];
+    selectedItem: Item | null = null;
 
     getBoxes(){
         this.api.selectByField("boxes", "userId", "eq", this.auth.loggedUser().id).subscribe({
@@ -106,6 +109,12 @@ export class BoxesComponent implements OnInit{
                 this.BoxesList = response as Box[];
                 if(this.BoxesList.length !== 0) {
                     this.NoBoxesFound = false;
+                    // Load items for each box
+                    this.BoxesList.forEach(b => {
+                        if (b.id) {
+                            this.loadBoxItems(b.id, 'card');
+                        }
+                    });
                 }
             },
             error: (error) => {
@@ -161,15 +170,16 @@ export class BoxesComponent implements OnInit{
         this.box.lengthCm = size === 'small' ? 30 : size === 'medium' ? 90 : 200;
     }
 
-    boxItems = [
-      { name: 'Name1', dimensions: '10x10x10', weight: '5kg' },
-    ];
+    boxItems: { name: string, dimensions: string, weight: string, quantity: number }[] = [];
+
+    // Map to store resolved box items per box id for the cards
+    boxItemsMap: { [boxId: string]: { name: string, dimensions: string, weight: string, quantity: number }[] } = {};
 
 
   value: number = 0;
-  items: MenuItem[] | undefined;
+  menuItems: MenuItem[] | undefined;
   ngOnInit() {
-        this.items = [
+        this.menuItems = [
             {
                 label: 'Update',
                 icon: 'pi pi-refresh'
@@ -180,6 +190,87 @@ export class BoxesComponent implements OnInit{
             }
         ];
         this.getBoxes();
+        this.getUserItems();
+    }
+
+    getUserItems() {
+        this.api.selectByField("items", "userId", "eq", this.auth.loggedUser().id).subscribe({
+            next: (response) => {
+                this.items = response as Item[];
+            },
+            error: (error) => {
+                console.error("Failed to retrieve items:", error);
+            }
+        });
+    }
+
+    loadBoxItems(boxId: string, target: 'dialog' | 'card' = 'dialog') {
+        this.api.selectByField("box_items", "boxId", "eq", boxId).subscribe({
+            next: (response) => {
+                const boxItemRecords = response as BoxItem[];
+                const resolved: { name: string, dimensions: string, weight: string, quantity: number }[] = [];
+                let pending = boxItemRecords.length;
+
+                if (pending === 0) {
+                    if (target === 'dialog') {
+                        this.boxItems = [];
+                    } else {
+                        this.boxItemsMap[boxId] = [];
+                    }
+                    return;
+                }
+
+                boxItemRecords.forEach(bi => {
+                    this.api.selectById("items", bi.itemId.toString()).subscribe({
+                        next: (itemRes: any) => {
+                            const it = (Array.isArray(itemRes) ? itemRes[0] : itemRes) as Item;
+                            resolved.push({
+                                name: it.name,
+                                dimensions: `${it.widthCm}x${it.heightCm}x${it.lengthCm}`,
+                                weight: `${it.weightKg} kg`,
+                                quantity: bi.quantity
+                            });
+                            pending--;
+                            if (pending === 0) {
+                                if (target === 'dialog') {
+                                    this.boxItems = resolved;
+                                } else {
+                                    this.boxItemsMap[boxId] = resolved;
+                                }
+                            }
+                        },
+                        error: () => {
+                            resolved.push({
+                                name: `Item #${bi.itemId}`,
+                                dimensions: '—',
+                                weight: '—',
+                                quantity: bi.quantity
+                            });
+                            pending--;
+                            if (pending === 0) {
+                                if (target === 'dialog') {
+                                    this.boxItems = resolved;
+                                } else {
+                                    this.boxItemsMap[boxId] = resolved;
+                                }
+                            }
+                        }
+                    });
+                });
+            },
+            error: (error) => {
+                console.error("Failed to load box items:", error);
+                if (target === 'dialog') {
+                    this.boxItems = [];
+                }
+            }
+        });
+    }
+
+    onItemSelected(event: any) {
+        if (this.selectedItem) {
+            this.item = { ...this.selectedItem };
+        }
     }
 
     // Selected box for adding items
@@ -188,6 +279,12 @@ export class BoxesComponent implements OnInit{
     openAddItem(box: Box) {
         this.AddItemMode = true;
         this.selectedBox = box;
+        this.selectedItem = null;
+        this.boxItems = [];
+        this.getUserItems();
+        if (box.id) {
+            this.loadBoxItems(box.id, 'dialog');
+        }
         // Prefill dialog with selected box context
         this.box = {
             ...this.box,
@@ -207,19 +304,26 @@ export class BoxesComponent implements OnInit{
             this.msg.show('error', 'Error', 'No box selected');
             return;
         }
+        if (!this.selectedItem && !this.item.id) {
+            this.msg.show('error', 'Error', 'Please select an item');
+            return;
+        }
         
+        const itemId = this.selectedItem?.id || this.item.id;
         const payload: any = {
             boxId: this.selectedBox.id,
-            itemId: this.item.id,
+            itemId: itemId,
             quantity: this.boxItem.quantity || 1
         };
-        this.api.insert('boxitems', payload, true).subscribe({
+        this.api.insert('box_items', payload, true).subscribe({
             next: (res) => {
                 this.msg.show('success', 'Success', 'Item added to box');
-                this.closeDialog();
-                this.getBoxes();
-                this.AddItemMode = false;
-                this.selectedBox = null;
+                // Refresh the box items in the dialog
+                if (this.selectedBox?.id) {
+                    this.loadBoxItems(this.selectedBox.id, 'dialog');
+                }
+                this.selectedItem = null;
+                this.item = { id: 0, name: '', userId: 0, description: '', category: '', lengthCm: 0, widthCm: 0, heightCm: 0, weightKg: 0, imagepath: null, createdAt: null, updatedAt: null };
             },
             error: (err) => {
                 console.error('Failed to add item to box', err);

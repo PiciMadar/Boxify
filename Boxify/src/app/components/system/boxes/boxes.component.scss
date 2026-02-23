@@ -173,3 +173,31 @@ p-inputnumber{
     display: block;
     margin-bottom: 1rem;
 }
+
+.existing-item-select {
+    margin-bottom: 1rem;
+
+    p-floatlabel {
+        display: block;
+        margin-bottom: 0.75rem;
+    }
+
+    .divider-or {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0.75rem 0;
+
+        hr {
+            flex: 1;
+            border: none;
+            border-top: 1px solid rgb(214, 214, 214);
+        }
+
+        span {
+            font-size: 0.85rem;
+            color: #888;
+            white-space: nowrap;
+        }
+    }
+}

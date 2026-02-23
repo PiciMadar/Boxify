@@ -43,6 +43,7 @@
                                 <th>Name</th>
                                 <th>Dimensions</th>
                                 <th>Weight</th>
+                                <th>Qty</th>
                             </tr>
                         </ng-template>
                         <ng-template #body let-item>
@@ -50,6 +51,15 @@
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.dimensions }}</td>
                                 <td>{{ item.weight }}</td>
+                                <td>{{ item.quantity }}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template #emptymessage>
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 2rem; color: #888;">
+                                    <i class="pi pi-inbox" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+                                    No items in this box yet
+                                </td>
                             </tr>
                         </ng-template>
                 </p-table>
@@ -109,6 +119,36 @@
                 <div class="newBoxContent">
                     <hr>
                     <h1>Add new item</h1>
+
+                    <!-- Dropdown to select existing item -->
+                    <div *ngIf="AddItemMode" class="existing-item-select">
+                        <p-floatlabel variant="on">
+                            <p-select
+                                id="item_select"
+                                [options]="items"
+                                [(ngModel)]="selectedItem"
+                                optionLabel="name"
+                                [filter]="true"
+                                filterBy="name"
+                                [showClear]="true"
+                                placeholder="Select an existing item"
+                                class="w-full"
+                                (onChange)="onItemSelected($event)"
+                                [style]="{ width: '100%' }">
+                                <ng-template let-item pTemplate="item">
+                                    <div class="flex items-center gap-2">
+                                        <i class="pi pi-box"></i>
+                                        <div>
+                                            <span>{{ item.name }}</span>
+                                            <small class="ml-2" style="color: #888;">{{ item.widthCm }}x{{ item.heightCm }}x{{ item.lengthCm }}cm · {{ item.weightKg }}kg</small>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-select>
+                            <label for="item_select"></label>
+                        </p-floatlabel>
+                    </div>
+
                     <p-floatlabel variant="on">
                         <input pInputText id="on_label" [(ngModel)]="item.name" autocomplete="off" class="w-full h-full" [disabled]="!AddItemMode"/>
                         <label for="on_label">Item name</label>
@@ -208,7 +248,7 @@
                     <hr>
                     <h3>Box content</h3>
                     <p-table
-                        [value]="boxItems"
+                        [value]="boxItemsMap[box.id!] || []"
                         [scrollable]="true"
                         scrollHeight="200px"
                         [tableStyle]="{'min-width': '5rem'}">
@@ -217,6 +257,7 @@
                                     <th>Name</th>
                                     <th>Dimensions</th>
                                     <th>Weight</th>
+                                    <th>Qty</th>
                                 </tr>
                             </ng-template>
                             <ng-template #body let-item>
@@ -224,6 +265,7 @@
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.dimensions }}</td>
                                     <td>{{ item.weight }}</td>
+                                    <td>{{ item.quantity }}</td>
                                 </tr>
                             </ng-template>
                     </p-table>
