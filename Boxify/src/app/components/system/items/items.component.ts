@@ -48,6 +48,20 @@ import { ToastModule } from 'primeng/toast';
   styleUrl: './items.component.scss'
 })
 export class ItemsComponent implements OnInit{
+
+
+    query:string =''
+    selectedItem: Item | 'All' = 'All'
+
+    get filterItems(): Item[] {
+      const q = this.query.trim().toLowerCase();
+      return this.ItemsList.filter((r) => {
+        const matchesQuery = !q || r.name.toLowerCase().includes(q);
+        const matchesCat = this.selectedItem === 'All' || r.name === this.selectedItem.name;
+        return matchesQuery && matchesCat;
+      });
+  }
+
     visible: boolean = false;
     visible2: boolean = false;
     showDialog() {
@@ -200,3 +214,6 @@ export class ItemsComponent implements OnInit{
       this.visible2 = true;
     }
 }
+
+
+
