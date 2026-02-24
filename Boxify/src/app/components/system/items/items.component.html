@@ -82,10 +82,37 @@
         <hr>
         <h2>Category</h2>
         <div class="HaromOszlop">
-
             <div class="card flex justify-center w-full ClassCatDropDown">
-                            <p-button label="+" [raised]="true" severity="success" />
-                <p-autocomplete [(ngModel)]="value" [dropdown]="true"  (completeMethod)="search($event)" class="w-full"/>
+                <p-autocomplete
+                    [(ngModel)]="item.category"
+                    [dropdown]="true"
+                    [suggestions]="filteredCategories"
+                    (completeMethod)="search($event)"
+                    placeholder="Select or type a category"
+                    class="w-full"
+                    [forceSelection]="false"
+                />
+                <p-button
+                    icon="pi pi-plus"
+                    [raised]="true"
+                    severity="success"
+                    (click)="showNewCategoryInput = !showNewCategoryInput"
+                />
+            </div>
+            <div *ngIf="showNewCategoryInput" class="new-category-row">
+                <input
+                    pInputText
+                    [(ngModel)]="newCategory"
+                    placeholder="New category name"
+                    class="w-full"
+                    (keydown.enter)="addNewCategory()"
+                />
+                <p-button
+                    label="Add"
+                    [raised]="true"
+                    severity="success"
+                    (click)="addNewCategory()"
+                />
             </div>
         </div>
         <hr>

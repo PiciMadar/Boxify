@@ -22,21 +22,34 @@ p-floatlabel{
     margin-top: 2%;
 }
 
-.ClassCatDropDown{
-    width: 33%;
-    margin-top: 2%;
-}
-.ClassCatDropDown>p-autocomplete{
-    width: 33%;
-}
-
 .HaromOszlop{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     row-gap: 0px;
     justify-content: center;
+    align-items: center;
     margin: auto;
     margin-bottom: 3%;
+}
+
+.ClassCatDropDown{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 2%;
+}
+
+.ClassCatDropDown > p-autocomplete {
+    flex: 1;
+}
+
+.new-category-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
 }
 
 .NumberInputsDiv{

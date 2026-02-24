@@ -51,9 +51,13 @@ export class ItemsComponent implements OnInit{
     visible: boolean = false;
     visible2: boolean = false;
     showDialog() {
+        this.showNewCategoryInput = false;
+        this.newCategory = '';
         this.visible = true;
     }
     closeDialog() {
+        this.showNewCategoryInput = false;
+        this.newCategory = '';
         this.visible = false;
     }
     
@@ -83,12 +87,42 @@ export class ItemsComponent implements OnInit{
     ItemsList: Item[] = []
     items: any[] | undefined;
 
+    // Categories
+    categories: string[] = [];
+    filteredCategories: string[] = [];
+    newCategory: string = '';
+    showNewCategoryInput: boolean = false;
+
     value: any;
 
     search(event: AutoCompleteCompleteEvent) {
-    let _items = [...Array(10).keys()];
+        const query = event.query.toLowerCase();
+        this.filteredCategories = this.categories.filter(c =>
+            c.toLowerCase().includes(query)
+        );
+    }
 
-    this.items = event.query ? [...Array(10).keys()].map((item) => event.query + '-' + item) : _items;
+    extractCategories() {
+        const unique = new Set<string>();
+        this.ItemsList.forEach(i => {
+            if (i.category && i.category.trim() !== '') {
+                unique.add(i.category.trim());
+            }
+        });
+        this.categories = Array.from(unique).sort();
+    }
+
+    addNewCategory() {
+        if (this.newCategory.trim() !== '') {
+            const cat = this.newCategory.trim();
+            if (!this.categories.includes(cat)) {
+                this.categories.push(cat);
+                this.categories.sort();
+            }
+            this.item.category = cat;
+            this.newCategory = '';
+            this.showNewCategoryInput = false;
+        }
     }
 
     onBasicUploadAuto(event: UploadEvent) {
@@ -113,6 +147,7 @@ export class ItemsComponent implements OnInit{
       this.api.selectByField("items", "userId", "eq", this.auth.loggedUser().id).subscribe({
             next: (response) => {
                 this.ItemsList = response as Item[];
+                this.extractCategories();
                 if(this.ItemsList.length !== 0) {
                     this.NoItemsFound = false;
                 }
