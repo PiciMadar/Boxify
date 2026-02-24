@@ -80,4 +80,9 @@ export class AuthService {
     }
     return false;
   }
+  
+  hasRole(role:string):boolean{
+    const user: any = this.loggedUser();
+    return user.role === role
+  }
 }
