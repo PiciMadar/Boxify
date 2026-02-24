@@ -21,7 +21,7 @@
             <div class="CalcDiv">
                 <h1>Space</h1>
                 <div class="card flex justify-center knobDiv">
-                    <p-knob [(ngModel)]="value" valueTemplate="{value}%" [size]="200" readonly="true"/>
+                    <p-knob [(ngModel)]="BoxMaxCap" valueTemplate="{value}%" [size]="200" readonly="true"/>
                 </div>
                 <h3>
                     Box weight capacity: {{box.maxWeightKg}} kg
@@ -166,6 +166,17 @@
                             <input pInputText id="on_label" [(ngModel)]="item.description" autocomplete="off" class="w-full h-full" [disabled]="!AddItemMode || MakeNewItem"/>
                             <label for="on_label">Item description</label>
                         </p-floatlabel>
+                        <br>
+                        <p-autocomplete
+                            [disabled]="!AddItemMode || MakeNewItem"
+                            [(ngModel)]="item.category"
+                            [dropdown]="true"
+                            [suggestions]="filteredCategories"
+                            (completeMethod)="search($event)"
+                            placeholder="Select or type a category"
+                            class="w-full"
+                            [forceSelection]="false"
+                        />
                         <div class="newBoxNumberCTRL">
                             <div class="card flex justify-center">
                                 <div class="IconAndNumber">
