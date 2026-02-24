@@ -141,15 +141,22 @@ export class BoxesComponent implements OnInit{
       else{
         this.item.userId = this.auth.loggedUser().id
         this.api.insert('items', this.item, true).subscribe({
-            next: (res) => {
-                console.log(this.item)
-                this.msg.show('success', 'Success', 'Item added to box');
-                this.selectedItem?.id = res.id
-                this.addItemToBox()
+            next: (res: any) => {
+                console.log('Created item response:', res);
+                const createdId = res.id ?? res[0]?.id ?? res.data?.id;
+                if (createdId) {
+                    this.item.id = createdId;
+                    this.selectedItem = { ...this.item, id: createdId };
+                    this.msg.show('success', 'Success', 'Item created');
+                    this.addItemToBox();
+                } else {
+                    console.error('Could not find id in response:', res);
+                    this.msg.show('error', 'Error', 'Item created but could not retrieve its ID');
+                }
             },
             error: (err) => {
-                console.error('Failed to add item to box', err);
-                this.msg.show('error', 'Error', err.error?.error || 'Failed to add item to box');
+                console.error('Failed to create item', err);
+                this.msg.show('error', 'Error', err.error?.error || 'Failed to create item');
             }
         });
       }
