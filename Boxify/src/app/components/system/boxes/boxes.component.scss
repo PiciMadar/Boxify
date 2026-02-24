@@ -201,3 +201,20 @@ p-inputnumber{
         }
     }
 }
+
+.NewOrDropDSwitchDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.NewOrDropDSwitchDiv>i{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.NewOrOldDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+}

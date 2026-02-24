@@ -20,6 +20,7 @@ import { Item } from '../../../interfaces/item';
 import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 
 
@@ -40,12 +41,16 @@ import { AuthService } from '../../../services/auth.service';
         FloatLabelModule,
         InputNumber,
         TableModule,
-        SelectModule
+        SelectModule,
+        ToggleSwitchModule
     ],
   templateUrl: './boxes.component.html',
   styleUrl: './boxes.component.scss'
 })
 export class BoxesComponent implements OnInit{
+
+    MakeNewItem: boolean = false;
+
     //Modal controll
     visible: boolean = false;
     showDialog() {
@@ -87,7 +92,6 @@ export class BoxesComponent implements OnInit{
     };
     //Item
     item:Item = {
-        id: 0,
         name: '',
         userId: 0,
         description: '',
@@ -97,8 +101,6 @@ export class BoxesComponent implements OnInit{
         heightCm: 0,
         weightKg: 0,
         imagepath: null,
-        createdAt: null,
-        updatedAt: null
     };
     items: Item[] = [];
     selectedItem: Item | null = null;
@@ -131,15 +133,28 @@ export class BoxesComponent implements OnInit{
     editBoxes(){
 
     }
-    addItem(){
-        if(this.box.name != '' || this.box.note != '') {
 
-        }
-        else
-        {
-            this.msg.show("error", "Error", "Please fill in the box name and description");
-        }
+    addItem(){
+      if(this.item.name == '' || this.item.description == '' || this.item.weightKg == 0 || this.item.widthCm == 0 || this.item.heightCm == 0 || this.item.lengthCm == 0){
+        this.msg.show('error', 'Error', 'Please fill in all inputs');
+      }
+      else{
+        this.item.userId = this.auth.loggedUser().id
+        this.api.insert('items', this.item, true).subscribe({
+            next: (res) => {
+                console.log(this.item)
+                this.msg.show('success', 'Success', 'Item added to box');
+                this.selectedItem?.id = res.id
+                this.addItemToBox()
+            },
+            error: (err) => {
+                console.error('Failed to add item to box', err);
+                this.msg.show('error', 'Error', err.error?.error || 'Failed to add item to box');
+            }
+        });
+      }
     }
+
     saveBox(){
         if(this.box.name != '' || this.box.note != '') {
             this.box.userId = this.auth.loggedUser().id;
