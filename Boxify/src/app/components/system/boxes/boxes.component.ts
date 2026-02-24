@@ -106,14 +106,13 @@ export class BoxesComponent implements OnInit{
     selectedItem: Item | null = null;
 
 
-    BoxMaxCap: number = 20;
+    BoxMaxCap: number = 0;
     getBoxes(){
         this.api.selectByField("boxes", "userId", "eq", this.auth.loggedUser().id).subscribe({
             next: (response) => {
                 this.BoxesList = response as Box[];
                 if(this.BoxesList.length !== 0) {
                     this.NoBoxesFound = false;
-                    // Load items for each box
                     this.BoxesList.forEach(b => {
                         if (b.id) {
                             this.loadBoxItems(b.id, 'card');
@@ -210,10 +209,10 @@ export class BoxesComponent implements OnInit{
     // Map to store resolved box items per box id for the cards
     boxItemsMap: { [boxId: string]: { name: string, dimensions: string, weight: string, quantity: number }[] } = {};
 
-
-  value: number = 0;
+    // Map to store weight fill percentage per box id for card knobs
+    weightPercentMap: { [boxId: string]: number } = {};
   menuItems: MenuItem[] | undefined;
-  ngOnInit() {
+  async ngOnInit() {
         this.menuItems = [
             {
                 label: 'Update',
@@ -224,8 +223,8 @@ export class BoxesComponent implements OnInit{
                 icon: 'pi pi-times'
             }
         ];
-        this.getBoxes();
-        this.getUserItems();
+        await this.getUserItems();
+        await this.getBoxes();
     }
 
     getUserItems() {
@@ -240,17 +239,24 @@ export class BoxesComponent implements OnInit{
     }
 
     loadBoxItems(boxId: string, target: 'dialog' | 'card' = 'dialog') {
+        // Find the box to get maxWeightKg
+        const box = this.BoxesList.find(b => b.id === boxId);
+        const maxWeight = box?.maxWeightKg || 1;
+
         this.api.selectByField("box_items", "boxId", "eq", boxId).subscribe({
             next: (response) => {
                 const boxItemRecords = response as BoxItem[];
                 const resolved: { name: string, dimensions: string, weight: string, quantity: number }[] = [];
                 let pending = boxItemRecords.length;
+                let totalWeight = 0;
 
                 if (pending === 0) {
                     if (target === 'dialog') {
                         this.boxItems = [];
+                        this.BoxMaxCap = 0;
                     } else {
                         this.boxItemsMap[boxId] = [];
+                        this.weightPercentMap[boxId] = 0;
                     }
                     return;
                 }
@@ -265,12 +271,16 @@ export class BoxesComponent implements OnInit{
                                 weight: `${it.weightKg} kg`,
                                 quantity: bi.quantity
                             });
+                            totalWeight += (it.weightKg || 0) * (bi.quantity || 1);
                             pending--;
                             if (pending === 0) {
+                                const percent = Math.min(Math.round((totalWeight / maxWeight) * 100), 100);
                                 if (target === 'dialog') {
                                     this.boxItems = resolved;
+                                    this.BoxMaxCap = percent;
                                 } else {
                                     this.boxItemsMap[boxId] = resolved;
+                                    this.weightPercentMap[boxId] = percent;
                                 }
                             }
                         },
@@ -283,10 +293,13 @@ export class BoxesComponent implements OnInit{
                             });
                             pending--;
                             if (pending === 0) {
+                                const percent = Math.min(Math.round((totalWeight / maxWeight) * 100), 100);
                                 if (target === 'dialog') {
                                     this.boxItems = resolved;
+                                    this.BoxMaxCap = percent;
                                 } else {
                                     this.boxItemsMap[boxId] = resolved;
+                                    this.weightPercentMap[boxId] = percent;
                                 }
                             }
                         }
@@ -297,6 +310,7 @@ export class BoxesComponent implements OnInit{
                 console.error("Failed to load box items:", error);
                 if (target === 'dialog') {
                     this.boxItems = [];
+                    this.BoxMaxCap = 0;
                 }
             }
         });
@@ -353,9 +367,10 @@ export class BoxesComponent implements OnInit{
         this.api.insert('box_items', payload, true).subscribe({
             next: (res) => {
                 this.msg.show('success', 'Success', 'Item added to box');
-                // Refresh the box items in the dialog
+                // Refresh the box items in the dialog and card
                 if (this.selectedBox?.id) {
                     this.loadBoxItems(this.selectedBox.id, 'dialog');
+                    this.loadBoxItems(this.selectedBox.id, 'card');
                 }
                 this.selectedItem = null;
                 this.item = { id: 0, name: '', userId: 0, description: '', category: '', lengthCm: 0, widthCm: 0, heightCm: 0, weightKg: 0, imagepath: null, createdAt: null, updatedAt: null };

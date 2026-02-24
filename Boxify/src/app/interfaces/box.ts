@@ -13,4 +13,5 @@ export interface Box {
     createdAt?: string | Date | null;
     updatedAt?: string | Date | null;
     name: string;
+    fill?: number;
 }

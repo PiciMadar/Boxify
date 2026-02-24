@@ -266,7 +266,7 @@
                 <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
                     <ng-template pTemplate="header">
                         <div class="card flex justify-center knobDiv">
-                            <p-knob [(ngModel)]="value" valueTemplate="{value}%" [size]="200" readonly="true"/>
+                            <p-knob [ngModel]="weightPercentMap[box.id!] || 0" valueTemplate="{value}%"  [size]="200" readonly="true"/>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="title"> {{box.name}} </ng-template>
