@@ -21,8 +21,7 @@ import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-
-
+import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-boxes',
@@ -42,7 +41,8 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
         InputNumber,
         TableModule,
         SelectModule,
-        ToggleSwitchModule
+        ToggleSwitchModule,
+        AutoCompleteModule,
     ],
   templateUrl: './boxes.component.html',
   styleUrl: './boxes.component.scss'
@@ -105,6 +105,8 @@ export class BoxesComponent implements OnInit{
     items: Item[] = [];
     selectedItem: Item | null = null;
 
+
+    BoxMaxCap: number = 20;
     getBoxes(){
         this.api.selectByField("boxes", "userId", "eq", this.auth.loggedUser().id).subscribe({
             next: (response) => {
@@ -134,6 +136,17 @@ export class BoxesComponent implements OnInit{
 
     }
 
+     // Categories
+    categories: string[] = [];
+    filteredCategories: string[] = [];
+    newCategory: string = '';
+    showNewCategoryInput: boolean = false;
+    search(event: AutoCompleteCompleteEvent) {
+            const query = event.query.toLowerCase();
+            this.filteredCategories = this.categories.filter(c =>
+                c.toLowerCase().includes(query)
+            );
+    }
     addItem(){
       if(this.item.name == '' || this.item.description == '' || this.item.weightKg == 0 || this.item.widthCm == 0 || this.item.heightCm == 0 || this.item.lengthCm == 0){
         this.msg.show('error', 'Error', 'Please fill in all inputs');
