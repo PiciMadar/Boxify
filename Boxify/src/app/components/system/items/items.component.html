@@ -9,7 +9,7 @@
         <ng-template #center>
             <p-iconfield iconPosition="left" >
                 <p-inputicon styleClass="pi pi-search" />
-                <input type="text" pInputText placeholder="Search" />
+                <input type="text" [(ngModel)]="query" pInputText placeholder="Search" />
             </p-iconfield>
         </ng-template>
     </p-toolbar>
