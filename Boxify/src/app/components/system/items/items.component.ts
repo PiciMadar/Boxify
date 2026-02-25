@@ -232,9 +232,12 @@ export class ItemsComponent implements OnInit{
       this.item.imagepath = this.uploadedFileUrl
     };
 
+    CurrentImg = document.getElementById("ShownImg") as HTMLImageElement
+    ImageVisible:boolean = false;
     imgOpen(imgurl:string){
       if(imgurl != null){
-        window.open(imgurl,'_blank')?.focus()
+        this.ImageVisible = true
+        this.CurrentImg.src = imgurl
       }
       else{
         this.messageService.show('error','Error','No image to open!')

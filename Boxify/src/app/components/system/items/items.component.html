@@ -145,7 +145,7 @@
         >
         Upload a file...
         </p-button>
-        
+
         <div class="ButtonDiv">
             <p-button label="Cancel" [raised]="true" (click)="closeDialog()" severity="secondary" [style]="{width: '100%'}" class="w-full"/>
             <p-button label="Save" [raised]="true" (click)="saveItem()" severity="success" [style]="{width: '100%'}" class="w-full"/>
@@ -157,5 +157,11 @@
     <p-dialog class="NewItemModal" header="Move to box" [modal]="true" [(visible)]="visible2" [style]="{ width: '20rem', height: '10rem' }">
         <div class="card flex justify-center">
             <p-autocomplete  [dropdown]="true" [suggestions]="ItemsList" (completeMethod)="search($event)" />
+        </div>
+    </p-dialog>
+
+    <p-dialog class="showImgModal" [modal]="true" [(visible)]="ImageVisible" [style]="{width: '20rem', height:'10rem'}">
+        <div class="card flex justify-center">
+            <img id="ShownImg" src="" alt="">
         </div>
     </p-dialog>
