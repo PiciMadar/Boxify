@@ -160,8 +160,8 @@
         </div>
     </p-dialog>
 
-    <p-dialog class="showImgModal" [modal]="true" [(visible)]="ImageVisible" [style]="{width: '20rem', height:'10rem'}">
+    <p-dialog class="showImgModal" header="Image" [modal]="true" [(visible)]="ImageVisible" [style]="{width: '40rem'}">
         <div class="card flex justify-center">
-            <img id="ShownImg" src="" alt="">
+            <img id="ShownImg" [src]="currentImgUrl" alt="" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
         </div>
     </p-dialog>

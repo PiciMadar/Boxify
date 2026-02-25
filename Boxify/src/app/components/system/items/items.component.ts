@@ -232,12 +232,12 @@ export class ItemsComponent implements OnInit{
       this.item.imagepath = this.uploadedFileUrl
     };
 
-    CurrentImg = document.getElementById("ShownImg") as HTMLImageElement
+    currentImgUrl: string = '';
     ImageVisible:boolean = false;
     imgOpen(imgurl:string){
       if(imgurl != null){
-        this.ImageVisible = true
-        this.CurrentImg.src = imgurl
+        this.currentImgUrl = imgurl;
+        this.ImageVisible = true;
       }
       else{
         this.messageService.show('error','Error','No image to open!')
