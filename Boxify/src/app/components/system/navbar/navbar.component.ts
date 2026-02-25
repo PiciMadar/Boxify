@@ -87,12 +87,12 @@ export class NavbarComponent implements OnInit, OnDestroy{
             {
               label: 'My Boxes',
               icon: 'pi pi-box',
-              url: '/boxes'
+              url: '/box/boxes'
             },
             {
               label: 'Items',
               icon: 'pi pi-objects-column',
-              url: '/items'
+              url: '/box/items'
             }
           ]
         }

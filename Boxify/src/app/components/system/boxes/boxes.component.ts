@@ -22,6 +22,7 @@ import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-boxes',
@@ -43,6 +44,7 @@ import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocompl
         SelectModule,
         ToggleSwitchModule,
         AutoCompleteModule,
+        QRCodeModule,
     ],
   templateUrl: './boxes.component.html',
   styleUrl: './boxes.component.scss'
@@ -75,6 +77,7 @@ export class BoxesComponent implements OnInit{
     //Boxes
     box : Box = {
       userId: 0,
+      code: '',
       lengthCm: 0,
       widthCm: 0,
       heightCm: 0,
@@ -115,6 +118,11 @@ export class BoxesComponent implements OnInit{
                     this.NoBoxesFound = false;
                     this.BoxesList.forEach(b => {
                         if (b.id) {
+                            // Backfill code for boxes that don't have one
+                            if (!b.code) {
+                                b.code = this.generateBoxCode();
+                                this.api.update('boxes', b.id, { code: b.code }).subscribe();
+                            }
                             this.loadBoxItems(b.id, 'card');
                         }
                     });
@@ -174,10 +182,19 @@ export class BoxesComponent implements OnInit{
       }
     }
 
+    generateBoxCode(length: number = 8): string {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = 'BOX-';
+        for (let i = 0; i < length; i++) {
+            code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return code;
+    }
+
     saveBox(){
         if(this.box.name != '' || this.box.note != '') {
             this.box.userId = this.auth.loggedUser().id;
-            console.log("Box details:", this.box);
+            this.box.code = this.generateBoxCode();
 
             this.api.insert("boxes", this.box, true).subscribe({
                 next: (response) => {

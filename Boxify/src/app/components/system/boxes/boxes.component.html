@@ -296,6 +296,12 @@
                             </ng-template>
                     </p-table>
                 <hr>
+                <div *ngIf="box.code" class="qr-code-section flex flex-column align-items-center" style="text-align: center; padding: 1rem 0;">
+                    <h3>Box QR Code</h3>
+                    <qrcode [qrdata]="box.code!" [width]="150" [errorCorrectionLevel]="'M'" [colorDark]="'#ffffff'" [colorLight]="'#1a1a1a'" [margin]="1"></qrcode>
+                    <small style="color: #888; margin-top: 0.5rem;">{{ box.code }}</small>
+                </div>
+                <hr>
                 <ng-template pTemplate="footer">
                     <div class="flex gap-4 mt-1">
                         <p-button label="Delete" severity="danger" class="w-full" [outlined]="true" (click)="deleteBox(box.id!)" styleClass="w-full" />

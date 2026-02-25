@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         }
         this.auth.login(res.token,res.id);
         this.msg.show("success","Success","Logged in successfully");
-        this.router.navigate(['/boxes']);
+        this.router.navigate(['/box/boxes']);
       },
       error: (err) => {
         console.error(err);
@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.auth.isLoggedUser()) {
-      this.router.navigate(['/boxes']);
+      this.router.navigate(['/box/boxes']);
     }
   }
 }
