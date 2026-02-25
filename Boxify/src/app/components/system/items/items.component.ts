@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,8 +12,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { Box } from '../../../interfaces/box';
-import { BoxItem } from '../../../interfaces/boxItem';
 import { Item } from '../../../interfaces/item';
 import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
@@ -22,6 +19,10 @@ import { AuthService } from '../../../services/auth.service';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { FileUpload, UploadEvent } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
+import { UploaderModule } from "angular-uploader";
+import { Uploader, UploadWidgetConfig, UploadWidgetResult } from 'uploader';
+import { Router, RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-items',
@@ -42,7 +43,9 @@ import { ToastModule } from 'primeng/toast';
         TableModule,
         AutoCompleteModule,
         FileUpload,
-        ToastModule
+        ToastModule,
+        FileUpload,
+        UploaderModule
     ],
   templateUrl: './items.component.html',
   styleUrl: './items.component.scss'
@@ -212,6 +215,33 @@ export class ItemsComponent implements OnInit{
     }
     moveToBox(){
       this.visible2 = true;
+    }
+
+    //File upload
+    uploadedFileUrl:string = ''
+
+    uploader = Uploader({
+    apiKey: 'free', // <-- Get production-ready API keys from Bytescale
+    });
+    options: UploadWidgetConfig = {
+      multi: false,
+    };
+    onComplete = (files: UploadWidgetResult[]) => {
+      this.uploadedFileUrl = files[0]?.fileUrl;
+      console.log(this.uploadedFileUrl)
+      this.item.imagepath = this.uploadedFileUrl
+    };
+
+    CurrentImg = document.getElementById("ShownImg") as HTMLImageElement
+    ImageVisible:boolean = false;
+    imgOpen(imgurl:string){
+      if(imgurl != null){
+        this.ImageVisible = true
+        this.CurrentImg.src = imgurl
+      }
+      else{
+        this.messageService.show('error','Error','No image to open!')
+      }
     }
 }
 

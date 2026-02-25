@@ -38,7 +38,7 @@
                 <th>Width</th>
                 <th>Height</th>
                 <th>Length</th>
-                <th>Image</th>
+                <th class="ItemImgTH">Image</th>
                 <th>Operations</th>
             </tr>
         </ng-template>
@@ -51,7 +51,7 @@
                 <td>{{item.widthCm}}</td>
                 <td>{{item.heightCm}}</td>
                 <td>{{item.lengthCm}}</td>
-                <td>{{item.imagepath}}</td>
+                <td class="ItemImgTH"><img class="ItemImg" src="{{item.imagepath}}" alt="" srcset="" (click)="imgOpen(item.imagepath)"></td>
                 <td>
                     <div class="ListGombok">
                         <p-button label='' icon="pi pi-box" severity="info" (click)="moveToBox()" />
@@ -135,7 +135,17 @@
                 <p>Length</p>
             </div>
         </div>
-        <hr>
+
+        <a href="{{ uploadedFileUrl }}" target="_blank">{{ uploadedFileUrl }}</a>
+        <p-button
+        uploadButton
+        [uploadComplete]="onComplete"
+        [uploadOptions]="options"
+        [uploader]="uploader"
+        >
+        Upload a file...
+        </p-button>
+
         <div class="ButtonDiv">
             <p-button label="Cancel" [raised]="true" (click)="closeDialog()" severity="secondary" [style]="{width: '100%'}" class="w-full"/>
             <p-button label="Save" [raised]="true" (click)="saveItem()" severity="success" [style]="{width: '100%'}" class="w-full"/>
@@ -147,5 +157,11 @@
     <p-dialog class="NewItemModal" header="Move to box" [modal]="true" [(visible)]="visible2" [style]="{ width: '20rem', height: '10rem' }">
         <div class="card flex justify-center">
             <p-autocomplete  [dropdown]="true" [suggestions]="ItemsList" (completeMethod)="search($event)" />
+        </div>
+    </p-dialog>
+
+    <p-dialog class="showImgModal" [modal]="true" [(visible)]="ImageVisible" [style]="{width: '20rem', height:'10rem'}">
+        <div class="card flex justify-center">
+            <img id="ShownImg" src="" alt="">
         </div>
     </p-dialog>
