@@ -8,7 +8,7 @@
         <ng-template #center>
             <p-iconfield iconPosition="left" >
                 <p-inputicon styleClass="pi pi-search" />
-                <input type="text" pInputText placeholder="Search" />
+                <input type="text" [(ngModel)]="query" pInputText placeholder="Search" />
             </p-iconfield>
         </ng-template>
     </p-toolbar>
@@ -16,7 +16,7 @@
 
 <div class="card flex justify-center">
     <hr>
-    <p-dialog [header]="AddItemMode ? 'Add item to box' : 'New box'" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem', height: '70rem' }">
+    <p-dialog [header]="AddItemMode ? 'Add item to box' : (EditMode ? 'Edit box' : 'New box')" [modal]="true" [(visible)]="visible" [style]="{ width: '60rem', height: '70rem' }">
         <div class="newBoxContainer">
             <div class="CalcDiv">
                 <h1>Space</h1>
@@ -69,7 +69,7 @@
             </div>
             <div class="contentDiv">
                 <div class="newBoxName">
-                    <h1>Create a new box</h1>
+                    <h1>{{ EditMode ? 'Edit box' : 'Create a new box' }}</h1>
                     <p-floatlabel variant="on">
                         <input pInputText id="on_label" [(ngModel)]="box.name" autocomplete="off" class="w-full" [disabled]="AddItemMode"/>
                         <label for="on_label">Box name</label>
@@ -251,18 +251,19 @@
         </div>
         <div class="newBoxButtonDiv">
             <p-button label="Cancel" [raised]="true" (click)="closeDialog()" severity="secondary" [style]="{width: '100%'}"/>
-            <p-button *ngIf="!AddItemMode" label="Save" [raised]="true" (click)="saveBox()" severity="success" [style]="{width: '100%'}"/>
+            <p-button *ngIf="!AddItemMode && !EditMode" label="Save" [raised]="true" (click)="saveBox()" severity="success" [style]="{width: '100%'}"/>
+            <p-button *ngIf="EditMode && !AddItemMode" label="Update" [raised]="true" (click)="updateBox()" severity="success" [style]="{width: '100%'}"/>
             <p-button *ngIf="AddItemMode" label="Add item to box" [raised]="true" (click)="addItemToBox()" severity="success" [style]="{width: '100%'}"/>
         </div>
     </p-dialog>
 </div>
 
     <div class="BoxCardsDiv" >
-        <div class="noBoxesDiv" *ngIf="NoBoxesFound">
+        <div class="noBoxesDiv" *ngIf="filterBoxes.length === 0">
             <img src="noBoxes.png" alt="" srcset="">
             <h1>No boxes found!</h1>
         </div>
-            <div *ngFor="let box of BoxesList" class="mb-4 p-8 flex items-center justify-center">
+            <div *ngFor="let box of filterBoxes" class="mb-4 p-8 flex items-center justify-center">
                 <p-card [style]="{ width: '25rem', overflow: 'hidden' }">
                     <ng-template pTemplate="header">
                         <div class="card flex justify-center knobDiv">
@@ -305,7 +306,7 @@
                 <ng-template pTemplate="footer">
                     <div class="flex gap-4 mt-1">
                         <p-button label="Delete" severity="danger" class="w-full" [outlined]="true" (click)="deleteBox(box.id!)" styleClass="w-full" />
-                        <p-button label="Edit" (click)="editBoxes()" class="w-full" styleClass="w-full" />
+                        <p-button label="Edit" (click)="editBox(box)" class="w-full" styleClass="w-full" />
                         <p-button label="Add" icon="pi pi-plus" (click)="openAddItem(box)" class="w-full" styleClass="w-full" />
                     </div>
                 </ng-template>

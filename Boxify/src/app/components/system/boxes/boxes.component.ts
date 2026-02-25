@@ -51,6 +51,18 @@ import { QRCodeModule } from 'angularx-qrcode';
 })
 export class BoxesComponent implements OnInit{
 
+    query:string =''
+    querySelectedBox: Box | 'All' = 'All';
+    get filterBoxes(): Box[] {
+      const q = this.query.trim().toLowerCase();
+      const filtered = this.BoxesList.filter((r) => {
+        const matchesQuery = !q || r.name.toLowerCase().includes(q);
+        const matchesCat = this.querySelectedBox === 'All' || r.name === this.querySelectedBox.name;
+        return matchesQuery && matchesCat;
+      });
+      return filtered;
+  }
+
     MakeNewItem: boolean = false;
 
     //Modal controll
@@ -61,6 +73,7 @@ export class BoxesComponent implements OnInit{
     closeDialog() {
         this.visible = false;
         this.AddItemMode = false;
+        this.EditMode = false;
         this.selectedBox = null;
     }
     AddItemMode:boolean = false;
@@ -136,11 +149,60 @@ export class BoxesComponent implements OnInit{
     }
 
     clearForm(){
-        this.box.name = '';
-        this.box.note = '';
+        this.box = {
+            userId: 0,
+            code: '',
+            lengthCm: 0,
+            widthCm: 0,
+            heightCm: 0,
+            maxWeightKg: 0,
+            name: '',
+        };
     }
-    editBoxes(){
+    editBox(box: Box){
+        this.EditMode = true;
+        this.AddItemMode = false;
+        this.selectedBox = box;
+        this.boxItems = [];
+        this.box = { ...box };
 
+        if (box.id) {
+            this.loadBoxItems(box.id, 'dialog');
+        }
+        this.showDialog();
+    }
+
+    updateBox() {
+        if (!this.selectedBox?.id) {
+            this.msg.show('error', 'Error', 'No box selected for editing');
+            return;
+        }
+        if (this.box.name === '') {
+            this.msg.show('error', 'Error', 'Box name cannot be empty');
+            return;
+        }
+
+        const updateData = {
+            name: this.box.name,
+            note: this.box.note,
+            lengthCm: this.box.lengthCm,
+            widthCm: this.box.widthCm,
+            heightCm: this.box.heightCm,
+            maxWeightKg: this.box.maxWeightKg,
+        };
+
+        this.api.update('boxes', this.selectedBox.id, updateData).subscribe({
+            next: () => {
+                this.msg.show('success', 'Success', 'Box updated successfully');
+                this.getBoxes();
+                this.closeDialog();
+                this.clearForm();
+            },
+            error: (error) => {
+                this.msg.show('error', 'Error', 'Failed to update box');
+                console.error('Update error:', error);
+            }
+        });
     }
 
      // Categories
