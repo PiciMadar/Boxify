@@ -1,9 +1,74 @@
 <div class="container">
     <h1 class="MainTitle">Dashboard</h1>
     <hr>
-    <div class="card">
-        <p-chart type="bar" [data]="data" [options]="options" class="h-[30rem]" />
+
+    <!-- Stat Cards -->
+    <div class="stats-row">
+        <p-card class="stat-card">
+            <div class="stat-content">
+                <i class="pi pi-box stat-icon"></i>
+                <div>
+                    <h2>{{ totalBoxes }}</h2>
+                    <p>Total Boxes</p>
+                </div>
+            </div>
+        </p-card>
+        <p-card class="stat-card">
+            <div class="stat-content">
+                <i class="pi pi-objects-column stat-icon"></i>
+                <div>
+                    <h2>{{ totalItems }}</h2>
+                    <p>Unique Items</p>
+                </div>
+            </div>
+        </p-card>
+        <p-card class="stat-card">
+            <div class="stat-content">
+                <i class="pi pi-list stat-icon"></i>
+                <div>
+                    <h2>{{ totalBoxItems }}</h2>
+                    <p>Items Packed</p>
+                </div>
+            </div>
+        </p-card>
+        <p-card class="stat-card">
+            <div class="stat-content">
+                <i class="pi pi-chart-pie stat-icon"></i>
+                <div>
+                    <h2>{{ avgFillPercent }}%</h2>
+                    <p>Avg Fill</p>
+                </div>
+            </div>
+        </p-card>
     </div>
+
+    <hr>
+
+    <!-- Charts Row 1 -->
+    <div class="charts-row">
+        <div class="chart-card">
+            <h3>Items per Box</h3>
+            <p-chart *ngIf="itemsPerBoxData" type="bar" [data]="itemsPerBoxData" [options]="itemsPerBoxOptions" class="h-[20rem]" />
+            <p *ngIf="!itemsPerBoxData" class="no-data">No box data yet</p>
+        </div>
+        <div class="chart-card">
+            <h3>Items by Category</h3>
+            <p-chart *ngIf="categoryData" type="doughnut" [data]="categoryData" [options]="categoryOptions" class="h-[20rem]" />
+            <p *ngIf="!categoryData" class="no-data">No item data yet</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Charts Row 2 -->
+    <div class="charts-row">
+        <div class="chart-card full-width">
+            <h3>Box Weight Fill %</h3>
+            <p-chart *ngIf="weightFillData" type="bar" [data]="weightFillData" [options]="weightFillOptions" class="h-[20rem]" />
+            <p *ngIf="!weightFillData" class="no-data">No box data yet</p>
+        </div>
+    </div>
+
     <hr>
 </div>
 

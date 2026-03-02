@@ -1,11 +1,104 @@
-.container{
-    width: 80%;
+.container {
+    width: 85%;
     margin: auto;
+    padding-bottom: 2rem;
 }
 
-.MainTitle{
+.MainTitle {
     text-align: center;
     font-size: xx-large;
     color: rgb(102, 101, 101);
     letter-spacing: 2px;
+}
+
+// Stat cards row
+.stats-row {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+}
+
+.stat-card {
+    flex: 1 1 200px;
+    max-width: 250px;
+    min-width: 180px;
+}
+
+.stat-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .stat-icon {
+        font-size: 2rem;
+        color: #2d81ff;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    p {
+        margin: 0;
+        color: #888;
+        font-size: 0.9rem;
+    }
+}
+
+// Charts
+.charts-row {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+.chart-card {
+    flex: 1 1 45%;
+    min-width: 300px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #2a2a2a;
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        color: #ccc;
+        font-weight: 600;
+    }
+
+    &.full-width {
+        flex: 1 1 100%;
+    }
+}
+
+.no-data {
+    text-align: center;
+    color: #666;
+    padding: 3rem 0;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .stats-row {
+        gap: 1rem;
+    }
+
+    .stat-card {
+        flex: 1 1 140px;
+        min-width: 140px;
+    }
+
+    .chart-card {
+        flex: 1 1 100%;
+    }
 }

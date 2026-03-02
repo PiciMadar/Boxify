@@ -17,7 +17,7 @@ import { ApiService } from '../../../services/api.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from '../../../services/auth.service';
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
-import { FileUpload, UploadEvent } from 'primeng/fileupload';
+import { UploadEvent } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { UploaderModule } from "angular-uploader";
 import { Uploader, UploadWidgetConfig, UploadWidgetResult } from 'uploader';
@@ -42,9 +42,7 @@ import { Router, RouterLink } from '@angular/router';
         InputNumber,
         TableModule,
         AutoCompleteModule,
-        FileUpload,
         ToastModule,
-        FileUpload,
         UploaderModule
     ],
   templateUrl: './items.component.html',
